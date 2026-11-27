@@ -17,6 +17,7 @@ for (const file of requiredFiles) await access(resolve(file));
 const pkg = JSON.parse(await readFile("package.json", "utf8"));
 if (pkg.packageManager !== "pnpm@12.24.0") throw new Error("packageManager must remain pinned to pnpm@12.24.0");
 if (pkg.engines?.node !== ">=24.22.3 <25") throw new Error("Node.js engine range does not match the repository baseline");
+if (pkg.engines?.pnpm !== "12.24.0") throw new Error("pnpm engine range must remain pinned to 12.24.0");
 
 const [nvmVersion, nodeVersion] = await Promise.all([
   readFile(".nvmrc", "utf8"),
