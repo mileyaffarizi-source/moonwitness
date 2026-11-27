@@ -111,6 +111,12 @@ If Dependency Review or CodeQL is unavailable under the repository's current vis
 - Any feature unavailable under the repository plan/settings is an explicit owner action, not a falsely reported pass.
 
 
+## Current repository enforcement status
+
+The repository was inspected on **2026-11-28**. GitHub reported `main` as **unprotected** and returned no repository rulesets. Therefore the workflows can publish check results, but GitHub does not yet enforce required approvals or required checks before merge. This is an observed settings gap, not a workflow pass.
+
+The repository owner must complete the separate GOV-013 administrator setup: enable the `main` ruleset with required CI/security checks, required human review, conversation resolution and stale-approval dismissal. Auto PR intentionally does not create or weaken branch protection and does not merge PRs.
+
 ## Dependency Review prerequisite — repository owner action
 
 The Dependency Review workflow requires GitHub's **Dependency graph** feature to be enabled for this repository. The PR check is intentionally fail-closed; it must not be converted to `continue-on-error`, a conditional skip or a fake success when the graph is unavailable.
