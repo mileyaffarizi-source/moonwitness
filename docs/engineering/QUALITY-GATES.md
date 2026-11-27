@@ -8,7 +8,7 @@ This foundation gate is not a substitute for application-specific ESLint, framew
 
 ## Canonical commands
 
-Run from the repository root with Node.js 22.14.x and pnpm 10.8.1:
+Run from the repository root with Node.js 24.22.3 and pnpm 12.24.0:
 
 ~~~sh
 pnpm lint
