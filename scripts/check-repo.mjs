@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 const requiredFiles = [
   "package.json", "pnpm-workspace.yaml", "pnpm-lock.yaml",
-  "tsconfig.base.json", ".nvmrc", ".node-version", ".npmrc", "AGENTS.md",
+  "tsconfig.base.json", ".nvmrc", ".node-version", "AGENTS.md",
   ".agents/skills/README.md",
   ".github/dependabot.yml",
   ".github/workflows/codeql.yml",
@@ -33,14 +33,37 @@ if (nodeVersion.trim() !== "24.22.3") {
   throw new Error("Node.js must remain pinned to the requested 24.22.3 baseline");
 }
 
-const npmConfig = new Set((await readFile(".npmrc", "utf8")).split("\n").map((line) => line.trim()));
-for (const setting of ["engine-strict=true", "save-exact=true"]) {
-  if (!npmConfig.has(setting)) throw new Error(".npmrc must include " + setting);
+const workspaceLines = new Set((await readFile("pnpm-workspace.yaml", "utf8"))
+  .split("\n")
+  .map((line) => line.trim()));
+for (const setting of [
+  '- "apps/*"',
+  '- "packages/*"',
+  "engineStrict: true",
+  "saveExact: true",
+  "minimumReleaseAge: 1440",
+  "blockExoticSubdeps: true",
+  "strictDepBuilds: true",
+]) {
+  if (!workspaceLines.has(setting)) throw new Error("pnpm-workspace.yaml must include " + setting);
 }
 
-const workspaceLines = (await readFile("pnpm-workspace.yaml", "utf8")).split("\n").map((line) => line.trim());
-for (const pattern of ['- "apps/*"', '- "packages/*"']) {
-  if (!workspaceLines.includes(pattern)) throw new Error("pnpm-workspace.yaml must include " + pattern);
+try {
+  const npmrc = await readFile(".npmrc", "utf8");
+  const unsupported = npmrc.split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#"))
+    .map((line) => line.split("=")[0].trim().toLowerCase())
+    .filter((key) => !(
+      key === "registry" || key.endsWith(":registry") ||
+      ["strict-ssl", "cafile", "ca", "certfile", "keyfile", "proxy", "https-proxy", "local-address"].includes(key) ||
+      key.includes("_auth") || key.includes("username") || key.includes("_password") || key.includes("email")
+    ));
+  if (unsupported.length > 0) {
+    throw new Error("pnpm 12 reads non-auth/registry settings from pnpm-workspace.yaml, not .npmrc: " + unsupported.join(", "));
+  }
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
 }
 
 const ciWorkflow = await readFile(".github/workflows/ci.yml", "utf8");
