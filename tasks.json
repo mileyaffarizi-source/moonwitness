@@ -23221,7 +23221,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/agent/src/workflows/.work-items/agt-007/contract/**"
+        "apps/agent/src/workflows/durable-workflows-and-recovery-agt-007/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-AGT-007",
@@ -23229,7 +23229,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AGT-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AGT-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -23300,7 +23301,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/agent/src/workflows/.work-items/agt-007/implementation/**"
+        "apps/agent/src/workflows/durable-workflows-and-recovery-agt-007/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-AGT-007",
@@ -23308,7 +23309,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AGT-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AGT-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -23381,7 +23383,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/agent/src/workflows/.work-items/agt-007/verification/**"
+        "apps/agent/src/workflows/durable-workflows-and-recovery-agt-007/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-AGT-007",
@@ -23389,7 +23391,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AGT-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AGT-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -23460,7 +23463,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/orm/src/registry/.work-items/api-004/contract/**"
+        "packages/orm/src/registry/orm-model-field-registry-api-004/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-API-004",
@@ -23468,7 +23471,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -23539,7 +23543,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/orm/src/registry/.work-items/api-004/implementation/**"
+        "packages/orm/src/registry/orm-model-field-registry-api-004/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-004",
@@ -23547,7 +23551,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -23620,7 +23625,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/orm/src/registry/.work-items/api-004/verification/**"
+        "packages/orm/src/registry/orm-model-field-registry-api-004/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-004",
@@ -23628,7 +23633,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -23699,7 +23705,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/orm/src/extensions/.work-items/api-006/contract/**"
+        "packages/orm/src/extensions/deterministic-model-extension-composition-api-006/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-API-006",
@@ -23707,7 +23713,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -23778,7 +23785,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/orm/src/extensions/.work-items/api-006/implementation/**"
+        "packages/orm/src/extensions/deterministic-model-extension-composition-api-006/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-006",
@@ -23786,7 +23793,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -23859,7 +23867,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/orm/src/extensions/.work-items/api-006/verification/**"
+        "packages/orm/src/extensions/deterministic-model-extension-composition-api-006/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-006",
@@ -23867,7 +23875,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -23939,7 +23948,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/orm/src/adapters/mikro-orm/.work-items/api-007/contract/**"
+        "packages/orm/src/adapters/mikro-orm/mikroorm-adapter-and-scoped-context-api-007/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-API-007",
@@ -23947,7 +23956,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24019,7 +24029,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/orm/src/adapters/mikro-orm/.work-items/api-007/implementation/**"
+        "packages/orm/src/adapters/mikro-orm/mikroorm-adapter-and-scoped-context-api-007/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-007",
@@ -24027,7 +24037,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24101,7 +24112,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/orm/src/adapters/mikro-orm/.work-items/api-007/verification/**"
+        "packages/orm/src/adapters/mikro-orm/mikroorm-adapter-and-scoped-context-api-007/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-007",
@@ -24109,7 +24120,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24180,7 +24192,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/orm/src/domain/.work-items/api-008/contract/**"
+        "packages/orm/src/domain/domain-ast-and-secure-record-operations-api-008/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-API-008",
@@ -24188,7 +24200,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24259,7 +24272,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/orm/src/domain/.work-items/api-008/implementation/**"
+        "packages/orm/src/domain/domain-ast-and-secure-record-operations-api-008/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-008",
@@ -24267,7 +24280,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24340,7 +24354,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/orm/src/domain/.work-items/api-008/verification/**"
+        "packages/orm/src/domain/domain-ast-and-secure-record-operations-api-008/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-008",
@@ -24348,7 +24362,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24420,7 +24435,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/api/src/security/.work-items/api-009/contract/**"
+        "apps/api/src/security/authorization-and-field-security-api-009/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-API-009",
@@ -24428,7 +24443,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24500,7 +24516,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/api/src/security/.work-items/api-009/implementation/**"
+        "apps/api/src/security/authorization-and-field-security-api-009/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-009",
@@ -24508,7 +24524,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24582,7 +24599,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/api/src/security/.work-items/api-009/verification/**"
+        "apps/api/src/security/authorization-and-field-security-api-009/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-009",
@@ -24590,7 +24607,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24661,7 +24679,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/api/src/use-cases/.work-items/api-010/contract/**"
+        "apps/api/src/use-cases/use-cases-transactions-and-audit-api-010/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-API-010",
@@ -24669,7 +24687,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24740,7 +24759,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/api/src/use-cases/.work-items/api-010/implementation/**"
+        "apps/api/src/use-cases/use-cases-transactions-and-audit-api-010/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-010",
@@ -24748,7 +24767,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24821,7 +24841,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/api/src/use-cases/.work-items/api-010/verification/**"
+        "apps/api/src/use-cases/use-cases-transactions-and-audit-api-010/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-010",
@@ -24829,7 +24849,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24900,7 +24921,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "integrations/odoo/.work-items/api-012/contract/**"
+        "integrations/odoo/version-aware-odoo-connector-api-012/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-API-012",
@@ -24908,7 +24929,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -24979,7 +25001,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "integrations/odoo/.work-items/api-012/implementation/**"
+        "integrations/odoo/version-aware-odoo-connector-api-012/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-012",
@@ -24987,7 +25009,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25060,7 +25083,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "integrations/odoo/.work-items/api-012/verification/**"
+        "integrations/odoo/version-aware-odoo-connector-api-012/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-API-012",
@@ -25068,7 +25091,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of API-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of API-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25140,7 +25164,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/web/src/features/moonwitness/.work-items/web-006/contract/**"
+        "apps/web/src/features/moonwitness/moonwitness-research-story-interfaces-web-006/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-WEB-006",
@@ -25148,7 +25172,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of WEB-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of WEB-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25220,7 +25245,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/web/src/features/moonwitness/.work-items/web-006/implementation/**"
+        "apps/web/src/features/moonwitness/moonwitness-research-story-interfaces-web-006/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-WEB-006",
@@ -25228,7 +25253,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of WEB-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of WEB-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25302,7 +25328,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/web/src/features/moonwitness/.work-items/web-006/verification/**"
+        "apps/web/src/features/moonwitness/moonwitness-research-story-interfaces-web-006/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-WEB-006",
@@ -25310,7 +25336,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of WEB-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of WEB-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25382,7 +25409,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/web/src/features/stories/.work-items/web-007/contract/**"
+        "apps/web/src/features/stories/story-worlds-and-asset-experience-web-007/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-WEB-007",
@@ -25390,7 +25417,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of WEB-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of WEB-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25462,7 +25490,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/web/src/features/stories/.work-items/web-007/implementation/**"
+        "apps/web/src/features/stories/story-worlds-and-asset-experience-web-007/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-WEB-007",
@@ -25470,7 +25498,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of WEB-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of WEB-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25544,7 +25573,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/web/src/features/stories/.work-items/web-007/verification/**"
+        "apps/web/src/features/stories/story-worlds-and-asset-experience-web-007/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-WEB-007",
@@ -25552,7 +25581,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of WEB-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of WEB-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25628,7 +25658,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/web/tests/.work-items/web-010/contract/**"
+        "apps/web/tests/accessibility-performance-and-e2e-web-010/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-WEB-010",
@@ -25636,7 +25666,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of WEB-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of WEB-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25712,7 +25743,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/web/tests/.work-items/web-010/implementation/**"
+        "apps/web/tests/accessibility-performance-and-e2e-web-010/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-WEB-010",
@@ -25720,7 +25751,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of WEB-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of WEB-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25798,7 +25830,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/web/tests/.work-items/web-010/verification/**"
+        "apps/web/tests/accessibility-performance-and-e2e-web-010/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-WEB-010",
@@ -25806,7 +25838,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of WEB-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of WEB-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25876,7 +25909,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/ui/primitives/.work-items/uia-004/contract/**"
+        "packages/ui/primitives/accessible-ui-primitives-uia-004/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-UIA-004",
@@ -25884,7 +25917,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of UIA-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of UIA-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -25954,7 +25988,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/ui/primitives/.work-items/uia-004/implementation/**"
+        "packages/ui/primitives/accessible-ui-primitives-uia-004/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-UIA-004",
@@ -25962,7 +25996,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of UIA-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of UIA-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26034,7 +26069,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/ui/primitives/.work-items/uia-004/verification/**"
+        "packages/ui/primitives/accessible-ui-primitives-uia-004/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-UIA-004",
@@ -26042,7 +26077,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of UIA-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of UIA-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26113,7 +26149,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/ui/components/.work-items/uia-005/contract/**"
+        "packages/ui/components/domain-compositions-and-layouts-uia-005/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-UIA-005",
@@ -26121,7 +26157,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of UIA-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of UIA-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26192,7 +26229,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/ui/components/.work-items/uia-005/implementation/**"
+        "packages/ui/components/domain-compositions-and-layouts-uia-005/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-UIA-005",
@@ -26200,7 +26237,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of UIA-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of UIA-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26273,7 +26311,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/ui/components/.work-items/uia-005/verification/**"
+        "packages/ui/components/domain-compositions-and-layouts-uia-005/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-UIA-005",
@@ -26281,7 +26319,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of UIA-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of UIA-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26352,7 +26391,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "assets/artwork/rocksoul/.work-items/art-004/contract/**"
+        "assets/artwork/rocksoul/threshold-universe-environment-art-art-004/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ART-004",
@@ -26360,7 +26399,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ART-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ART-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26431,7 +26471,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "assets/artwork/rocksoul/.work-items/art-004/implementation/**"
+        "assets/artwork/rocksoul/threshold-universe-environment-art-art-004/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ART-004",
@@ -26439,7 +26479,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ART-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ART-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26512,7 +26553,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "assets/artwork/rocksoul/.work-items/art-004/verification/**"
+        "assets/artwork/rocksoul/threshold-universe-environment-art-art-004/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ART-004",
@@ -26520,7 +26561,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ART-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ART-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26592,7 +26634,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "assets/characters/.work-items/chr-006/contract/**"
+        "assets/characters/approved-character-sheets-where-sourced-chr-006/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-CHR-006",
@@ -26600,7 +26642,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CHR-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CHR-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26672,7 +26715,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "assets/characters/.work-items/chr-006/implementation/**"
+        "assets/characters/approved-character-sheets-where-sourced-chr-006/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-CHR-006",
@@ -26680,7 +26723,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CHR-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CHR-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26754,7 +26798,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "assets/characters/.work-items/chr-006/verification/**"
+        "assets/characters/approved-character-sheets-where-sourced-chr-006/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-CHR-006",
@@ -26762,7 +26806,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CHR-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CHR-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26833,7 +26878,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/base/.work-items/pkg-004/contract/**"
+        "packages/base/base-contracts-public-exports-pkg-004/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-PKG-004",
@@ -26841,7 +26886,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of PKG-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of PKG-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26912,7 +26958,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/base/.work-items/pkg-004/implementation/**"
+        "packages/base/base-contracts-public-exports-pkg-004/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-PKG-004",
@@ -26920,7 +26966,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of PKG-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of PKG-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -26993,7 +27040,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/base/.work-items/pkg-004/verification/**"
+        "packages/base/base-contracts-public-exports-pkg-004/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-PKG-004",
@@ -27001,7 +27048,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of PKG-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of PKG-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27072,7 +27120,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/orm/src/addons/.work-items/add-004/contract/**"
+        "packages/orm/src/addons/model-field-extension-declaration-add-004/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ADD-004",
@@ -27080,7 +27128,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27151,7 +27200,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/orm/src/addons/.work-items/add-004/implementation/**"
+        "packages/orm/src/addons/model-field-extension-declaration-add-004/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ADD-004",
@@ -27159,7 +27208,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27232,7 +27282,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/orm/src/addons/.work-items/add-004/verification/**"
+        "packages/orm/src/addons/model-field-extension-declaration-add-004/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ADD-004",
@@ -27240,7 +27290,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27313,7 +27364,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/api/src/addons/lifecycle/.work-items/add-006/contract/**"
+        "apps/api/src/addons/lifecycle/add-on-lifecycle-state-machine-add-006/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ADD-006",
@@ -27321,7 +27372,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27394,7 +27446,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/api/src/addons/lifecycle/.work-items/add-006/implementation/**"
+        "apps/api/src/addons/lifecycle/add-on-lifecycle-state-machine-add-006/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ADD-006",
@@ -27402,7 +27454,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27477,7 +27530,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/api/src/addons/lifecycle/.work-items/add-006/verification/**"
+        "apps/api/src/addons/lifecycle/add-on-lifecycle-state-machine-add-006/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ADD-006",
@@ -27485,7 +27538,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27558,7 +27612,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/api/src/addons/.work-items/add-008/contract/**"
+        "apps/api/src/addons/api-agent-web-contribution-adapters-add-008/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ADD-008",
@@ -27566,7 +27620,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27639,7 +27694,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/api/src/addons/.work-items/add-008/implementation/**"
+        "apps/api/src/addons/api-agent-web-contribution-adapters-add-008/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ADD-008",
@@ -27647,7 +27702,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27722,7 +27778,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/api/src/addons/.work-items/add-008/verification/**"
+        "apps/api/src/addons/api-agent-web-contribution-adapters-add-008/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ADD-008",
@@ -27730,7 +27786,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27802,7 +27859,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/addons/reference/.work-items/add-009/contract/**"
+        "packages/addons/reference/reference-end-to-end-add-on-add-009/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ADD-009",
@@ -27810,7 +27867,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27882,7 +27940,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/addons/reference/.work-items/add-009/implementation/**"
+        "packages/addons/reference/reference-end-to-end-add-on-add-009/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ADD-009",
@@ -27890,7 +27948,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -27964,7 +28023,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/addons/reference/.work-items/add-009/verification/**"
+        "packages/addons/reference/reference-end-to-end-add-on-add-009/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ADD-009",
@@ -27972,7 +28031,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ADD-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ADD-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28044,7 +28104,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/base/src/contracts/.work-items/app-003/contract/**"
+        "packages/base/src/contracts/cross-app-api-and-event-contracts-app-003/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-APP-003",
@@ -28052,7 +28112,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of APP-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of APP-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28124,7 +28185,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/base/src/contracts/.work-items/app-003/implementation/**"
+        "packages/base/src/contracts/cross-app-api-and-event-contracts-app-003/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-APP-003",
@@ -28132,7 +28193,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of APP-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of APP-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28206,7 +28268,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/base/src/contracts/.work-items/app-003/verification/**"
+        "packages/base/src/contracts/cross-app-api-and-event-contracts-app-003/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-APP-003",
@@ -28214,7 +28276,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of APP-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of APP-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28285,7 +28348,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/dx/src/coordinator/.work-items/dx-004/contract/**"
+        "apps/dx/src/coordinator/atomic-task-claims-leases-and-registry-writer-dx-004/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-DX-004",
@@ -28293,7 +28356,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28364,7 +28428,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/dx/src/coordinator/.work-items/dx-004/implementation/**"
+        "apps/dx/src/coordinator/atomic-task-claims-leases-and-registry-writer-dx-004/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-DX-004",
@@ -28372,7 +28436,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28445,7 +28510,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/dx/src/coordinator/.work-items/dx-004/verification/**"
+        "apps/dx/src/coordinator/atomic-task-claims-leases-and-registry-writer-dx-004/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-DX-004",
@@ -28453,7 +28518,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28525,7 +28591,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/dx/src/execution/.work-items/dx-007/contract/**"
+        "apps/dx/src/execution/bounded-execution-sandbox-and-kill-switch-dx-007/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-DX-007",
@@ -28533,7 +28599,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28605,7 +28672,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/dx/src/execution/.work-items/dx-007/implementation/**"
+        "apps/dx/src/execution/bounded-execution-sandbox-and-kill-switch-dx-007/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-DX-007",
@@ -28613,7 +28680,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28687,7 +28755,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/dx/src/execution/.work-items/dx-007/verification/**"
+        "apps/dx/src/execution/bounded-execution-sandbox-and-kill-switch-dx-007/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-DX-007",
@@ -28695,7 +28763,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28771,7 +28840,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/dx/src/ui/.work-items/dx-012/contract/**"
+        "apps/dx/src/ui/dx-desktop-workbench-ui-dx-012/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-DX-012",
@@ -28779,7 +28848,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28855,7 +28925,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/dx/src/ui/.work-items/dx-012/implementation/**"
+        "apps/dx/src/ui/dx-desktop-workbench-ui-dx-012/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-DX-012",
@@ -28863,7 +28933,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -28941,7 +29012,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/dx/src/ui/.work-items/dx-012/verification/**"
+        "apps/dx/src/ui/dx-desktop-workbench-ui-dx-012/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-DX-012",
@@ -28949,7 +29020,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29025,7 +29097,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "docs/reports/dx/.work-items/dx-013/contract/**"
+        "docs/reports/dx/first-dx-task-to-commit-vertical-slice-dx-013/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-DX-013",
@@ -29033,7 +29105,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-013. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-013. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29109,7 +29182,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "docs/reports/dx/.work-items/dx-013/implementation/**"
+        "docs/reports/dx/first-dx-task-to-commit-vertical-slice-dx-013/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-DX-013",
@@ -29117,7 +29190,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-013. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-013. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29195,7 +29269,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "docs/reports/dx/.work-items/dx-013/verification/**"
+        "docs/reports/dx/first-dx-task-to-commit-vertical-slice-dx-013/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-DX-013",
@@ -29203,7 +29277,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of DX-013. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of DX-013. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29275,7 +29350,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/addons/oss-inventory/.work-items/oss-002/contract/**"
+        "packages/addons/oss-inventory/canonical-network-resource-inventory-oss-002/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-OSS-002",
@@ -29283,7 +29358,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of OSS-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of OSS-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29355,7 +29431,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/addons/oss-inventory/.work-items/oss-002/implementation/**"
+        "packages/addons/oss-inventory/canonical-network-resource-inventory-oss-002/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-OSS-002",
@@ -29363,7 +29439,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of OSS-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of OSS-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29437,7 +29514,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/addons/oss-inventory/.work-items/oss-002/verification/**"
+        "packages/addons/oss-inventory/canonical-network-resource-inventory-oss-002/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-OSS-002",
@@ -29445,7 +29522,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of OSS-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of OSS-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29520,7 +29598,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/addons/oss-provisioning/.work-items/oss-008/contract/**"
+        "packages/addons/oss-provisioning/governed-provisioning-configuration-oss-008/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-OSS-008",
@@ -29528,7 +29606,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of OSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of OSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29603,7 +29682,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/addons/oss-provisioning/.work-items/oss-008/implementation/**"
+        "packages/addons/oss-provisioning/governed-provisioning-configuration-oss-008/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-OSS-008",
@@ -29611,7 +29690,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of OSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of OSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29688,7 +29768,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/addons/oss-provisioning/.work-items/oss-008/verification/**"
+        "packages/addons/oss-provisioning/governed-provisioning-configuration-oss-008/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-OSS-008",
@@ -29696,7 +29776,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of OSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of OSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29768,7 +29849,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/addons/bss-billing/.work-items/bss-006/contract/**"
+        "packages/addons/bss-billing/rating-billing-and-invoicing-foundations-bss-006/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-BSS-006",
@@ -29776,7 +29857,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of BSS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of BSS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29848,7 +29930,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/addons/bss-billing/.work-items/bss-006/implementation/**"
+        "packages/addons/bss-billing/rating-billing-and-invoicing-foundations-bss-006/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-BSS-006",
@@ -29856,7 +29938,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of BSS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of BSS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -29930,7 +30013,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/addons/bss-billing/.work-items/bss-006/verification/**"
+        "packages/addons/bss-billing/rating-billing-and-invoicing-foundations-bss-006/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-BSS-006",
@@ -29938,7 +30021,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of BSS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of BSS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30011,7 +30095,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "integrations/odoo/bss/.work-items/bss-008/contract/**"
+        "integrations/odoo/bss/odoo-integration-and-controlled-transition-bss-008/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-BSS-008",
@@ -30019,7 +30103,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of BSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of BSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30092,7 +30177,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "integrations/odoo/bss/.work-items/bss-008/implementation/**"
+        "integrations/odoo/bss/odoo-integration-and-controlled-transition-bss-008/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-BSS-008",
@@ -30100,7 +30185,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of BSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of BSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30175,7 +30261,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "integrations/odoo/bss/.work-items/bss-008/verification/**"
+        "integrations/odoo/bss/odoo-integration-and-controlled-transition-bss-008/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-BSS-008",
@@ -30183,7 +30269,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of BSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of BSS-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30255,7 +30342,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/addons/isp-orchestration/.work-items/isp-005/contract/**"
+        "packages/addons/isp-orchestration/resource-reservation-and-oss-handoff-isp-005/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ISP-005",
@@ -30263,7 +30350,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ISP-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ISP-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30335,7 +30423,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/addons/isp-orchestration/.work-items/isp-005/implementation/**"
+        "packages/addons/isp-orchestration/resource-reservation-and-oss-handoff-isp-005/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ISP-005",
@@ -30343,7 +30431,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ISP-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ISP-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30417,7 +30506,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/addons/isp-orchestration/.work-items/isp-005/verification/**"
+        "packages/addons/isp-orchestration/resource-reservation-and-oss-handoff-isp-005/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ISP-005",
@@ -30425,7 +30514,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ISP-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ISP-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30500,7 +30590,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "docs/reports/isp/.work-items/isp-009/contract/**"
+        "docs/reports/isp/complete-isp-order-to-activation-journey-isp-009/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ISP-009",
@@ -30508,7 +30598,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ISP-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ISP-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30583,7 +30674,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "docs/reports/isp/.work-items/isp-009/implementation/**"
+        "docs/reports/isp/complete-isp-order-to-activation-journey-isp-009/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ISP-009",
@@ -30591,7 +30682,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ISP-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ISP-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30668,7 +30760,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "docs/reports/isp/.work-items/isp-009/verification/**"
+        "docs/reports/isp/complete-isp-order-to-activation-journey-isp-009/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ISP-009",
@@ -30676,7 +30768,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ISP-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ISP-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30749,7 +30842,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/cloud/src/runners/.work-items/cloud-004/contract/**"
+        "apps/cloud/src/runners/isolated-infrastructure-runner-cloud-004/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-CLOUD-004",
@@ -30757,7 +30850,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CLOUD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CLOUD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30830,7 +30924,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/cloud/src/runners/.work-items/cloud-004/implementation/**"
+        "apps/cloud/src/runners/isolated-infrastructure-runner-cloud-004/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-CLOUD-004",
@@ -30838,7 +30932,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CLOUD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CLOUD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30913,7 +31008,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/cloud/src/runners/.work-items/cloud-004/verification/**"
+        "apps/cloud/src/runners/isolated-infrastructure-runner-cloud-004/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-CLOUD-004",
@@ -30921,7 +31016,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CLOUD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CLOUD-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -30994,7 +31090,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/cloud/src/deployments/.work-items/cloud-006/contract/**"
+        "apps/cloud/src/deployments/deployment-and-container-management-cloud-006/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-CLOUD-006",
@@ -31002,7 +31098,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CLOUD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CLOUD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31075,7 +31172,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/cloud/src/deployments/.work-items/cloud-006/implementation/**"
+        "apps/cloud/src/deployments/deployment-and-container-management-cloud-006/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-CLOUD-006",
@@ -31083,7 +31180,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CLOUD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CLOUD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31158,7 +31256,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/cloud/src/deployments/.work-items/cloud-006/verification/**"
+        "apps/cloud/src/deployments/deployment-and-container-management-cloud-006/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-CLOUD-006",
@@ -31166,7 +31264,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CLOUD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CLOUD-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31240,7 +31339,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "docs/reports/cloud/.work-items/cloud-010/contract/**"
+        "docs/reports/cloud/cloud-control-plane-security-audit-cloud-010/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-CLOUD-010",
@@ -31248,7 +31347,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CLOUD-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CLOUD-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31322,7 +31422,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "docs/reports/cloud/.work-items/cloud-010/implementation/**"
+        "docs/reports/cloud/cloud-control-plane-security-audit-cloud-010/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-CLOUD-010",
@@ -31330,7 +31430,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CLOUD-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CLOUD-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31406,7 +31507,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "docs/reports/cloud/.work-items/cloud-010/verification/**"
+        "docs/reports/cloud/cloud-control-plane-security-audit-cloud-010/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-CLOUD-010",
@@ -31414,7 +31515,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of CLOUD-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of CLOUD-010. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31486,7 +31588,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/A-L-L-A-H/.work-items/allah-001/contract/**"
+        "apps/A-L-L-A-H/corpus-legal-government-sources-allah-001/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ALLAH-001",
@@ -31494,7 +31596,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-001. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-001. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31566,7 +31669,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/A-L-L-A-H/.work-items/allah-001/implementation/**"
+        "apps/A-L-L-A-H/corpus-legal-government-sources-allah-001/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-001",
@@ -31574,7 +31677,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-001. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-001. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31648,7 +31752,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/A-L-L-A-H/.work-items/allah-001/verification/**"
+        "apps/A-L-L-A-H/corpus-legal-government-sources-allah-001/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-001",
@@ -31656,7 +31760,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-001. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-001. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31727,7 +31832,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/knowledge/src/corpus/.work-items/allah-003/contract/**"
+        "packages/knowledge/src/corpus/immutable-source-versions-and-locators-allah-003/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ALLAH-003",
@@ -31735,7 +31840,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31806,7 +31912,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/knowledge/src/corpus/.work-items/allah-003/implementation/**"
+        "packages/knowledge/src/corpus/immutable-source-versions-and-locators-allah-003/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-003",
@@ -31814,7 +31920,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31887,7 +31994,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/knowledge/src/corpus/.work-items/allah-003/verification/**"
+        "packages/knowledge/src/corpus/immutable-source-versions-and-locators-allah-003/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-003",
@@ -31895,7 +32002,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-003. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -31967,7 +32075,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/knowledge/src/legal/.work-items/allah-005/contract/**"
+        "packages/knowledge/src/legal/legal-government-instrument-model-allah-005/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ALLAH-005",
@@ -31975,7 +32083,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32047,7 +32156,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/knowledge/src/legal/.work-items/allah-005/implementation/**"
+        "packages/knowledge/src/legal/legal-government-instrument-model-allah-005/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-005",
@@ -32055,7 +32164,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32129,7 +32239,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/knowledge/src/legal/.work-items/allah-005/verification/**"
+        "packages/knowledge/src/legal/legal-government-instrument-model-allah-005/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-005",
@@ -32137,7 +32247,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32210,7 +32321,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/knowledge/src/ontology/.work-items/allah-006/contract/**"
+        "packages/knowledge/src/ontology/ontology-and-evidence-backed-relations-allah-006/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ALLAH-006",
@@ -32218,7 +32329,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32291,7 +32403,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/knowledge/src/ontology/.work-items/allah-006/implementation/**"
+        "packages/knowledge/src/ontology/ontology-and-evidence-backed-relations-allah-006/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-006",
@@ -32299,7 +32411,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32374,7 +32487,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/knowledge/src/ontology/.work-items/allah-006/verification/**"
+        "packages/knowledge/src/ontology/ontology-and-evidence-backed-relations-allah-006/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-006",
@@ -32382,7 +32495,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32456,7 +32570,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "packages/knowledge/src/retrieval/.work-items/allah-008/contract/**"
+        "packages/knowledge/src/retrieval/source-aware-retrieval-search-allah-008/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ALLAH-008",
@@ -32464,7 +32578,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32538,7 +32653,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "packages/knowledge/src/retrieval/.work-items/allah-008/implementation/**"
+        "packages/knowledge/src/retrieval/source-aware-retrieval-search-allah-008/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-008",
@@ -32546,7 +32661,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32622,7 +32738,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "packages/knowledge/src/retrieval/.work-items/allah-008/verification/**"
+        "packages/knowledge/src/retrieval/source-aware-retrieval-search-allah-008/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-008",
@@ -32630,7 +32746,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32703,7 +32820,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/A-L-L-A-H/src/.work-items/allah-009/contract/**"
+        "apps/A-L-L-A-H/src/flagship-landing-and-knowledge-navigation-allah-009/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ALLAH-009",
@@ -32711,7 +32828,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32784,7 +32902,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/A-L-L-A-H/src/.work-items/allah-009/implementation/**"
+        "apps/A-L-L-A-H/src/flagship-landing-and-knowledge-navigation-allah-009/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-009",
@@ -32792,7 +32910,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32867,7 +32986,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/A-L-L-A-H/src/.work-items/allah-009/verification/**"
+        "apps/A-L-L-A-H/src/flagship-landing-and-knowledge-navigation-allah-009/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-009",
@@ -32875,7 +32994,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -32950,7 +33070,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "docs/reports/knowledge/.work-items/allah-012/contract/**"
+        "docs/reports/knowledge/corpus-ontology-legal-knowledge-vertical-slice-allah-012/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ALLAH-012",
@@ -32958,7 +33078,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33033,7 +33154,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "docs/reports/knowledge/.work-items/allah-012/implementation/**"
+        "docs/reports/knowledge/corpus-ontology-legal-knowledge-vertical-slice-allah-012/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-012",
@@ -33041,7 +33162,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33118,7 +33240,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "docs/reports/knowledge/.work-items/allah-012/verification/**"
+        "docs/reports/knowledge/corpus-ontology-legal-knowledge-vertical-slice-allah-012/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ALLAH-012",
@@ -33126,7 +33248,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ALLAH-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ALLAH-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33199,7 +33322,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/riot/src/lab/.work-items/riot-002/contract/**"
+        "apps/riot/src/lab/isolated-lab-infrastructure-and-identity-riot-002/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-RIOT-002",
@@ -33207,7 +33330,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of RIOT-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of RIOT-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33280,7 +33404,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/riot/src/lab/.work-items/riot-002/implementation/**"
+        "apps/riot/src/lab/isolated-lab-infrastructure-and-identity-riot-002/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-RIOT-002",
@@ -33288,7 +33412,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of RIOT-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of RIOT-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33363,7 +33488,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/riot/src/lab/.work-items/riot-002/verification/**"
+        "apps/riot/src/lab/isolated-lab-infrastructure-and-identity-riot-002/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-RIOT-002",
@@ -33371,7 +33496,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of RIOT-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of RIOT-002. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33442,7 +33568,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/riot/src/redteam/.work-items/riot-004/contract/**"
+        "apps/riot/src/redteam/isolated-red-team-exercise-orchestration-riot-004/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-RIOT-004",
@@ -33450,7 +33576,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of RIOT-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of RIOT-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33521,7 +33648,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/riot/src/redteam/.work-items/riot-004/implementation/**"
+        "apps/riot/src/redteam/isolated-red-team-exercise-orchestration-riot-004/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-RIOT-004",
@@ -33529,7 +33656,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of RIOT-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of RIOT-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33602,7 +33730,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/riot/src/redteam/.work-items/riot-004/verification/**"
+        "apps/riot/src/redteam/isolated-red-team-exercise-orchestration-riot-004/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-RIOT-004",
@@ -33610,7 +33738,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of RIOT-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of RIOT-004. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33683,7 +33812,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "infra/riot/.work-items/riot-008/contract/**"
+        "infra/riot/lab-egress-teardown-and-kill-switch-riot-008/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-RIOT-008",
@@ -33691,7 +33820,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of RIOT-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of RIOT-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33764,7 +33894,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "infra/riot/.work-items/riot-008/implementation/**"
+        "infra/riot/lab-egress-teardown-and-kill-switch-riot-008/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-RIOT-008",
@@ -33772,7 +33902,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of RIOT-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of RIOT-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33847,7 +33978,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "infra/riot/.work-items/riot-008/verification/**"
+        "infra/riot/lab-egress-teardown-and-kill-switch-riot-008/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-RIOT-008",
@@ -33855,7 +33986,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of RIOT-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of RIOT-008. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -33927,7 +34059,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/astronauts/internal/controller/jobs/.work-items/ast-009/contract/**"
+        "apps/astronauts/internal/controller/jobs/durable-job-scheduling-dispatch-and-cancellation-ast-009/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-AST-009",
@@ -33935,7 +34067,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AST-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AST-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34007,7 +34140,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/astronauts/internal/controller/jobs/.work-items/ast-009/implementation/**"
+        "apps/astronauts/internal/controller/jobs/durable-job-scheduling-dispatch-and-cancellation-ast-009/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-AST-009",
@@ -34015,7 +34148,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AST-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AST-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34089,7 +34223,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/astronauts/internal/controller/jobs/.work-items/ast-009/verification/**"
+        "apps/astronauts/internal/controller/jobs/durable-job-scheduling-dispatch-and-cancellation-ast-009/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-AST-009",
@@ -34097,7 +34231,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AST-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AST-009. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34171,7 +34306,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/astronauts/internal/controller/authorization/.work-items/ast-011/contract/**"
+        "apps/astronauts/internal/controller/authorization/api-signed-grants-and-governed-host-executor-ast-011/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-AST-011",
@@ -34179,7 +34314,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AST-011. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AST-011. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34253,7 +34389,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/astronauts/internal/controller/authorization/.work-items/ast-011/implementation/**"
+        "apps/astronauts/internal/controller/authorization/api-signed-grants-and-governed-host-executor-ast-011/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-AST-011",
@@ -34261,7 +34397,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AST-011. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AST-011. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34337,7 +34474,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/astronauts/internal/controller/authorization/.work-items/ast-011/verification/**"
+        "apps/astronauts/internal/controller/authorization/api-signed-grants-and-governed-host-executor-ast-011/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-AST-011",
@@ -34345,7 +34482,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AST-011. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AST-011. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34420,7 +34558,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/astronauts/tests/.work-items/ast-014/contract/**"
+        "apps/astronauts/tests/astronauts-end-to-end-security-and-platform-integrat-ast-014/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-AST-014",
@@ -34428,7 +34566,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AST-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AST-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34503,7 +34642,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/astronauts/tests/.work-items/ast-014/implementation/**"
+        "apps/astronauts/tests/astronauts-end-to-end-security-and-platform-integrat-ast-014/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-AST-014",
@@ -34511,7 +34650,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AST-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AST-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34588,7 +34728,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/astronauts/tests/.work-items/ast-014/verification/**"
+        "apps/astronauts/tests/astronauts-end-to-end-security-and-platform-integrat-ast-014/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-AST-014",
@@ -34596,7 +34736,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of AST-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of AST-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34670,7 +34811,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/arsy/crates/radius-auth/.work-items/ars-005/contract/**"
+        "apps/arsy/crates/radius-auth/radius-authentication-service-for-pppoe-aaa-ars-005/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ARS-005",
@@ -34678,7 +34819,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34752,7 +34894,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/arsy/crates/radius-auth/.work-items/ars-005/implementation/**"
+        "apps/arsy/crates/radius-auth/radius-authentication-service-for-pppoe-aaa-ars-005/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ARS-005",
@@ -34760,7 +34902,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34836,7 +34979,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/arsy/crates/radius-auth/.work-items/ars-005/verification/**"
+        "apps/arsy/crates/radius-auth/radius-authentication-service-for-pppoe-aaa-ars-005/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ARS-005",
@@ -34844,7 +34987,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-005. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34916,7 +35060,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/arsy/crates/radius-accounting/.work-items/ars-006/contract/**"
+        "apps/arsy/crates/radius-accounting/radius-accounting-and-dynamic-authorization-ars-006/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ARS-006",
@@ -34924,7 +35068,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -34996,7 +35141,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/arsy/crates/radius-accounting/.work-items/ars-006/implementation/**"
+        "apps/arsy/crates/radius-accounting/radius-accounting-and-dynamic-authorization-ars-006/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ARS-006",
@@ -35004,7 +35149,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -35078,7 +35224,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/arsy/crates/radius-accounting/.work-items/ars-006/verification/**"
+        "apps/arsy/crates/radius-accounting/radius-accounting-and-dynamic-authorization-ars-006/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ARS-006",
@@ -35086,7 +35232,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-006. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -35159,7 +35306,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/arsy/crates/acs-cwmp/.work-items/ars-007/contract/**"
+        "apps/arsy/crates/acs-cwmp/tr-069-cwmp-acs-transport-and-session-core-ars-007/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ARS-007",
@@ -35167,7 +35314,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -35240,7 +35388,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/arsy/crates/acs-cwmp/.work-items/ars-007/implementation/**"
+        "apps/arsy/crates/acs-cwmp/tr-069-cwmp-acs-transport-and-session-core-ars-007/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ARS-007",
@@ -35248,7 +35396,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -35323,7 +35472,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/arsy/crates/acs-cwmp/.work-items/ars-007/verification/**"
+        "apps/arsy/crates/acs-cwmp/tr-069-cwmp-acs-transport-and-session-core-ars-007/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ARS-007",
@@ -35331,7 +35480,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-007. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -35408,7 +35558,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/arsy/tests/security/.work-items/ars-012/contract/**"
+        "apps/arsy/tests/security/arsy-protocol-security-load-failover-and-operations-ars-012/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ARS-012",
@@ -35416,7 +35566,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -35493,7 +35644,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/arsy/tests/security/.work-items/ars-012/implementation/**"
+        "apps/arsy/tests/security/arsy-protocol-security-load-failover-and-operations-ars-012/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ARS-012",
@@ -35501,7 +35652,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -35580,7 +35732,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/arsy/tests/security/.work-items/ars-012/verification/**"
+        "apps/arsy/tests/security/arsy-protocol-security-load-failover-and-operations-ars-012/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ARS-012",
@@ -35588,7 +35740,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-012. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -35666,7 +35819,7 @@
         "Owner/interface review"
       ],
       "file_ownership": [
-        "apps/arsy/tests/integration/.work-items/ars-014/contract/**"
+        "apps/arsy/tests/integration/radius-acs-and-syslog-end-to-end-integrations-ars-014/contract/**"
       ],
       "estimate": "S",
       "parallel_group": "split-ARS-014",
@@ -35674,7 +35827,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -35752,7 +35906,7 @@
         "Negative authorization/error tests"
       ],
       "file_ownership": [
-        "apps/arsy/tests/integration/.work-items/ars-014/implementation/**"
+        "apps/arsy/tests/integration/radius-acs-and-syslog-end-to-end-integrations-ars-014/implementation/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ARS-014",
@@ -35760,7 +35914,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
@@ -35840,7 +35995,7 @@
         "Evidence and acceptance review"
       ],
       "file_ownership": [
-        "apps/arsy/tests/integration/.work-items/ars-014/verification/**"
+        "apps/arsy/tests/integration/radius-acs-and-syslog-end-to-end-integrations-ars-014/verification/**"
       ],
       "estimate": "M",
       "parallel_group": "split-ARS-014",
@@ -35848,7 +36003,8 @@
       "evidence": [],
       "blocker": null,
       "notes": [
-        "Atomic child of ARS-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification."
+        "Atomic child of ARS-014. Its path is reserved exclusively for this child; parent completion requires all sibling evidence and parent integration verification.",
+        "Path ownership is reserved under a feature-specific module folder; refine module internals only within this task's exclusive scope."
       ],
       "created_at": null,
       "updated_at": null,
