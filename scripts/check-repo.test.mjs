@@ -101,9 +101,9 @@ test("GitHub security and release automation have non-overlapping active owners"
   assert.ok(secrets.includes("gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e"));
   assert.ok(secrets.includes("fetch-depth: 0"));
   assert.ok(secrets.includes("3d3c42e5aac5ba805825da76410c181273ba90b1"));
-  assert.ok(workflowSecurity.includes("zizmor@1.32.0"));
+  assert.ok(workflowSecurity.includes('ZIZMOR_VERSION: "1.32.0"'));
   assert.ok(workflowSecurity.includes("68559e99cc807c1eb7e9238fd43a15bba460eec2"));
-  assert.ok(workflowSecurity.includes("--format=github"));
+  assert.ok(workflowSecurity.includes('uvx "zizmor@${ZIZMOR_VERSION}"') && workflowSecurity.includes("--format=github"));
   assert.ok(workflowSecurity.includes("3d3c42e5aac5ba805825da76410c181273ba90b1"));
   assert.ok(secrets.includes("REVIEWED_EXCEPTION_GITLEAKS_COMMENT_ONLY"));
   assert.ok(releaseWorkflow.includes("googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7"));
