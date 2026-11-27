@@ -117,7 +117,8 @@ if (!secretWorkflow.includes("gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57
   throw new Error("Secret scanning must use Gitleaks v3 with full Git history and the GitHub token");
 }
 if (!workflowSecurity.includes("astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2") ||
-    !workflowSecurity.includes("zizmor@1.32.0") ||
+    !workflowSecurity.includes('ZIZMOR_VERSION: "1.32.0"') ||
+    !workflowSecurity.includes('uvx "zizmor@${ZIZMOR_VERSION}"') ||
     !workflowSecurity.includes("--format=github")) {
   throw new Error("Workflow Security must run the pinned Zizmor version with GitHub annotations");
 }
