@@ -196,8 +196,8 @@ test("validates the repository's canonical task registry", async () => {
   assert.equal(registry.project.application_count, 16);
 });
 
-test("CLI validates the canonical registry from the repository root", () => {
-  const registry = JSON.parse(readFileSync(new URL("../../tasks.json", import.meta.url), "utf8"));
+test("CLI validates the canonical registry from the repository root", async () => {
+  const registry = JSON.parse(await readFile(new URL("../../tasks.json", import.meta.url), "utf8"));
   const script = fileURLToPath(new URL("./task-registry.mjs", import.meta.url));
   const result = spawnSync(process.execPath, [script, "tasks.json"], {
     cwd: process.cwd(),
