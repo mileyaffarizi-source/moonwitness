@@ -1,6 +1,6 @@
 # BLUEPRINT-RULES-GOVERN-CONTRACT — PLATFORM CONSTITUTION & EXECUTION CONTRACT
 
-**Document ID:** MW-BP-GOV-001 · **Version:** 1.0.0  
+**Document ID:** MW-BP-GOV-001 · **Version:** 2.0.0  
 **Parent:** [BLUEPRINT.md](./BLUEPRINT.md) · **Task registry:** [tasks.json](./tasks.json)  
 **Audience:** Human owners, local AI agents, CI systems, add-on authors and operators.
 
@@ -18,7 +18,7 @@ A lower-level document cannot silently override a higher-level rule. A conflict 
 
 ## 2. Non-negotiable platform laws
 
-1. Exactly three primary runtimes: Mastra Agent, Fastify API, Next.js Web.
+1. Exactly fourteen named applications are defined in BLUEPRINT-APPLICATIONS.MD. This does not require fourteen microservices.
 2. Node.js LTS + pnpm + pnpm Workspaces + Turborepo. No Bun.
 3. API is business authority and only business-data write boundary.
 4. Agent calls approved API capabilities; no direct business DB access.
@@ -53,7 +53,7 @@ Fail closed when policy metadata is absent/invalid. Admin bypass is explicit, na
 
 ## 6. Cross-realm contracts
 
-Every Web/API/Agent interaction uses typed, versioned contracts. Changes declare compatibility, owner, consumers and migration plan.
+Every app-to-app interaction uses typed, versioned contracts. Changes declare compatibility, owner, consumers and migration plan.
 
 ### 6.1 HTTP contract
 A route defines method, path/version, operation ID, auth, capability, request/response schema, stable errors, idempotency, pagination, rate/timeout, classification, audit side effects and deprecation.
@@ -148,3 +148,44 @@ Tasks **GOV-001 through GOV-012** in [tasks.json](./tasks.json).
 ## 15. Definition of done
 
 Repository has a verifiable task DAG, claims do not collide, dependencies/approvals are enforced, contracts are versioned, security/ownership boundaries hold, evidence is attached to completion and no worker can turn a proposal into an authoritative result.
+
+## 16. Fourteen-app governance addendum
+
+The app inventory in BLUEPRINT-APPLICATIONS.MD is authoritative. The fourteen apps are:
+apps/agent, apps/api, apps/web, apps/OSS, apps/BSS, apps/id, apps/docs, apps/desktop, apps/mobile, apps/cloud, apps/isp, apps/dx, apps/A-L-L-A-H and apps/riot.
+
+Do not reintroduce the superseded exactly-three-app constraint. Do not interpret the fourteen directories as an automatic mandate for fourteen separately deployed microservices.
+
+### 16.1 Mandatory ownership distinctions
+
+- BSS owns commercial records; OSS owns technical/network operational records; ISP owns subscriber service orchestration.
+- ID owns identity/authentication integration; API/domain owners enforce record/resource authorization.
+- Vault/KMS owns secret values; apps/id and other apps use scoped identities/references.
+- DX owns developer orchestration, not business data authority.
+- Docs renders canonical documentation/task status; it does not create a parallel task ledger.
+- Web owns MoonWitness landing/community. A-L-L-A-H owns its separate flagship landing/corpus experience.
+- Cloud, OSS and RIOT privileged runners are isolated from public request workers and from each other.
+
+### 16.2 DX-first engineering rule
+
+DX is the first priority for building the implementation factory. Begin with a safe task reader/validator, dependency graph, atomic task lease, isolated Git worktree and one approved agent adapter. Do not start autonomous multi-agent production execution before file ownership, command sandbox, approval gates and evidence validation exist.
+
+### 16.3 Identity and secrets rule
+
+Use standards-compliant OIDC/OAuth provider integration. Do not invent an identity protocol. Public/native clients use the appropriate Authorization Code + PKCE flow and secure platform-specific session handling. Never place secret values in ID tokens, task files, source code, prompts or logs. Secret values belong to a dedicated vault/KMS with workload identity, narrow policies, audit and rotation.
+
+### 16.4 Cloud/OSS/RIOT privileged operation rule
+
+Infrastructure apply, network configuration, production deployment and security-lab execution require scoped identities, exact resource scope, command/tool allowlists, policy checks, immutable audit and human approval when risky. Public frontends and generic Agents cannot directly access host shell, Docker sockets, network devices or cloud admin credentials.
+
+### 16.5 Corpus and legal knowledge rule
+
+Divine/primary corpus, translations, commentary, human law, government documents and AI analysis remain separate source classes with version/provenance. Legal status is jurisdiction/date-dependent. AI-generated ontology edges and interpretations remain proposals until reviewed. No restricted visual depiction is generated.
+
+### 16.6 Community and content rule
+
+User-generated community content is not editorial canon. Define moderation, reporting, privacy, content rights and abuse handling before public rollout. The meaning of the label CSS remains unconfirmed until verified from source/owner.
+
+### 16.7 RIOT safety and authorization
+
+War-equipment archive work is limited to historical, journalistic, fictional or non-operational metadata/media. Do not create instructions for weapon construction, acquisition, modification, targeting or operational deployment. Red-team work defaults to isolated synthetic labs with written authorization, fixed scope, expiry, egress controls, kill switch and audit.

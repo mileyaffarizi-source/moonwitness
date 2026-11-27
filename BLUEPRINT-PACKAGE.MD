@@ -1,6 +1,6 @@
 # BLUEPRINT-PACKAGE — MONOREPO PACKAGE ARCHITECTURE
 
-**Document ID:** MW-BP-PKG-001 · **Version:** 1.0.0  
+**Document ID:** MW-BP-PKG-001 · **Version:** 2.0.0  
 **Parent:** [BLUEPRINT.md](./BLUEPRINT.md) · **Task registry:** [tasks.json](./tasks.json)  
 **Runtime:** Node.js LTS · **Package manager:** pnpm · **Task graph:** Turborepo
 
@@ -8,12 +8,7 @@
 
 Define how the repository is divided into reusable, independently testable workspace packages. This architecture enables local AI parallel work without circular dependencies, shared-file collisions, duplicated business logic or accidental runtime coupling.
 
-Exactly three primary application runtimes:
-- **apps/agent** — Mastra;
-- **apps/api** — Fastify and authoritative ORM composition;
-- **apps/web** — Next.js.
-
-Other directories are libraries, integrations, content, infrastructure or tooling, not hidden fourth applications.
+The workspace contains exactly fourteen named applications as defined in BLUEPRINT-APPLICATIONS.MD: agent, api, web, OSS, BSS, id, docs, desktop, mobile, cloud, isp, dx, A-L-L-A-H and riot. An app directory is not automatically a separately deployed microservice; deployment boundaries are chosen by trust, scale, availability and lifecycle needs. No fifteenth app may be introduced without an ADR and a coordinated update to the application inventory.
 
 ## 2. Toolchain rules
 
@@ -39,13 +34,13 @@ Pin Node.js LTS and pnpm; use pnpm Workspaces for linking and Turborepo for task
 
 ## 4. Dependency direction
 
-Allowed: Base → platform-neutral dependencies; ORM → Base; Add-on → Base SDK/ORM descriptors/shared contracts; API → Base/ORM/add-ons/server integrations; Agent → Agent contracts/approved clients and calls API; Web → browser-safe contracts/UI/API client; UI → tokens/primitives only; Narrative → platform-neutral schemas.
+Allowed: Base → platform-neutral dependencies; ORM → Base; Add-on → Base SDK/ORM descriptors/shared contracts; API → Base/ORM/domain add-ons/server integrations; Agent → Agent contracts/approved clients and calls API; DX → task contracts plus isolated local execution adapters; each frontend app → browser/native-safe contracts and approved API clients; ID → identity-provider integration and identity contracts; Cloud/OSS/RIOT privileged runners → isolated capability interfaces; UI → tokens/primitives only; Narrative/Knowledge → platform-neutral source-aware schemas.
 
 Forbidden:
 - Base importing add-ons;
 - add-ons importing another add-on's private implementation;
-- Web importing MikroORM/Fastify/Agent runtime;
-- Agent importing API internal repositories or persistence adapters;
+- any frontend importing MikroORM/Fastify/Agent runtime;
+- Agent or DX importing API internal repositories or persistence adapters;
 - add-ons creating competing registries/database connections;
 - circular package dependencies;
 - deep imports outside declared exports.
@@ -84,4 +79,20 @@ Tasks **PKG-001 through PKG-009** in [tasks.json](./tasks.json).
 
 ## 11. Definition of done
 
-Clean Node.js/pnpm install builds reproducibly; package boundaries are explicit and checked; exactly three app runtimes exist; public exports are stable; no cycles/realm leaks exist; local AI workers can operate on non-overlapping packages under a shared task contract.
+Clean Node.js/pnpm install builds reproducibly; package boundaries are explicit and checked; all fourteen named app surfaces are inventoried and bounded (without requiring fourteen microservices); public exports are stable; no cycles/realm leaks exist; local AI workers can operate on non-overlapping packages under a shared task contract.
+
+## 12. Application and package separation
+
+Apps are user/operator/developer experiences and selected runtime boundaries. Packages own reusable technical contracts and domain capabilities. Do not put all domain implementation inside app-specific folders, and do not create one database per app by default.
+
+Recommended domain package families (subject to source audit):
+- identity contracts/client and provider adapters;
+- OSS network inventory/telemetry/provisioning domain;
+- BSS commercial/customer/order domain;
+- ISP subscriber-service orchestration domain;
+- cloud resource/IaC/vault adapters;
+- corpus/ontology/citation/narrative domain;
+- RIOT media/lab metadata and isolated adapter contracts;
+- DX task registry, worker adapter and worktree orchestration packages.
+
+The API composes authoritative business capabilities. Frontends consume contracts. Privileged workers use separate service identities and narrowly scoped adapters.

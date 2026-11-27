@@ -6,7 +6,7 @@
 
 ## 1. Mission
 
-**apps/web** is the Experience Realm: the environment through which humans enter, navigate, understand, create, investigate, review and operate the Living Platform. It must feel like a coherent living universe, not a generic SaaS dashboard with dark colors and gradients.
+**apps/web** is the MoonWitness public experience: its main front page, narrative/research discovery and Community experience. It is one of fourteen application surfaces; it is not the universal frontend for every product. It must feel like a coherent living universe, not a generic SaaS dashboard with dark colors and gradients.
 
 The visual direction is immersive anime/game FX, cinematic and emotionally expressive, while remaining accessible, fast, legible and trustworthy.
 
@@ -108,3 +108,17 @@ Tasks **WEB-001 through WEB-010** in [tasks.json](./tasks.json).
 ## 15. Definition of done
 
 Users can enter the universe, navigate enabled worlds, complete a real authorized workflow, understand evidence and operational state, recover from failure and use keyboard/reduced motion. All business state comes from API contracts; visuals never imply success or truth not established by platform.
+
+## 16. MoonWitness landing and Community boundary
+
+The public front page must communicate the MoonWitness identity and route visitors into StoryTelling, Fact Exposure/evidence discovery and community spaces without implying that unreviewed claims are verified facts.
+
+**Community (CSS)** is a provisional label. The intended expansion/meaning of CSS must be confirmed from original product notes or by the product owner before implementation. Do not assume it means a particular social-network architecture or merely Cascading Style Sheets.
+
+If it is a community/social system, define membership, profiles, posts/discussions, moderation, reporting, trust/reputation, privacy, content rights, anti-spam and safety policies before implementation. Community posts remain user-generated content, separate from editorial/corpus canon.
+
+## 17. Relationship to the other applications
+
+Web is not the flagship A-L-L-A-H landing page; that experience belongs to apps/A-L-L-A-H. Web is not the OSS/BSS/ISP operator console, DX coding workbench or general Desktop client. Shared UI components/tokens are permitted, but ownership, navigation and data contracts are separate.
+
+See BLUEPRINT-APPLICATIONS.MD and BLUEPRINT-DOCS.MD for app boundaries.

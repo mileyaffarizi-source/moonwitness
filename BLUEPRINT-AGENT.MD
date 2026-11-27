@@ -7,7 +7,7 @@
 
 ## 1. Mission and ownership
 
-**apps/agent** is the Intelligence Realm. It reasons, plans, coordinates tools, executes workflows, requests approval and reports results. It is not the system of record, a parallel API, an unrestricted database client or a general-purpose shell.
+**apps/agent** is the shared Intelligence Runtime used by the fourteen-app ecosystem. It is distinct from **apps/dx**, which is the developer workbench and local orchestration control plane. It reasons, plans, coordinates tools, executes workflows, requests approval and reports results. It is not the system of record, a parallel API, an unrestricted database client or a general-purpose shell.
 
 Authority split:
 - **Agent:** model orchestration, context assembly, agent/tool/workflow registration, evaluation, memory, checkpoints, action proposals and run history.
@@ -118,3 +118,9 @@ Tasks **AGT-001 through AGT-010** in [tasks.json](./tasks.json).
 ## 15. Definition of done
 
 A real workflow executes under verified identity, calls only approved API capabilities, enforces permissions at API, survives restart where required, supports approval/cancellation, produces traceable output and proves persisted effects through authoritative API/database state. Agent has no direct business database writes.
+
+## 16. Relationship with apps/dx and privileged clients
+
+apps/dx may select and invoke approved Agent adapters, but it does not bypass Agent tool policies or API authorization. The DX local daemon can launch a configured coding agent within a bounded repository/worktree sandbox. It must not expose host shell, production secrets or Docker privileges as ordinary Mastra tools.
+
+Desktop, Mobile, OSS, BSS, Cloud, ISP, A-L-L-A-H, RIOT and Web experiences call approved API contracts. The Agent does not import their UI code or internal domain repositories.

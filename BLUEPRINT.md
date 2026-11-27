@@ -1,7 +1,7 @@
 # THE LIVING PLATFORM
 ## Master Blueprint — Universe Narrative, Enterprise Architecture & Implementation Standard
 
-**Version:** 3.1  
+**Version:** 4.0  
 **Status:** Architecture baseline; implementation not yet verified  
 **Target repository:** `mileyaffarizi-source/moonwitness`  
 **Runtime:** Node.js LTS · pnpm Workspaces · Turborepo  
@@ -29,7 +29,7 @@ Before implementation:
 
 ## Initial repository baseline
 
-The repository lookup performed before this blueprint was prepared reported `mileyaffarizi-source/moonwitness` as an empty repository with default branch `main`. This blueprint is therefore an initial architecture baseline, not a description of an existing implementation. Re-inspect the repository before beginning Phase 0. The attempted GitHub contents write was rejected by the connected integration with HTTP 403 (`Resource not accessible by integration`); this local copy is provided as a commit-ready fallback and is not represented as already committed upstream.
+The initial architecture baseline was committed to the repository before this expanded application topology. This document records the target architecture as of version 4.0. It is not evidence that the fourteen apps or their capabilities are already implemented. Re-inspect the current repository, source files and runtime behavior before beginning implementation phases.
 
 ---
 
@@ -55,7 +55,7 @@ This platform brings together two forces that must reinforce one another.
 
 The engineering must be strong enough to support the creative ambition. The creative experience must be meaningful enough to give the technology an identity.
 
-The platform has three primary realms:
+The platform has three architectural planes and fourteen named applications. The planes remain Intelligence, Authority and Experience; the application topology is defined in BLUEPRINT-APPLICATIONS.MD.
 
 - **THE INTELLIGENCE — AGENT:** the ability to reason, understand context, coordinate capabilities, and execute authorized missions.
 - **THE AUTHORITY — API:** the ability to define business truth, protect data, govern models, and coordinate the platform.
@@ -67,7 +67,7 @@ Above it exists **THE ADD-ON ECOSYSTEM — WORLDS WITHIN WORLDS**.
 
 The platform must grow without losing its identity.
 
-**One Universe. Three Realms. One Foundation. Independent Capabilities. Multiple Creative Worlds. One Coherent Experience.**
+**One Universe. Fourteen Applications. One Foundation. Independent Capabilities. Multiple Creative Worlds. One Coherent Experience.**
 
 # 2. Product identity and creative canon
 
@@ -206,79 +206,121 @@ Never destroy a prior version when a creative item is revised. AI may organize, 
 
 # PART II — FINAL APPLICATION TOPOLOGY
 
-# 3. Three applications, one platform
+# 3. Fourteen applications, one platform
 
-The platform consists of exactly three primary applications:
+The platform has exactly fourteen named application surfaces/runtimes. This replaces the previous three-application constraint. An application directory is a product/runtime boundary, not automatically a separate microservice or database. See [BLUEPRINT-APPLICATIONS.MD](./BLUEPRINT-APPLICATIONS.MD) for the authoritative app map.
 
-| Application | Technology | Realm | Authority |
-|---|---|---|---|
-| `apps/agent` | Mastra + Node.js | Intelligence | AI execution and orchestration |
-| `apps/api` | Fastify + platform ORM + MikroORM | Authority | Business logic, records, transactions |
-| `apps/web` | Next.js App Router | Experience | Human interaction and visual experience |
+| # | Application | Technology / Role | Primary authority |
+|---:|---|---|---|
+| 1 | apps/agent | Mastra + Node.js | AI orchestration and agent workflows |
+| 2 | apps/api | Fastify + platform ORM + MikroORM | Shared business/API authority |
+| 3 | apps/web | Next.js | MoonWitness public front page and Community; CSS meaning pending confirmation |
+| 4 | apps/OSS | Operations Support System | Network/resource operations and service assurance |
+| 5 | apps/BSS | Business Support System | Customer, offer, order, contract and commercial lifecycle |
+| 6 | apps/id | Identity Center / OIDC | Login, identity, SSO, sessions and federation |
+| 7 | apps/docs | Documentation/Wiki/DX Progress | Documentation sources and read-only progress projection |
+| 8 | apps/desktop | Desktop client | General desktop user/operator experience |
+| 9 | apps/mobile | React Native / Expo candidate | Native mobile experience |
+| 10 | apps/cloud | Cloud and Infrastructure Control Plane | Resource, deployment, quota, metering and vault integration |
+| 11 | apps/isp | ISP/Telco vertical | Subscriber service lifecycle and BSS/OSS orchestration |
+| 12 | apps/dx | Developer Experience Workbench | Local AI orchestration, repository/task/worktree/test/review workflows |
+| 13 | apps/A-L-L-A-H | Flagship landing and knowledge experience | Divine Corpus, ontology, law and government knowledge |
+| 14 | apps/riot | Creative/media and isolated security lab | Studio, media, authorized red/blue-team research lab |
 
-They are three runtimes within one platform, not three disconnected products. They share platform identity, package compatibility, API/event contracts, add-on IDs, user and tenant context, permission conventions, configuration, observability conventions, release compatibility, and design tokens where applicable.
+Use the requested directory spelling where practical. Use lowercase stable package IDs, service IDs and import aliases for portability. Application paths do not imply that each app must be independently deployed from the first release.
 
-## 3.1 apps/agent — Intelligence Realm
+## 3.1 apps/agent — Intelligence Runtime
 
-Mastra is the canonical AI orchestration framework. It owns agent definitions, tools, workflows, networks where justified, memory configuration, context construction, model routing, evaluations/scorers, input/output processors, autonomous workflow execution, human approval checkpoints, run history, AI-specific observability, and agent-specific persistence.
+Mastra is the canonical AI orchestration framework. It owns agent definitions, tools, workflows, memory configuration, context construction, model routing, evaluations/scorers, processors, human approval checkpoints, run history and Agent-specific persistence.
 
 Rules:
-
 1. Each agent has one documented responsibility.
-2. Each tool has typed input and output schemas.
-3. Every privileged tool has an authorization policy.
+2. Each tool has typed input/output schemas and an explicit capability mapping.
+3. Privileged tools require an authorization policy.
 4. Tools call approved API capabilities.
-5. Agents do not directly access business repositories or write business records.
-6. Agent memory is not the authoritative business record.
-7. Long-running workflows require durable execution state.
-8. Retries must be idempotent.
-9. Sensitive actions require approval or an explicit approved policy.
-10. Every execution must be traceable.
+5. Agents never directly access business repositories or write business records.
+6. Agent memory is not authoritative business data.
+7. Long-running workflows need durable execution state.
+8. Retries are idempotent.
+9. Sensitive actions require scoped approval or an explicitly reviewed policy.
+10. Every execution is traceable.
 11. External content is untrusted input.
-12. No unrestricted SQL, shell, Docker, filesystem, or infrastructure access.
-13. Public clients must not receive unrestricted access to the internal Mastra runtime.
+12. No unrestricted SQL, shell, Docker, filesystem or infrastructure access.
+13. Public clients never get unrestricted access to the internal Mastra runtime.
 
-Mastra may persist its own thread, memory, and workflow state with separate ownership, credentials, and storage boundaries.
+See [BLUEPRINT-AGENT.MD](./BLUEPRINT-AGENT.MD). apps/dx is the developer orchestration workbench; it may invoke approved Agent adapters but does not change Agent/API authority boundaries.
 
-## 3.2 apps/api — Authority Realm
+## 3.2 apps/api — Shared Authority Runtime
 
-Fastify is the application runtime. The platform-owned ORM and MikroORM adapter are composed here.
+Fastify is the platform API and composition root. It owns shared HTTP capabilities, application use cases, domain modules, model/field registry, record operations, security, transactions, add-on lifecycle, integration adapters, transactional outbox, audit, health and readiness.
 
-The API owns public HTTP APIs, protected internal capability APIs, application use cases, domain services, model/field registries, model extensions, record operations, business rules, repositories, database transactions, add-on registration/lifecycle, authentication, authorization, model access rights, record rules, field-level security, API versioning/OpenAPI, integration adapters, transactional outbox, event publication, job coordination, audit records, health, and readiness.
+The API is a modular domain-oriented platform, not an unbounded monolith. Initial domain modules should have strict ownership and dependency contracts for identity integration, OSS, BSS, ISP, Cloud, corpus/knowledge, creative assets and platform operations.
 
-The API is the authoritative business application boundary. Every business write must pass through an authorized API-owned use case and model operation.
+Every business write passes through an authorized API-owned use case and model operation. Apps do not connect directly to each other's databases. Extract a domain into an independently deployed service only when security isolation, scaling, availability or ownership requires it and an ADR approves the change.
 
-## 3.3 apps/web — Experience Realm
+See [BLUEPRINT-API.MD](./BLUEPRINT-API.MD).
 
-Next.js App Router is the human-facing application. It owns The Threshold, universe entry, realm/world navigation, user interaction, design-system integration, theme selection, animation/FX presentation, feature composition, API client, streaming presentation, real-time status visualization, mission/story/research/evidence interfaces, monitoring interfaces, and accessible responsive layouts.
+## 3.3 apps/web — MoonWitness Public Experience
 
-Rules:
+Next.js App Router owns the MoonWitness public front page, its narrative/research discovery and Community experience. The phrase **Community (CSS)** is provisional: do not expand or implement the CSS acronym as a confirmed feature name until source material/owner confirms its meaning.
 
-- Never connect directly to the business database.
-- Never own authoritative business rules.
-- Never import server-only Agent or ORM internals.
-- Use typed API contracts.
-- Treat UI permissions as presentation controls, not security boundaries.
-- Use deterministic compile-time-safe add-on contributions.
-- Respect accessibility and reduced-motion preferences.
+Web owns human interaction, presentation, responsive layout, theming, FX, content composition and typed API clients. It does not own business rules, permissions or persistence. It has no direct DB/MikroORM access and no private Agent/runtime credentials.
+
+See [BLUEPRINT-WEB.MD](./BLUEPRINT-WEB.MD).
+
+## 3.4 Additional application responsibilities
+
+- **apps/OSS:** technical/network operational truth; not billing or CRM.
+- **apps/BSS:** commercial truth; not network device configuration.
+- **apps/id:** centralized login/identity/OIDC and service identity. It does not hold arbitrary application secret values.
+- **apps/docs:** version-controlled documentation and read-only projections of tasks/CI evidence. It is not a second task ledger.
+- **apps/desktop:** general end-user desktop client; not a coding IDE.
+- **apps/mobile:** native mobile client; shares contracts, not server runtime.
+- **apps/cloud:** infrastructure control plane with isolated execution runners and vault integration.
+- **apps/isp:** subscriber/ISP vertical lifecycle coordinating BSS commercial orders and OSS technical execution.
+- **apps/dx:** highest-priority engineering workbench to coordinate local AI agents, task registry, Git worktrees, tests, diffs and approvals.
+- **apps/A-L-L-A-H:** flagship landing and source-aware knowledge experience; separates Divine Corpus, translations, commentary, ontology, human law and government sources.
+- **apps/riot:** creative/media studio and isolated, explicitly authorized red-team/blue-team lab; never a production backdoor.
+
+Detailed ownership, source-of-truth and dependency boundaries are in [BLUEPRINT-APPLICATIONS.MD](./BLUEPRINT-APPLICATIONS.MD) and each app-specific blueprint.
 
 # 4. Application communication and execution flows
 
-## 4.1 Direct business request
+## 4.1 Interactive product request
 
-User → Web → API → authentication → authorization → validation → model registry → application use case → ORM → transaction → database → structured result → Web.
+User → appropriate client app (Web / A-L-L-A-H / OSS / BSS / ISP / Desktop / Mobile / Docs / RIOT) → apps/id when authentication is required → apps/api resource server → endpoint/capability authorization → domain use case/add-on → platform ORM → transaction → authoritative store → structured result → calling app.
 
-## 4.2 AI-assisted request
+Public corpus pages may allow anonymous access by explicit policy. Protected operations still require central identity and resource-owned authorization.
 
-User → Web → API → trusted identity/permission context → Mastra → agent reasoning/workflow → approved tool → protected internal API capability → model access and record rules → application use case → ORM → transaction → structured result → Mastra → API → Web.
+## 4.2 AI-assisted business request
 
-The Agent must never become an alternative business authority. The internal capability interface must not recursively call the same AI orchestration entrypoint.
+Client app → API → verified identity/actor context → Mastra Agent → bounded reasoning/workflow → allowlisted tool → protected API capability → model/record/field rules → API-owned use case → ORM transaction → structured result → Agent → API → client app.
 
-## 4.3 Long-running work
+The Agent is never an alternative business authority. Agent tools never receive database credentials or private repositories. The internal capability interface must not recursively call the same AI orchestration entrypoint.
 
-API transaction → business record and outbox record → outbox dispatcher → queue → Mastra workflow → checkpoint/retry/approval → result event → API status update → Web.
+## 4.3 Developer execution flow — apps/dx
 
-Use idempotency keys, correlation IDs, causation IDs, versioned payload schemas, retry policy, timeouts, dead-letter handling, cancellation, persistent job status, approval checkpoints, and auditable execution history. Use a transactional outbox for durable business events and Redis/BullMQ for suitable asynchronous jobs. Do not introduce Kafka or another heavyweight broker without evidence of need. Use SSE or WebSocket only where required; the API owns the client-facing real-time contract.
+tasks.json → DX schema/DAG validator → atomic task claim/lease → isolated Git worktree → bounded local agent adapter → approved commands/tests → diff/evidence collection → human review → commit/PR/CI → atomic task status update.
+
+DX has local filesystem/process capability only through its protected daemon and task policy. It must not grant a coding agent ambient production secrets, host admin, unrestricted Docker or arbitrary network access.
+
+## 4.4 Telecom commercial-to-technical flow
+
+BSS accepted commercial order → ISP service orchestration → OSS qualification/resource reservation/provisioning → activation verification/RFS evidence → ISP service state → BSS commercial milestone/billing event.
+
+BSS owns the commercial order and financial state. OSS owns the technical resource and observed network state. ISP owns the subscriber-service orchestration and correlation across both.
+
+## 4.5 Infrastructure control flow — apps/cloud
+
+Cloud control-plane request → identity/workload verification → scoped resource policy → immutable plan → policy/cost/impact review → human approval where required → isolated execution runner → cloud/provider API → observed-state verification → audit/event/result.
+
+No public request worker, generic Agent or Web component directly controls host Docker, production cloud credentials or infrastructure runner.
+
+## 4.6 Long-running events and jobs
+
+API transaction → business record + outbox record → outbox dispatcher → queue → domain worker or Mastra workflow → checkpoint/retry/approval → result event → API status update → subscribing app.
+
+Use idempotency keys, correlation IDs, causation IDs, versioned schemas, timeouts, dead-letter handling, cancellation, persistent job status and audit history. Use transactional outbox and Redis/BullMQ where appropriate. Do not introduce a heavyweight event broker without evidence. SSE/WebSocket is an API-owned client contract, not a direct database subscription.
 
 ---
 
@@ -843,26 +885,39 @@ Recommended top-level organization:
 ```text
 living-platform/
 ├── apps/
-│   ├── agent/        # Mastra runtime
-│   ├── api/          # Fastify + ORM composition root
-│   └── web/          # Next.js experience
+│   ├── agent/              # Mastra AI orchestration
+│   ├── api/                # Fastify shared authority / ORM composition
+│   ├── web/                # MoonWitness landing + Community
+│   ├── OSS/                # Operational Support System
+│   ├── BSS/                # Business Support System
+│   ├── id/                 # Central Identity / OIDC
+│   ├── docs/               # Documentation / Wiki / progress projection
+│   ├── desktop/            # General desktop experience
+│   ├── mobile/             # Native mobile experience
+│   ├── cloud/              # Cloud / infrastructure control plane
+│   ├── isp/                # ISP subscriber service lifecycle
+│   ├── dx/                 # Developer Experience Workbench (P0)
+│   ├── A-L-L-A-H/          # Flagship landing + corpus/knowledge
+│   └── riot/               # Creative/media + isolated security lab
 ├── packages/
-│   ├── base/         # kernel, contracts, addon-sdk, lifecycle, security, events
-│   ├── orm/          # model registry, fields, records, domain, security, adapter
-│   ├── addons/       # independent domain capabilities
-│   ├── clients/      # API, agent, event clients
-│   ├── ui/           # tokens, themes, primitives, components, FX, motion
-│   ├── narrative/    # canon contracts, story schema, timeline, relationships
-│   └── testing/      # fixtures, factories, mocks, helpers
+│   ├── base/
+│   ├── orm/
+│   ├── addons/
+│   ├── clients/
+│   ├── ui/
+│   ├── narrative/
+│   ├── identity-contracts/
+│   ├── network-contracts/
+│   ├── knowledge/
+│   └── testing/
 ├── integrations/
-│   ├── odoo/         # connector, version adapters, mappings, tests
-│   └── odoo-addons/  # native Python Odoo modules, when required
+│   ├── odoo/
+│   ├── identity-providers/
+│   ├── network-equipment/
+│   ├── cloud-providers/
+│   └── odoo-addons/
+├── assets/
 ├── content/
-│   ├── canon/
-│   ├── worlds/
-│   ├── stories/
-│   ├── artwork/
-│   └── visual-references/
 ├── configs/
 ├── infra/
 ├── docs/
@@ -873,18 +928,10 @@ living-platform/
 ├── package.json
 ├── turbo.json
 ├── tsconfig.json
-├── eslint.config.js
-├── .prettierrc.json
-├── .editorconfig
-├── .env.example
-├── .node-version
-├── .gitignore
-├── .dockerignore
-├── README.md
-├── CONTRIBUTING.md
-├── SECURITY.md
-└── CHANGELOG.md
+└── README.md
+
 ```
+
 
 The detailed directory tree must be finalized after audit. Do not create empty folders simply to match a diagram.
 
@@ -895,7 +942,10 @@ The detailed directory tree must be finalized after audit. Do not create empty f
 - Add-on model declarations depend on the ORM SDK and shared contracts.
 - API composes add-on model metadata and application services.
 - Agent consumes approved contracts and API capabilities.
-- Web consumes browser-safe contracts and API clients.
+- DX consumes task contracts and uses scoped local execution adapters.
+- All application frontends consume browser-safe API contracts; only explicitly privileged local/control-plane workers receive scoped execution capabilities.
+- OSS/BSS/ISP domain logic is owned by domain add-ons composed by API; apps are distinct experiences, not duplicate database owners.
+- ID owns authentication identity; resource APIs own authorization; vault infrastructure owns secret values.
 - UI packages are independent of business persistence.
 - Native Odoo Python add-ons remain outside the TypeScript runtime graph.
 
@@ -1275,7 +1325,7 @@ Work in dependency order. Parallel work is allowed only after package ownership,
 - [ ] Verify persistence and restart recovery.
 - [ ] Document operations.
 
-**Acceptance:** all three applications build, deploy, recover, and release independently where contracts permit.
+**Acceptance:** all fourteen application surfaces build, validate, and release according to their deployment class; only justified trust/scaling boundaries become independent services.
 
 ## PHASE 12 — Final verification
 
@@ -1334,7 +1384,7 @@ Every major technical decision requires an ADR containing context, options, deci
 
 ## Platform
 
-1. One platform, exactly three primary applications.
+1. One platform, exactly fourteen named applications; app count does not force fourteen microservices.
 2. Mastra owns AI orchestration.
 3. Fastify API owns business execution and data authority.
 4. Next.js owns human experience.
@@ -1404,7 +1454,7 @@ Every major technical decision requires an ADR containing context, options, deci
 - Package boundaries are checked.
 - ADRs and ownership are documented.
 
-**THREE REALMS**
+**FOURTEEN-APP ECOSYSTEM**
 - Mastra Agent starts and executes real authorized workflows.
 - Fastify API owns business operations.
 - Next.js Web communicates through API contracts.
@@ -1519,9 +1569,24 @@ THE STORIES ARE THE MEMORY.
 THE AGENTS ARE THE INTELLIGENCE.  
 THE HUMAN REMAINS IN CONTROL.**
 
-**ONE UNIVERSE. THREE REALMS. INFINITE CAPABILITIES.**
+**ONE UNIVERSE. FOURTEEN APPLICATIONS. INFINITE CAPABILITIES.**
 
 **BUILD THE FOUNDATION.  
 PRESERVE THE STORIES.  
 CONNECT THE WORLDS.  
 BRING THE UNIVERSE TO LIFE.**
+
+# 26. Expanded application topology
+
+The authoritative application topology, trust boundaries, source-of-truth map and deployment classes are maintained in [BLUEPRINT-APPLICATIONS.MD](./BLUEPRINT-APPLICATIONS.MD).
+
+Specialist contracts:
+- [DX Workbench](./BLUEPRINT-DX.MD) — implementation factory and first priority.
+- [Central Identity](./BLUEPRINT-ID.MD) — OIDC/SSO and service identity; secrets remain in a dedicated vault.
+- [OSS](./BLUEPRINT-OSS.MD), [BSS](./BLUEPRINT-BSS.MD), [ISP](./BLUEPRINT-ISP.MD) — separated operational, commercial and subscriber-service responsibilities.
+- [Cloud](./BLUEPRINT-CLOUD.MD) — infrastructure control plane and isolated execution.
+- [Docs](./BLUEPRINT-DOCS.MD), [Desktop](./BLUEPRINT-DESKTOP.MD), [Mobile](./BLUEPRINT-MOBILE.MD) — dedicated client/documentation experiences.
+- [A-L-L-A-H](./BLUEPRINT-A-L-L-A-H.MD) — flagship corpus/ontology/legal/government knowledge.
+- [RIOT](./BLUEPRINT-RIOT.MD) — creative studio and isolated authorized security lab.
+
+**Do not interpret fourteen app directories as an obligation to deploy fourteen microservices.**

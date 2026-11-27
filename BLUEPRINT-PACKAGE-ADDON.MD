@@ -107,3 +107,21 @@ Tasks **ADD-001 through ADD-011** in [tasks.json](./tasks.json).
 ## 13. Definition of done
 
 An independent add-on can be validated, installed, enabled, composed, secured, observed, disabled and upgraded without duplicating Base logic, bypassing API authority or damaging another add-on's or legacy Odoo's data.
+
+## 15. Application vs add-on boundary
+
+An application is a product experience/runtime boundary; an add-on is a domain capability package. One app may consume several add-ons, and one add-on may contribute API/Agent/UI contracts to multiple apps. This does not permit duplicated ownership.
+
+Examples:
+- OSS app consumes network inventory, telemetry, alarm, incident and provisioning add-ons.
+- BSS app consumes party/customer, catalogue, order, subscription and finance add-ons.
+- ISP app orchestrates contracts between BSS and OSS; it does not own either domain's records.
+- A-L-L-A-H app consumes corpus, translation, ontology, citation and legal-source add-ons.
+- DX app consumes task-registry, agent-adapter, Git/worktree and evidence contracts.
+- RIOT app consumes creative-media and isolated-lab capabilities through separate trust boundaries.
+
+Every add-on has one model owner and one authoritative write path. Cross-add-on references use public record/service contracts; never reach into private tables or repositories.
+
+## 16. High-risk add-on constraints
+
+Network configuration, cloud apply, secret access, production deploy and security-lab operations are privileged capabilities. They must not be exposed as ordinary generic add-on hooks. Each requires separate capability ID, service identity, exact resource scope, risk class, audit and human approval according to policy.

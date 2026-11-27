@@ -6,7 +6,7 @@
 
 ## 1. Mission
 
-**apps/api** is the sole application authority for business operations and platform-owned records. It composes Base Platform, model registry, ORM, security, add-on capabilities, domain use cases, integrations, events and API contracts.
+**apps/api** is the shared modular authority for business operations and platform-owned records across fourteen application surfaces. It remains one API runtime initially, not an excuse to merge all domains into shared unowned logic. It composes Base Platform, model registry, ORM, security, add-on capabilities, domain use cases, integrations, events and API contracts.
 
 The API is not a bag of route handlers. It is the composition root for an explicit application architecture.
 
@@ -121,3 +121,23 @@ Tasks **API-001 through API-013** in [tasks.json](./tasks.json).
 ## 16. Definition of done
 
 Every business write is an authorized API-owned use case; model composition is deterministic; add-ons cannot bypass persistence/security; real DB and security tests pass; legacy Odoo tables remain untouched by MikroORM; side effects are attributable, observable and recoverable.
+
+## 17. Fourteen-app domain composition
+
+Compose domain capabilities behind explicit API modules and add-on ownership:
+- Identity integration and token validation consume apps/id issuer/client contracts; API remains the resource authorization point.
+- OSS owns network inventory, telemetry, alarms, provisioning and assurance through network adapters.
+- BSS owns commercial customer/order/subscription/invoice/payment data, subject to legacy Odoo transition rules.
+- ISP owns subscriber service orchestration between BSS and OSS.
+- Cloud owns resource/deployment control-plane records; privileged applies run outside request workers.
+- A-L-L-A-H and MoonWitness content domains use source-aware corpus/claim/provenance models.
+- RIOT lab records and operations remain isolated from production modules.
+- DX task/agent execution records do not grant business or infrastructure authority.
+
+Do not let each app create its own database copy of shared identities, customers, network resources or canonical corpus. Reference the authoritative domain through approved API contracts and external IDs.
+
+## 18. Trust zones and API deployment policy
+
+Treat identity, network management, infrastructure control and security labs as distinct trust zones. The common API may compose domain routes, but credentials, policy and execution workers remain separately scoped. Consider separate API deployment pools only where a threat model or availability requirement justifies it; record the boundary in an ADR.
+
+DX, Cloud, OSS and RIOT privileged operations must use dedicated capability endpoints, service identities, scoped approvals, command allowlists and audit. Public Web/API routes cannot invoke privileged runners directly.
