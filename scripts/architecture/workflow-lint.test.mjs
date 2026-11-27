@@ -24,6 +24,10 @@ test("accepts SHA-pinned actions and explicit least-privilege policy", () => {
   assert.deepEqual(validateWorkflowFile(".github/workflows/example.yml", base("      uses: owner/action@" + SHA)), []);
 });
 
+test("accepts SHA-pinned subdirectory actions such as CodeQL init/analyze", () => {
+  assert.deepEqual(validateWorkflowFile(".github/workflows/example.yml", base("      uses: github/codeql-action/init@" + SHA)), []);
+});
+
 test("rejects mutable action tags and branch refs", () => {
   const errors = validateWorkflowFile(".github/workflows/example.yml", base("      uses: actions/checkout@v7"));
   assert.ok(errors.some((error) => error.code === "UNPINNED_ACTION"));
