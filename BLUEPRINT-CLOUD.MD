@@ -57,3 +57,8 @@ Provider decision, resource model, tenant/project model, runner isolation, IaC p
 ## 9. Task ownership and definition of done
 
 Tasks CLOUD-* in tasks.json. Done means a non-production test resource can be planned, policy-checked, approved, applied by an isolated runner, observed from provider state and safely destroyed with audit evidence.
+
+
+## 10. Boundary with Astronauts
+
+Cloud owns provider accounts, resource plans/state, compute/network/storage creation, deployment intents and provider-side lifecycle. Astronauts owns the enrolled machine fleet after a machine exists: enrollment, host identity, heartbeat, host inventory and signed typed operations. Cloud may request an approved Astronauts bootstrap capability after provisioning, but neither service may treat the other's runner or credential as ambient authority. Destroying a Cloud resource must revoke/decommission its Astronauts machine identity through an explicit, idempotent lifecycle hand-off.
