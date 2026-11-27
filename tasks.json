@@ -7396,12 +7396,12 @@
         "docs/architecture/package-audit.md — Node 22.14.0/pnpm 10.8.1 baseline; frozen-lockfile CI passed; Turbo explicitly unverified",
         "docs/architecture/dependency-graph.md — actual workspace and CI dependency path"
       ],
-      "blocker": null,
+      "blocker": "Turbo is not installed/configured, so compatibility is documented as unverified and awaits validation in PKG-008.",
       "notes": [
         "Review requested: Turborepo is not installed/configured; compatibility must be verified when PKG-002/PKG-008 introduce the actual task graph. No child workspace package exists yet."
       ],
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2026-11-27T14:37:18.909Z",
       "completed_at": null
     },
     {
@@ -8849,7 +8849,7 @@
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "done",
+      "status": "in_review",
       "owner_role": "platform_governance_lead",
       "assigned_agent": null,
       "claim": {
@@ -8912,13 +8912,14 @@
         "GitHub recursive tree API — 77 entries; response not truncated",
         "GitHub main CI run 46016534152 — completed successfully after PR #2"
       ],
-      "blocker": null,
+      "blocker": "Awaiting explicit human owner review; the audit reports are committed but the task requires human approval.",
       "notes": [
-        "Local workstation working tree and external/private systems are outside the GitHub repository audit boundary; no claims are made about them."
+        "Local workstation working tree and external/private systems are outside the GitHub repository audit boundary; no claims are made about them.",
+        "Status correction: deliverables exist, but this task is human_approval_required and has not received explicit owner approval; do not treat as dependency-satisfied."
       ],
       "created_at": null,
-      "updated_at": "2026-11-27T14:32:10.005Z",
-      "completed_at": "2026-11-27T14:32:10.005Z"
+      "updated_at": "2026-11-27T14:37:18.909Z",
+      "completed_at": null
     },
     {
       "id": "GOV-002",
@@ -8927,7 +8928,7 @@
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "done",
+      "status": "in_review",
       "owner_role": "platform_governance_lead",
       "assigned_agent": null,
       "claim": {
@@ -8992,13 +8993,14 @@
         "docs/governance/architecture-change-process.md — decision lifecycle, precedence and approval integrity",
         "GOV-001 dependency completed at main commit 2227104a60cbd42d395f4b4738cf2c016b056479"
       ],
-      "blocker": null,
+      "blocker": "Awaiting explicit human owner approval of the ADR/change-control process; GOV-001 approval is also pending.",
       "notes": [
-        "Material architecture/security/data/canon decisions still require the designated human owner; this task establishes process, not blanket approval."
+        "Material architecture/security/data/canon decisions still require the designated human owner; this task establishes process, not blanket approval.",
+        "Status correction: deliverables exist, but this task is human_approval_required and has not received explicit owner approval; do not treat as dependency-satisfied."
       ],
       "created_at": null,
-      "updated_at": "2026-11-27T14:34:16.339Z",
-      "completed_at": "2026-11-27T14:34:16.339Z"
+      "updated_at": "2026-11-27T14:37:18.909Z",
+      "completed_at": null
     },
     {
       "id": "GOV-003",
@@ -9370,7 +9372,7 @@
         "This is a proposal for review, not an authorization to run autonomous workers. GOV-007 is marked human_approval_required in the canonical registry."
       ],
       "created_at": null,
-      "updated_at": "2026-11-27T14:35:49.942Z",
+      "updated_at": "2026-11-27T14:37:18.909Z",
       "completed_at": null
     },
     {
@@ -9827,12 +9829,12 @@
         "docs/architecture/application-inventory.md — fourteen app identities, ownership and overlap review",
         "docs/architecture/existing-app-baseline.json — recursive Git tree audit at c1c604801e4bbde982a44689aac7b6c48b1978ee"
       ],
-      "blocker": null,
+      "blocker": "Awaiting product-owner review of the fourteen-app inventory; CSS expansion and named maintainers remain unresolved.",
       "notes": [
         "Review requested: CSS expansion and named maintainer assignments remain unresolved; the audit intentionally records no materialized app source."
       ],
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2026-11-27T14:37:18.909Z",
       "completed_at": null
     },
     {
