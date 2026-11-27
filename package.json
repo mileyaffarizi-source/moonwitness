@@ -16,6 +16,7 @@
     "check:repo": "node scripts/check-repo.mjs",
     "check:tasks": "node scripts/tasks/task-registry.mjs",
     "test": "node --test",
-    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm check:repo && pnpm check:tasks && pnpm test"
+    "check": "pnpm lint && pnpm lint:addons && pnpm format:check && pnpm typecheck && pnpm check:repo && pnpm check:tasks && pnpm test",
+    "lint:addons": "node scripts/architecture/addon-lint.mjs"
   }
 }
