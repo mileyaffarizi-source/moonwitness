@@ -69,3 +69,8 @@ Do not add every future tool at the root pre-emptively. The package that owns th
 ## Failure policy
 
 CI failure blocks merge. Do not add continue-on-error, blanket || true, warning-only lint steps, or automatic formatting writes inside CI. Formatters may be run locally as explicit edits; CI only checks. Branch protections must require the Repository CI check before merge.
+
+
+## Atomic task registry gate
+
+The task validator checks the project/task/application counts, one-to-one workstream membership, task type, parent/child symmetry, integration dependencies, non-overlapping parent/child scopes, dependency DAG and active claim collisions. XL tasks are rejected; decompose them before a worker claims implementation. See [TASK-DECOMPOSITION-STANDARD.md](./TASK-DECOMPOSITION-STANDARD.md).
