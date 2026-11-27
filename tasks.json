@@ -9170,7 +9170,7 @@
       "blueprint": "BLUEPRINT-PACKAGE-ADDON.MD",
       "phase": "PHASE-03",
       "priority": "P0",
-      "status": "pending",
+      "status": "done",
       "owner_role": "platform_architect",
       "assigned_agent": null,
       "claim": {
@@ -9264,15 +9264,25 @@
       "estimate": "L",
       "parallel_group": "ADDON-FOUNDATION",
       "human_approval_required": false,
-      "evidence": [],
+      "evidence": [
+        "BLUEPRINT-PACKAGE-ADDON.MD v2 — normative Odoo-style modular add-on architecture, manifest, ownership, capability, permission, data, realm, artifact and lifecycle rules.",
+        "docs/engineering/ADDON-ENGINEERING-STANDARD.md — mandatory package layout, identity/version, dependencies, export, security, Odoo/data ownership, disable/decommission and static-gate authoring standard.",
+        "docs/architecture/addons/addon.manifest.schema.json and addon.manifest.example.json — strict JSON Schema 2020-12 v1 contract and schema-valid reference fixture.",
+        "scripts/architecture/addon-lint.mjs and addon-lint.test.mjs — static manifest/package/source validator, package-version parity, contribution export checks, capability/permission allowlists, risk/approval, storage ownership, forbidden import/source policy, dependency compatibility/cycles and regression tests.",
+        "pnpm lint:addons is part of the canonical pnpm check sequence and CI. Run 46033369016 passed; no add-on packages are materialized, and the linter reports zero found while schema/fixture tests remain active.",
+        "The full 53-test suite passed on the PR CI run; CodeQL run 46033369202 passed. The PR was merged as main commit 6e2c8b84953613eb3da0fe86e05395829fd415e1.",
+        "ADR-0003 remains Proposed; third-party add-on execution, signing trust and privileged lifecycle remain blocked pending owner/security decision.",
+        "PR #14: https://github.com/mileyaffarizi-source/moonwitness/pull/14"
+      ],
       "blocker": null,
       "notes": [
         "The task covers static manifest/package engineering hygiene only. Runtime trust, third-party sandbox, signing root, secret injection and egress design remain Proposed in ADR-0003.",
-        "No add-on package directory is created by this foundation task."
+        "No add-on package directory is created by this foundation task.",
+        "Static authoring standard and linter are complete. No executable add-on loader, reference add-on package, sandbox, signing root or third-party runtime is implemented or authorized by this task."
       ],
       "created_at": null,
-      "updated_at": "2026-11-27T20:10:00.000Z",
-      "completed_at": null
+      "updated_at": "2026-11-27T16:27:40.000Z",
+      "completed_at": "2026-11-27T16:27:40.000Z"
     },
     {
       "id": "GOV-001",
