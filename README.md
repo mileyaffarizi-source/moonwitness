@@ -9,6 +9,9 @@ MoonWitness is a multi-application ecosystem. Its target architecture is documen
 This repository is being transitioned from an architecture/planning repository into an executable Node.js monorepo. The initial foundation establishes workspace conventions and automated repository checks. It does not claim that the fourteen planned applications are implemented.
 
 - Application architecture: BLUEPRINT-APPLICATIONS.MD
+- Foundation build order and owner gates: BLUEPRINT-FOUNDATIONS.MD
+- Add-on authoring and lifecycle contract: BLUEPRINT-PACKAGE-ADDON.MD
+- Proposed add-on trust/lifecycle ADR: docs/adr/ADR-0003-addon-manifest-trust-and-lifecycle.md (owner review pending)
 - Developer Experience blueprint: BLUEPRINT-DX.MD
 - Task registry: tasks.json
 - Latest repository baseline audit: AUDIT-REPOSITORY-BASELINE-2026-11-27.MD
