@@ -38,6 +38,8 @@ const FORBIDDEN_DEPENDENCIES = [
   /^@mikro-orm\//, /^mikro-orm$/, /^@prisma\//, /^prisma$/,
   /^pg$/, /^pg-native$/, /^mysql$/, /^mysql2$/, /^sqlite3$/, /^better-sqlite3$/,
   /^mongodb$/, /^mongoose$/, /^typeorm$/, /^sequelize$/, /^drizzle-orm$/, /^knex$/,
+  /^undici$/, /^axios$/, /^got$/, /^node-fetch$/, /^cross-fetch$/,
+  /^superagent$/, /^request$/, /^ws$/, /^socket\.io-client$/,
   /^fastify$/, /^@fastify\//, /^express$/, /^koa$/,
 ];
 const FORBIDDEN_IMPORTS = [
