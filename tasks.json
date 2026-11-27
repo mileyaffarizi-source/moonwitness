@@ -9224,7 +9224,8 @@
         "docs/architecture/addons/addon.manifest.schema.json",
         "scripts/architecture/addon-lint.mjs and regression tests",
         "ADR-0003 proposed trust-boundary decision",
-        "Root quality gate and AI contributor policy integration"
+        "Root quality gate and AI contributor policy integration",
+        "Schema-valid reference add-on manifest example"
       ],
       "acceptance_criteria": [
         "A strict manifest schema and linter agree on required v1 fields and reject unknown/unsafe declarations.",
@@ -9232,7 +9233,8 @@
         "Required dependency cycles are detected deterministically; optional dependency absence is not treated as a required failure.",
         "Add-on package/source rules reject direct ORM/DB/server internals, child-process/eval, ambient secret reads and automatic install hooks.",
         "pnpm lint:addons is included in pnpm check and CI; no current add-on is fabricated.",
-        "ADR-0003 remains Proposed for trust/isolation until owner/security acceptance."
+        "ADR-0003 remains Proposed for trust/isolation until owner/security acceptance.",
+        "Published reference manifest example validates against the canonical schema and static policy linter."
       ],
       "verification": [
         "Manifest positive/negative fixtures",
@@ -9240,7 +9242,8 @@
         "Dependency DAG/cycle/version tests",
         "pnpm lint:addons",
         "pnpm install --frozen-lockfile",
-        "pnpm check"
+        "pnpm check",
+        "Reference manifest schema/policy conformance test"
       ],
       "file_ownership": [
         "BLUEPRINT-PACKAGE-ADDON.MD",
@@ -9268,7 +9271,7 @@
         "No add-on package directory is created by this foundation task."
       ],
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2026-11-27T20:10:00.000Z",
       "completed_at": null
     },
     {
