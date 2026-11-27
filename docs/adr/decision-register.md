@@ -8,8 +8,9 @@
 | ID | Decision | Status | Canonical document | Notes |
 |---|---|---|---|---|
 | ADR-0001 | Repository foundation: Node.js/pnpm workspace, strict TS defaults and repository CI | Accepted | [docs/engineering/ADR-0001-repository-foundation.md](../engineering/ADR-0001-repository-foundation.md) | Initial implementation baseline; app frameworks/ORM/deployment remain deferred |
+| ADR-0002 | Node.js 24.22.3, pnpm 12.24.0 and non-overlapping GitHub security/release automation | Accepted | [ADR-0002-runtime-and-github-automation.md](./ADR-0002-runtime-and-github-automation.md) | Supersedes ADR-0001 runtime pins only; GitHub owner settings remain required |
 
-No additional ADR is recorded in the register at this audit. Do not infer that a blueprint proposal is an accepted ADR.
+ADR-0002 records the owner-approved runtime and repository automation update. Other blueprint proposals remain non-authoritative until accepted through this process.
 
 ## ID allocation and lifecycle
 
