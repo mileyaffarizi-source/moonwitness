@@ -9,8 +9,9 @@
 |---|---|---|---|---|
 | ADR-0001 | Repository foundation: Node.js/pnpm workspace, strict TS defaults and repository CI | Accepted | [docs/engineering/ADR-0001-repository-foundation.md](../engineering/ADR-0001-repository-foundation.md) | Initial implementation baseline; app frameworks/ORM/deployment remain deferred |
 | ADR-0002 | Node.js 24.22.3, pnpm 12.24.0 and non-overlapping GitHub security/release automation | Accepted | [ADR-0002-runtime-and-github-automation.md](./ADR-0002-runtime-and-github-automation.md) | Supersedes ADR-0001 runtime pins only; GitHub owner settings remain required |
+| ADR-0003 | Add-on execution trust boundary and capability isolation | Proposed | [ADR-0003-addon-runtime-and-trust-boundary.md](./ADR-0003-addon-runtime-and-trust-boundary.md) | Third-party add-on execution remains disabled pending owner/security approval |
 
-ADR-0002 records the owner-approved runtime and repository automation update. Other blueprint proposals remain non-authoritative until accepted through this process.
+ADR-0002 records the owner-approved runtime and repository automation update. ADR-0003 is a proposed trust-boundary decision; it does not authorize third-party add-on execution. Other blueprint proposals remain non-authoritative until accepted through this process.
 
 ## ID allocation and lifecycle
 
