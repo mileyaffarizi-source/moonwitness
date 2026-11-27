@@ -15,6 +15,8 @@ export const TASK_STATUSES = Object.freeze([
 ]);
 
 const PRIORITIES = new Set(["P0", "P1", "P2"]);
+const TASK_TYPES = new Set(["task", "subtask", "integration"]);
+const ESTIMATES = new Set(["XS", "S", "M", "L"]);
 const ACTIVE_STATUSES = new Set(["claimed", "in_progress"]);
 const STRING_ARRAY_FIELDS = [
   "scope_in",
@@ -28,6 +30,7 @@ const STRING_ARRAY_FIELDS = [
   "file_ownership",
   "evidence",
   "notes",
+  "child_tasks",
 ];
 const REQUIRED_STRING_FIELDS = [
   "id",
@@ -41,6 +44,7 @@ const REQUIRED_STRING_FIELDS = [
   "objective",
   "estimate",
   "parallel_group",
+  "task_type",
 ];
 
 function isRecord(value) {
@@ -125,6 +129,9 @@ function validateTask(task, index, addError) {
   if (!PRIORITIES.has(task.priority)) {
     addError("INVALID_PRIORITY", `${path}.priority`, `unsupported priority: ${String(task.priority)}`);
   }
+  if (!TASK_TYPES.has(task.task_type)) addError("INVALID_TASK_TYPE", `${path}.task_type`, `unsupported task type: ${String(task.task_type)}`);
+  if (!ESTIMATES.has(task.estimate)) addError("INVALID_ESTIMATE", `${path}.estimate`, `unsupported estimate: ${String(task.estimate)}; XL work must be decomposed`);
+  validateNullableString(task.parent_task, `${path}.parent_task`, addError);
 
   for (const field of STRING_ARRAY_FIELDS) {
     if (!Array.isArray(task[field])) {
@@ -136,6 +143,16 @@ function validateTask(task, index, addError) {
         addError("INVALID_ARRAY_ITEM", `${path}.${field}[${itemIndex}]`, "must be a non-empty string");
       }
     });
+  }
+
+  if (task.task_type === "task" && (task.parent_task !== null || task.child_tasks?.length > 0)) {
+    addError("INVALID_TASK_HIERARCHY", path, "plain tasks cannot have a parent or children");
+  }
+  if (task.task_type === "subtask" && (!isNonEmptyString(task.parent_task) || task.child_tasks?.length > 0)) {
+    addError("INVALID_TASK_HIERARCHY", path, "subtasks require one parent and cannot own child tasks");
+  }
+  if (task.task_type === "integration" && (task.parent_task !== null || !Array.isArray(task.child_tasks) || task.child_tasks.length === 0)) {
+    addError("INVALID_TASK_HIERARCHY", path, "integration tasks require child tasks and cannot themselves be subtasks");
   }
 
   if (Array.isArray(task.dependencies)) {
@@ -353,6 +370,76 @@ export function validateTaskRegistry(registry) {
     }
   }
 
+  const project = isRecord(registry.project) ? registry.project : {};
+  if (!Number.isInteger(project.task_count) || project.task_count !== registry.tasks.length) {
+    addError("PROJECT_TASK_COUNT_MISMATCH", "$.project.task_count", "must equal tasks.length (" + registry.tasks.length + ")");
+  }
+  if (!Array.isArray(project.applications)) {
+    addError("INVALID_APPLICATION_INVENTORY", "$.project.applications", "must be an array");
+  }
+  if (!Number.isInteger(project.application_count) || !Array.isArray(project.applications) || project.application_count !== project.applications.length) {
+    addError("PROJECT_APPLICATION_COUNT_MISMATCH", "$.project.application_count", "must equal project.applications.length");
+  }
+
+  const streamsByName = new Map();
+  const streamIds = new Set();
+  const membership = new Map();
+  if (Array.isArray(registry.workstreams)) {
+    registry.workstreams.forEach((stream, streamIndex) => {
+      const streamPath = "workstreams[" + streamIndex + "]";
+      if (!isRecord(stream) || !isNonEmptyString(stream.id) || !isNonEmptyString(stream.name) || !Array.isArray(stream.task_ids)) {
+        addError("INVALID_WORKSTREAM", streamPath, "requires id, name and task_ids array");
+        return;
+      }
+      if (streamIds.has(stream.id)) addError("DUPLICATE_WORKSTREAM_ID", streamPath + ".id", "duplicate workstream ID: " + stream.id);
+      if (streamsByName.has(stream.name)) addError("DUPLICATE_WORKSTREAM_NAME", streamPath + ".name", "duplicate workstream name: " + stream.name);
+      streamIds.add(stream.id);
+      streamsByName.set(stream.name, stream);
+      const local = new Set();
+      stream.task_ids.forEach((taskId, taskIndex) => {
+        const memberPath = streamPath + ".task_ids[" + taskIndex + "]";
+        if (!isNonEmptyString(taskId)) { addError("INVALID_WORKSTREAM_TASK_ID", memberPath, "must be a non-empty task ID"); return; }
+        if (local.has(taskId)) addError("DUPLICATE_WORKSTREAM_MEMBERSHIP", memberPath, "duplicate membership: " + taskId);
+        local.add(taskId);
+        membership.set(taskId, (membership.get(taskId) ?? 0) + 1);
+        const listedTask = tasksById.get(taskId);
+        if (!listedTask) addError("WORKSTREAM_UNKNOWN_TASK", memberPath, "unknown task ID: " + taskId);
+        else if (listedTask.workstream !== stream.name) addError("WORKSTREAM_TASK_MISMATCH", memberPath, "task " + taskId + " declares " + listedTask.workstream + ", not " + stream.name);
+      });
+    });
+  }
+
+  for (const [index, task] of registry.tasks.entries()) {
+    if (!isRecord(task)) continue;
+    if (!streamsByName.has(task.workstream)) addError("UNKNOWN_TASK_WORKSTREAM", "tasks[" + index + "].workstream", "unknown workstream: " + task.workstream);
+    if ((membership.get(task.id) ?? 0) !== 1) addError("TASK_WORKSTREAM_MEMBERSHIP", "tasks[" + index + "].id", "every task must appear exactly once in its declared workstream");
+
+    if (task.task_type === "subtask") {
+      const parent = tasksById.get(task.parent_task);
+      if (!parent) addError("MISSING_PARENT_TASK", "tasks[" + index + "].parent_task", "unknown parent task: " + task.parent_task);
+      else {
+        if (parent.task_type !== "integration") addError("INVALID_PARENT_TYPE", "tasks[" + index + "].parent_task", "subtask parent must be an integration task");
+        if (!Array.isArray(parent.child_tasks) || !parent.child_tasks.includes(task.id)) addError("PARENT_CHILD_MISMATCH", "tasks[" + index + "].parent_task", "parent must list this subtask in child_tasks");
+        if (Array.isArray(task.dependencies) && task.dependencies.includes(parent.id)) addError("CHILD_DEPENDS_ON_PARENT", "tasks[" + index + "].dependencies", "a subtask cannot depend on its own integration parent");
+        for (const childPath of task.file_ownership ?? []) for (const parentPath of parent.file_ownership ?? []) {
+          if (pathsOverlap(childPath, parentPath)) addError("PARENT_CHILD_PATH_COLLISION", "tasks[" + index + "].file_ownership", "subtask and parent cannot own overlapping paths");
+        }
+      }
+    }
+
+    if (task.task_type === "integration") {
+      const listed = new Set();
+      for (const [childIndex, childId] of (task.child_tasks ?? []).entries()) {
+        const childPath = "tasks[" + index + "].child_tasks[" + childIndex + "]";
+        if (listed.has(childId)) addError("DUPLICATE_CHILD_TASK", childPath, "duplicate child task: " + childId);
+        listed.add(childId);
+        const child = tasksById.get(childId);
+        if (!child) { addError("MISSING_CHILD_TASK", childPath, "unknown child task: " + childId); continue; }
+        if (child.task_type !== "subtask" || child.parent_task !== task.id) addError("CHILD_PARENT_MISMATCH", childPath, "task " + childId + " must be a subtask of " + task.id);
+        if (!Array.isArray(task.dependencies) || !task.dependencies.includes(childId)) addError("INTEGRATION_MISSING_CHILD_DEPENDENCY", "tasks[" + index + "].dependencies", "integration task must depend on child " + childId);
+      }
+    }
+  }
   for (const cycle of findCycles(tasksById)) {
     addError("DEPENDENCY_CYCLE", "$.tasks", cycle.join(" -> "));
   }
