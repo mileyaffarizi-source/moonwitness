@@ -48,6 +48,43 @@ for (const action of ["actions/checkout@v7", "pnpm/action-setup@v6", "actions/se
   if (!ciWorkflow.includes(action)) throw new Error("CI must use the current Node 24-compatible action baseline: " + action);
 }
 
+const [codeqlWorkflow, dependencyReviewWorkflow, releaseWorkflow, dependabotConfig, releaseConfigText, releaseManifestText] = await Promise.all([
+  readFile(".github/workflows/codeql.yml", "utf8"),
+  readFile(".github/workflows/dependency-review.yml", "utf8"),
+  readFile(".github/workflows/release-please.yml", "utf8"),
+  readFile(".github/dependabot.yml", "utf8"),
+  readFile("release-please-config.json", "utf8"),
+  readFile(".release-please-manifest.json", "utf8"),
+]);
+if (!codeqlWorkflow.includes("github/codeql-action/init@v4") ||
+    !codeqlWorkflow.includes("github/codeql-action/analyze@v4") ||
+    !codeqlWorkflow.includes("security-events: write")) {
+  throw new Error("CodeQL must use the official v4 analysis actions with the security-events permission");
+}
+if (!dependencyReviewWorkflow.includes("actions/dependency-review-action@v5") ||
+    !dependencyReviewWorkflow.includes("fail-on-severity: high")) {
+  throw new Error("Dependency Review must use v5 and fail on high severity");
+}
+if (!releaseWorkflow.includes("googleapis/release-please-action@v5") ||
+    !releaseWorkflow.includes("config-file: release-please-config.json")) {
+  throw new Error("Release Please v5 must be the sole changelog/release workflow");
+}
+if (!dependabotConfig.includes("package-ecosystem: github-actions") ||
+    !dependabotConfig.includes("package-ecosystem: npm")) {
+  throw new Error("Dependabot must update GitHub Actions and npm/pnpm dependencies");
+}
+const releaseConfig = JSON.parse(releaseConfigText);
+const releaseManifest = JSON.parse(releaseManifestText);
+if (releaseConfig.packages?.["."]?.["release-type"] !== "node" ||
+    releaseManifest["."] !== pkg.version) {
+  throw new Error("Release Please root package config/manifest must match package.json version");
+}
+const automationWorkflows = (await readdir(".github/workflows"))
+  .filter((name) => /(?:release|changelog)/i.test(name) && name.endsWith(".yml"));
+if (automationWorkflows.length !== 1 || automationWorkflows[0] !== "release-please.yml") {
+  throw new Error("Release Please must remain the only changelog/release workflow to prevent duplicate writers");
+}
+
 const lockfile = await readFile("pnpm-lock.yaml", "utf8");
 if (lockfile.split("\n")[0].trim() !== "lockfileVersion: '9.0'" || !lockfile.includes("importers:")) {
   throw new Error("pnpm-lock.yaml must be a valid pnpm v9/v10-compatible workspace lockfile");
