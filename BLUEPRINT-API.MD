@@ -128,7 +128,9 @@ Compose domain capabilities behind explicit API modules and add-on ownership:
 - Identity integration and token validation consume apps/id issuer/client contracts; API remains the resource authorization point.
 - OSS owns network inventory, telemetry, alarms, provisioning and assurance through network adapters.
 - BSS owns commercial customer/order/subscription/invoice/payment data, subject to legacy Odoo transition rules.
-- ISP owns subscriber service orchestration between BSS and OSS.
+- ISP owns subscriber service orchestration and entitlement state between BSS and OSS.
+- Astronauts owns enrolled host identity, fleet heartbeat, host inventory and signed job execution evidence; the API authorizes every privileged capability.
+- Arsy owns RADIUS/ACS/Syslog protocol-session runtime and normalized protocol events; it is not a subscriber, billing or network inventory master.
 - Cloud owns resource/deployment control-plane records; privileged applies run outside request workers.
 - A-L-L-A-H and MoonWitness content domains use source-aware corpus/claim/provenance models.
 - RIOT lab records and operations remain isolated from production modules.
@@ -140,7 +142,7 @@ Do not let each app create its own database copy of shared identities, customers
 
 Treat identity, network management, infrastructure control and security labs as distinct trust zones. The common API may compose domain routes, but credentials, policy and execution workers remain separately scoped. Consider separate API deployment pools only where a threat model or availability requirement justifies it; record the boundary in an ADR.
 
-DX, Cloud, OSS and RIOT privileged operations must use dedicated capability endpoints, service identities, scoped approvals, command allowlists and audit. Public Web/API routes cannot invoke privileged runners directly.
+DX, Cloud, OSS, Astronauts, Arsy and RIOT privileged operations must use dedicated capability endpoints, service identities, scoped approvals, command/protocol allowlists and audit. Public Web/API routes cannot invoke privileged runners directly.
 
 
 ## 19. Astronauts and Arsy capability boundaries
