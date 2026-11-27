@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile, readdir } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 
 test("workspace package manager is pinned", async () => {
   const pkg = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
@@ -38,4 +38,18 @@ test("agent contract and focused skills are present", async () => {
     assert.ok(lines.some((line) => /^name:\s*\S+/.test(line)));
     assert.ok(lines.some((line) => /^description:\s*\S+/.test(line)));
   }
+});
+
+test("pnpm 12 project settings live in pnpm-workspace.yaml", async () => {
+  const workspace = await readFile(new URL("../pnpm-workspace.yaml", import.meta.url), "utf8");
+  for (const setting of [
+    "engineStrict: true",
+    "saveExact: true",
+    "minimumReleaseAge: 1440",
+    "blockExoticSubdeps: true",
+    "strictDepBuilds: true",
+  ]) {
+    assert.ok(workspace.includes(setting), "missing workspace setting: " + setting);
+  }
+  await assert.rejects(access(new URL("../.npmrc", import.meta.url)));
 });
