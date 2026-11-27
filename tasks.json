@@ -7330,7 +7330,7 @@
       "blueprint": "BLUEPRINT-PACKAGE.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "pending",
+      "status": "in_review",
       "owner_role": "platform_architect",
       "assigned_agent": null,
       "claim": {
@@ -7385,14 +7385,21 @@
         "package.json",
         "pnpm-lock.yaml",
         "pnpm-workspace.yaml",
-        "turbo.json"
+        "turbo.json",
+        "docs/architecture/package-audit.md",
+        "docs/architecture/dependency-graph.md"
       ],
       "estimate": "M",
       "parallel_group": "PKG-PHASE-00",
       "human_approval_required": false,
-      "evidence": [],
+      "evidence": [
+        "docs/architecture/package-audit.md — Node 22.14.0/pnpm 10.8.1 baseline; frozen-lockfile CI passed; Turbo explicitly unverified",
+        "docs/architecture/dependency-graph.md — actual workspace and CI dependency path"
+      ],
       "blocker": null,
-      "notes": [],
+      "notes": [
+        "Review requested: Turborepo is not installed/configured; compatibility must be verified when PKG-002/PKG-008 introduce the actual task graph. No child workspace package exists yet."
+      ],
       "created_at": null,
       "updated_at": null,
       "completed_at": null
@@ -9736,7 +9743,7 @@
       "blueprint": "BLUEPRINT-APPLICATIONS.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "pending",
+      "status": "in_review",
       "owner_role": "application_architect",
       "assigned_agent": null,
       "claim": {
@@ -9796,9 +9803,14 @@
       "estimate": "L",
       "parallel_group": "APP-PHASE-00",
       "human_approval_required": true,
-      "evidence": [],
+      "evidence": [
+        "docs/architecture/application-inventory.md — fourteen app identities, ownership and overlap review",
+        "docs/architecture/existing-app-baseline.json — recursive Git tree audit at c1c604801e4bbde982a44689aac7b6c48b1978ee"
+      ],
       "blocker": null,
-      "notes": [],
+      "notes": [
+        "Review requested: CSS expansion and named maintainer assignments remain unresolved; the audit intentionally records no materialized app source."
+      ],
       "created_at": null,
       "updated_at": null,
       "completed_at": null
