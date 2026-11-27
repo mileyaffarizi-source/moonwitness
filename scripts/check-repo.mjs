@@ -5,11 +5,17 @@ const requiredFiles = [
   "package.json", "pnpm-workspace.yaml", "pnpm-lock.yaml",
   "tsconfig.base.json", ".nvmrc", ".node-version", ".npmrc", "AGENTS.md",
   ".agents/skills/README.md",
+  ".github/dependabot.yml",
+  ".github/workflows/codeql.yml",
+  ".github/workflows/dependency-review.yml",
+  ".github/workflows/release-please.yml",
+  "release-please-config.json",
+  ".release-please-manifest.json",
 ];
 for (const file of requiredFiles) await access(resolve(file));
 
 const pkg = JSON.parse(await readFile("package.json", "utf8"));
-if (pkg.packageManager !== "pnpm@12.24.0") throw new Error("packageManager must remain pinned to pnpm@10.8.1");
+if (pkg.packageManager !== "pnpm@12.24.0") throw new Error("packageManager must remain pinned to pnpm@12.24.0");
 if (pkg.engines?.node !== ">=24.22.3 <25") throw new Error("Node.js engine range does not match the repository baseline");
 
 const [nvmVersion, nodeVersion] = await Promise.all([
@@ -24,7 +30,7 @@ if (nvmVersion.trim() !== nodeVersion.trim()) {
   throw new Error(".nvmrc and .node-version must pin the same Node.js version");
 }
 if (nodeVersion.trim() !== "24.22.3") {
-  throw new Error("Node.js must remain pinned to the audited 22.14.0 baseline");
+  throw new Error("Node.js must remain pinned to the requested 24.22.3 baseline");
 }
 
 const npmConfig = new Set((await readFile(".npmrc", "utf8")).split("\n").map((line) => line.trim()));
@@ -35,6 +41,11 @@ for (const setting of ["engine-strict=true", "save-exact=true"]) {
 const workspaceLines = (await readFile("pnpm-workspace.yaml", "utf8")).split("\n").map((line) => line.trim());
 for (const pattern of ['- "apps/*"', '- "packages/*"']) {
   if (!workspaceLines.includes(pattern)) throw new Error("pnpm-workspace.yaml must include " + pattern);
+}
+
+const ciWorkflow = await readFile(".github/workflows/ci.yml", "utf8");
+for (const action of ["actions/checkout@v7", "pnpm/action-setup@v6", "actions/setup-node@v7"]) {
+  if (!ciWorkflow.includes(action)) throw new Error("CI must use the current Node 24-compatible action baseline: " + action);
 }
 
 const lockfile = await readFile("pnpm-lock.yaml", "utf8");
