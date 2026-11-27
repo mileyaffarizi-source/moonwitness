@@ -20715,13 +20715,15 @@
         "Add Gitleaks repository-history secret scanning and Zizmor GitHub Actions workflow security lint.",
         "Pin every remote GitHub Action to a reviewed immutable 40-character commit SHA and record the release tag in a comment.",
         "Enforce workflow permissions, concurrency, secret-reference and dangerous-trigger policy through a deterministic root lint command.",
-        "Document repository administrator settings, secret response, scope boundaries and unavailable plan-dependent features."
+        "Document repository administrator settings, secret response, scope boundaries and unavailable plan-dependent features.",
+        "Automatically open or reuse one source-branch pull request into main while leaving Dependabot, Renovate and Release Please PR ownership unchanged."
       ],
       "scope_out": [
         "Do not enable automatic dependency merge, package publishing, deployment or production releases.",
         "Do not claim GitHub repository settings or branch protection have been enabled; GOV-013 owns administrator configuration.",
         "Do not add parallel changelog writers such as Changesets, semantic-release, Release Drafter or Changelogithub.",
-        "Do not grant arbitrary Actions write permissions or execute fork-controlled code with elevated permissions."
+        "Do not grant arbitrary Actions write permissions or execute fork-controlled code with elevated permissions.",
+        "Do not enable auto-merge, approve pull requests, bypass required checks or run write-enabled automation on pull_request events."
       ],
       "dependencies": [
         "GOV-008",
@@ -20744,7 +20746,8 @@
         "Remove silent feature flags that prevent standard checks from running on eligible events.",
         "Document administrator-only features as separate owner tasks and preserve exact capability limits.",
         "Run all workflow lints, repository tests, frozen install, CodeQL, Dependency Review, Gitleaks and Zizmor; inspect each run independently.",
-        "Record exact CI/security run URLs and any plan/visibility limitation without marking unsupported features successful."
+        "Record exact CI/security run URLs and any plan/visibility limitation without marking unsupported features successful.",
+        "Add a least-privilege Auto PR workflow for non-main branch pushes and manual dispatch; reuse open PRs, preserve intentionally closed PRs and exclude dependency/release bot branches."
       ],
       "deliverables": [
         "docs/engineering/GITHUB-AUTOMATION.md ownership matrix",
@@ -20752,7 +20755,8 @@
         "Immutable GitHub Actions pin policy",
         "scripts/architecture/workflow-lint.mjs and regression tests",
         "pnpm lint:workflows integrated into pnpm check",
-        "ADR-0004 runtime/automation evidence and owner-setting hand-off"
+        "ADR-0004 runtime/automation evidence and owner-setting hand-off",
+        ".github/workflows/auto-pr.yml — automatic source-branch PR creation with existing PR-template reuse and no auto-merge"
       ],
       "acceptance_criteria": [
         "Every remote uses reference across workflow YAML is pinned to a full immutable 40-character commit SHA.",
@@ -20762,7 +20766,8 @@
         "Dependency Review runs on eligible pull requests without DEPENDENCY_REVIEW_ENABLED.",
         "Release Please is the only workflow that writes version/changelog/release metadata.",
         "pnpm check executes the workflow lint and all tests pass.",
-        "Security workflows produce independently verified run evidence; any unsupported plan/settings remain explicit owner blockers."
+        "Security workflows produce independently verified run evidence; any unsupported plan/settings remain explicit owner blockers.",
+        "A non-main branch push creates at most one PR into main; later pushes reuse the same PR; Dependabot/Renovate/Release Please branches are excluded; intentionally closed PRs are not reopened; no auto-merge or review bypass is enabled."
       ],
       "verification": [
         "pnpm lint:workflows",
@@ -20770,7 +20775,8 @@
         "GitHub Actions CodeQL run",
         "GitHub Actions Dependency Review run",
         "GitHub Actions Gitleaks run",
-        "GitHub Actions Zizmor run"
+        "GitHub Actions Zizmor run",
+        "GitHub Actions Auto Pull Request run on a test branch; confirm the PR is opened once and subsequent commits do not create duplicates."
       ],
       "file_ownership": [
         ".github/workflows/**",
@@ -20800,7 +20806,8 @@
         "Repository CI run 46040342559 passed with all 65 tests; immutable GitHub workflow policy passed for all 6 workflows.",
         "CodeQL run 46040342407 completed successfully; Zizmor Workflow Security run 46040342368 completed successfully; Gitleaks Secret Scanning run 46040342558 completed successfully with 'No leaks detected'.",
         "Dependency Review run 46040342338 failed before analysis with the explicit platform message: Dependency review is not supported on this repository; enable Dependency Graph in repository Settings → Security and analysis. This is tracked by blocked owner task GOV-013 and is not reported as a pass.",
-        "The automation implementation remains in PR #16 until the Dependency Graph owner prerequisite is met."
+        "The automation implementation remains in PR #16 until the Dependency Graph owner prerequisite is met.",
+        "Added .github/workflows/auto-pr.yml using a SHA-pinned checkout action, contents:read and pull-requests:write; it runs only on branch push/manual dispatch, does not trigger on pull_request, and leaves merge/review gates unchanged. Final workflow execution evidence is pending."
       ],
       "blocker": null,
       "notes": [
@@ -20809,7 +20816,7 @@
         "Dependency Review is available on public repositories and supported private repositories with GitHub Advanced Security; a run failure due repository visibility/plan must be recorded as an owner setting limitation, not silently bypassed."
       ],
       "created_at": "2026-11-27T16:55:00.000Z",
-      "updated_at": "2026-11-27T17:17:29.702Z",
+      "updated_at": "2026-11-28T12:00:00.000Z",
       "completed_at": null,
       "task_type": "task",
       "parent_task": null,
