@@ -115,7 +115,7 @@
       "legacy_policy": "Existing Odoo-owned data remains Odoo-owned; supported version-aware APIs only; no big-bang migration."
     },
     "generated_at": "2026-11-27",
-    "task_count": 237,
+    "task_count": 238,
     "status": "planning",
     "application_count": 14,
     "priority_workstream": "DX",
@@ -19188,6 +19188,124 @@
       "notes": [
         "Workflow files for CodeQL, Dependency Review, Dependabot, Release Please, Gitleaks and Zizmor are not proof that repository-level features or branch protection are enabled."
       ]
+    },
+    {
+      "id": "GOV-014",
+      "title": "Harden GitHub security and release automation with immutable workflow gates",
+      "workstream": "GOVERNANCE",
+      "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+      "phase": "PHASE-10",
+      "priority": "P1",
+      "status": "in_review",
+      "owner_role": "platform_governance_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Ensure repository security, dependency, workflow and release automation have one non-overlapping owner per concern and execute under an immutable, least-privilege workflow standard.",
+      "scope_in": [
+        "Keep CodeQL as source SAST, Dependency Review as changed dependency risk, Dependabot as update PR writer and Release Please as the only changelog/release writer.",
+        "Enable Dependency Review on eligible pull requests without an optional repository variable gate.",
+        "Add Gitleaks repository-history secret scanning and Zizmor GitHub Actions workflow security lint.",
+        "Pin every remote GitHub Action to a reviewed immutable 40-character commit SHA and record the release tag in a comment.",
+        "Enforce workflow permissions, concurrency, secret-reference and dangerous-trigger policy through a deterministic root lint command.",
+        "Document repository administrator settings, secret response, scope boundaries and unavailable plan-dependent features."
+      ],
+      "scope_out": [
+        "Do not enable automatic dependency merge, package publishing, deployment or production releases.",
+        "Do not claim GitHub repository settings or branch protection have been enabled; GOV-013 owns administrator configuration.",
+        "Do not add parallel changelog writers such as Changesets, semantic-release, Release Drafter or Changelogithub.",
+        "Do not grant arbitrary Actions write permissions or execute fork-controlled code with elevated permissions."
+      ],
+      "dependencies": [
+        "GOV-008",
+        "PKG-002"
+      ],
+      "inputs": [
+        ".github/workflows/**",
+        ".github/dependabot.yml",
+        "docs/engineering/GITHUB-AUTOMATION.md",
+        "docs/adr/ADR-0004-node26-lts-and-github-automation.md",
+        "scripts/architecture/workflow-lint.mjs",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect current workflows and assign exactly one owner to each security/release responsibility.",
+        "Verify current stable action versions and immutable commit SHAs against upstream release metadata.",
+        "Pin workflow actions to 40-character SHAs and preserve human-readable release-version comments.",
+        "Implement and wire deterministic workflow lint into pnpm check.",
+        "Add secret scanning and workflow security scanning with least-privilege tokens.",
+        "Remove silent feature flags that prevent standard checks from running on eligible events.",
+        "Document administrator-only features as separate owner tasks and preserve exact capability limits.",
+        "Run all workflow lints, repository tests, frozen install, CodeQL, Dependency Review, Gitleaks and Zizmor; inspect each run independently.",
+        "Record exact CI/security run URLs and any plan/visibility limitation without marking unsupported features successful."
+      ],
+      "deliverables": [
+        "docs/engineering/GITHUB-AUTOMATION.md ownership matrix",
+        "CodeQL / Dependency Review / Dependabot / Release Please / Gitleaks / Zizmor workflows",
+        "Immutable GitHub Actions pin policy",
+        "scripts/architecture/workflow-lint.mjs and regression tests",
+        "pnpm lint:workflows integrated into pnpm check",
+        "ADR-0004 runtime/automation evidence and owner-setting hand-off"
+      ],
+      "acceptance_criteria": [
+        "Every remote uses reference across workflow YAML is pinned to a full immutable 40-character commit SHA.",
+        "All workflows declare explicit top-level permissions and concurrency.",
+        "pull_request_target, implicit secret references, masked job failures and unreviewed pull-request write permissions fail the deterministic workflow lint.",
+        "CodeQL, Gitleaks, Zizmor, Dependency Review, Dependabot and Release Please have non-overlapping documented responsibilities.",
+        "Dependency Review runs on eligible pull requests without DEPENDENCY_REVIEW_ENABLED.",
+        "Release Please is the only workflow that writes version/changelog/release metadata.",
+        "pnpm check executes the workflow lint and all tests pass.",
+        "Security workflows produce independently verified run evidence; any unsupported plan/settings remain explicit owner blockers."
+      ],
+      "verification": [
+        "pnpm lint:workflows",
+        "pnpm check",
+        "GitHub Actions CodeQL run",
+        "GitHub Actions Dependency Review run",
+        "GitHub Actions Gitleaks run",
+        "GitHub Actions Zizmor run"
+      ],
+      "file_ownership": [
+        ".github/workflows/**",
+        ".github/dependabot.yml",
+        "docs/engineering/GITHUB-AUTOMATION.md",
+        "scripts/architecture/workflow-lint.mjs",
+        "scripts/architecture/workflow-lint.test.mjs",
+        "scripts/check-repo.mjs",
+        "scripts/check-repo.test.mjs",
+        "scripts/quality/quality-gate.mjs",
+        "scripts/quality/quality-gate.test.mjs",
+        "package.json",
+        "README.md",
+        "tasks.json"
+      ],
+      "estimate": "L",
+      "parallel_group": "GOV-PHASE-10",
+      "human_approval_required": false,
+      "evidence": [
+        "CodeQL v4.39.5 is pinned to commit 915412ff23e8b7659517e607487dbeae018f2934; action release date 2026-11-24 verified upstream.",
+        "Dependency Review v5.0.0 is pinned to commit a1d282b36b6f3519aa1f3fc636f609c47dddb294; the workflow runs on eligible PRs without a repository-variable feature flag.",
+        "Gitleaks v3.0.0 is pinned to commit e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e and scans full Git history; its only PR write exception is comment-only reporting with no execution of PR scripts.",
+        "Zizmor 1.32.0 runs as a weekly and workflow-change security audit through setup-uv pinned to commit 68559e99cc807c1eb7e9238fd43a15bba460eec2 and emits GitHub annotations.",
+        "Release Please v5.0.0 remains the sole version/changelog/release writer and is pinned to commit 45996ed1f6d02564a971a2fa1b5860e934307cf7.",
+        "scripts/architecture/workflow-lint.mjs implements immutable SHA, explicit permissions, concurrency, secrets, dangerous-trigger, failure masking and PR write-boundary policy.",
+        "The lint:workflows command is wired into the canonical pnpm check; CI evidence will be attached after the PR workflow completes."
+      ],
+      "blocker": null,
+      "notes": [
+        "GOV-013 separately owns GitHub repository settings such as Dependency Graph, Code Scanning plan availability, Secret Scanning/Push Protection and main branch ruleset.",
+        "Gitleaks Action v3 is supported for the current personal repository owner account; moving the repository to a GitHub Organization requires confirming its licensing requirement.",
+        "Dependency Review is available on public repositories and supported private repositories with GitHub Advanced Security; a run failure due repository visibility/plan must be recorded as an owner setting limitation, not silently bypassed."
+      ],
+      "created_at": null,
+      "updated_at": "2026-11-27T16:55:00.000Z",
+      "completed_at": null
     }
   ]
 }
