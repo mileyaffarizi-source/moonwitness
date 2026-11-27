@@ -159,7 +159,7 @@ The machine-readable JSON Schema is docs/architecture/addons/addon.manifest.sche
 
 - manifestVersion, stable id, display name, SemVer version and description;
 - owner team, SPDX/license identifier and provenance;
-- bounded platformApi/addonSdk compatibility ranges and Node >=26.13.0 <27.0.0;
+- bounded platformApi/addonSdk compatibility ranges and Node >=26.13.1 <27.0.0;
 - required and optional dependency IDs with explicit bounded SemVer ranges;
 - allowlisted capability contributions and separately declared permission requests;
 - unique contributions with type, safe package-relative entrypoint, capabilities and permissions;
