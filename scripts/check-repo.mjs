@@ -23,7 +23,7 @@ for (const file of requiredFiles) await access(resolve(file));
 
 const pkg = JSON.parse(await readFile("package.json", "utf8"));
 if (pkg.packageManager !== "pnpm@12.24.0") throw new Error("packageManager must remain pinned to pnpm@12.24.0");
-if (pkg.engines?.node !== ">=24.22.3 <25") throw new Error("Node.js engine range does not match the repository baseline");
+if (pkg.engines?.node !== ">=26.13.0 <27") throw new Error("Node.js engine range does not match the repository baseline");
 if (pkg.engines?.pnpm !== "12.24.0") throw new Error("pnpm engine range must remain pinned to 12.24.0");
 
 const [nvmVersion, nodeVersion] = await Promise.all([
@@ -37,8 +37,8 @@ if (versionParts.length !== 3 || versionParts.some((part) => !/^[0-9]+$/.test(pa
 if (nvmVersion.trim() !== nodeVersion.trim()) {
   throw new Error(".nvmrc and .node-version must pin the same Node.js version");
 }
-if (nodeVersion.trim() !== "24.22.3") {
-  throw new Error("Node.js must remain pinned to the requested 24.22.3 baseline");
+if (nodeVersion.trim() !== "26.13.0") {
+  throw new Error("Node.js must remain pinned to the requested 26.13.0 baseline");
 }
 
 const workspaceLines = new Set((await readFile("pnpm-workspace.yaml", "utf8"))
@@ -78,7 +78,7 @@ try {
 
 const ciWorkflow = await readFile(".github/workflows/ci.yml", "utf8");
 for (const action of ["actions/checkout@v7", "pnpm/action-setup@v6", "actions/setup-node@v7"]) {
-  if (!ciWorkflow.includes(action)) throw new Error("CI must use the current Node 24-compatible action baseline: " + action);
+  if (!ciWorkflow.includes(action)) throw new Error("CI must use the current Node 26-compatible action baseline: " + action);
 }
 
 const [codeqlWorkflow, dependencyReviewWorkflow, releaseWorkflow, dependabotConfig, releaseConfigText, releaseManifestText] = await Promise.all([
