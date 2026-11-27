@@ -6,7 +6,7 @@
 
 ## 1. Mission
 
-**apps/api** is the shared modular authority for business operations and platform-owned records across fourteen application surfaces. It remains one API runtime initially, not an excuse to merge all domains into shared unowned logic. It composes Base Platform, model registry, ORM, security, add-on capabilities, domain use cases, integrations, events and API contracts.
+**apps/api** is the shared modular authority for business operations and platform-owned records across sixteen application surfaces. It remains one API runtime initially, not an excuse to merge all domains into shared unowned logic. It composes Base Platform, model registry, ORM, security, add-on capabilities, domain use cases, integrations, events and API contracts.
 
 The API is not a bag of route handlers. It is the composition root for an explicit application architecture.
 
@@ -122,7 +122,7 @@ Tasks **API-001 through API-013** in [tasks.json](./tasks.json).
 
 Every business write is an authorized API-owned use case; model composition is deterministic; add-ons cannot bypass persistence/security; real DB and security tests pass; legacy Odoo tables remain untouched by MikroORM; side effects are attributable, observable and recoverable.
 
-## 17. Fourteen-app domain composition
+## 17. Sixteen-app domain composition
 
 Compose domain capabilities behind explicit API modules and add-on ownership:
 - Identity integration and token validation consume apps/id issuer/client contracts; API remains the resource authorization point.
@@ -141,3 +141,11 @@ Do not let each app create its own database copy of shared identities, customers
 Treat identity, network management, infrastructure control and security labs as distinct trust zones. The common API may compose domain routes, but credentials, policy and execution workers remain separately scoped. Consider separate API deployment pools only where a threat model or availability requirement justifies it; record the boundary in an ADR.
 
 DX, Cloud, OSS and RIOT privileged operations must use dedicated capability endpoints, service identities, scoped approvals, command allowlists and audit. Public Web/API routes cannot invoke privileged runners directly.
+
+
+## 19. Astronauts and Arsy capability boundaries
+
+- The API is the authority that authenticates the requesting actor, evaluates domain/resource authorization, records approval and issues exact-scope short-lived execution grants for machine operations. Astronauts verifies and enforces those grants at the machine-fleet boundary; it does not invent business permission.
+- Agent and DX call only documented API capabilities. They never connect directly to an Astronauts Edge Agent, RADIUS listener, ACS endpoint or Syslog listener to bypass policy.
+- Arsy consumes versioned, time-bounded policy projections from API/ISP/BSS and sends protocol events/results through approved contracts/outbox. It never writes subscriber, invoice, service lifecycle or OSS inventory tables directly.
+- Astronauts and Arsy may own isolated operational stores for their respective machine/protocol runtime state. They do not share databases or become shadow copies of API-owned business records.
