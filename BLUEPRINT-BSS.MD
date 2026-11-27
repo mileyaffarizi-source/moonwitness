@@ -55,3 +55,34 @@ Commercial domain map, product catalogue schema, party/account model, order/cont
 ## 9. Task ownership and definition of done
 
 Tasks BSS-* in tasks.json. Done means a real commercial order can be accepted, versioned and traced through ISP/OSS hand-off, while customer/financial data remains consistent, auditable and owned by the correct system.
+
+
+## 10. Commercial records and state ownership
+
+Use explicit aggregate boundaries: **Party/Account**, **Product/Offer**, **Quote**, **Commercial Order**, **Contract**, **Subscription/Commercial Entitlement**, **Invoice**, **Payment/Refund**, **Collection**. Each record has stable ID, owner, lifecycle, effective dates, currency/jurisdiction where relevant, external references and audit/version history.
+
+Commercial order lifecycle: **draft → quoted → accepted → confirmed → fulfilment_pending → fulfilled / partially_fulfilled / failed / cancelled**. An order is not fulfilled merely because ISP accepted an orchestration command; fulfilment needs authoritative ISP/OSS evidence.
+
+Invoice lifecycle: **draft → calculated → approved → issued → partially_paid → paid / overdue / disputed / credited / voided**. Posted financial documents are immutable snapshots; correction uses credit/debit/reversal documents rather than rewriting history. Payment lifecycle distinguishes initiated, pending, settled, failed, reversed and refunded.
+
+## 11. Rating and financial calculation contract
+
+All amounts include explicit ISO currency, decimal precision, rounding mode, tax treatment and effective time. Never use binary floating point for money. A charge record references the rated source event, tariff/offer version, quantity/unit, rating timestamp, calculation breakdown and idempotency key.
+
+Network usage or RADIUS accounting is evidence input, not an invoice. The BSS rating policy decides whether usage is billable, included, capped, prorated, disputed or excluded under the customer contract. Duplicate accounting events cannot create duplicate charges.
+
+Tax, revenue-recognition, payment-provider and accounting compliance are jurisdiction-specific discovery/review tasks. Do not claim regulatory compliance until a qualified owner confirms the rules and test evidence.
+
+## 12. Financial controls and audit
+
+Segregate role capabilities for pricing, discount override, credit limit, invoice issue, payment reconciliation, refund, write-off, tax configuration and report export. Sensitive actions require maker/checker or a documented policy, exact amount/customer/document scope, reason, expiry and immutable audit.
+
+Reconciliation compares internal invoice/payment state with payment-provider/bank/Odoo references using explicit matching rules and unresolved discrepancy queues. Never silently force balances to agree.
+
+## 13. Integration contract to ISP and Arsy
+
+BSS publishes an accepted commercial order with account/customer reference, offer/contract version, service specification, billing start rule and idempotency key. ISP returns qualification/activation/exception milestones; BSS decides commercial consequences.
+
+Arsy RADIUS accounting events may be consumed only via an approved API/ISP contract. BSS must not treat an Accounting-Start packet as an invoice or a protocol Access-Accept as a commercial entitlement. Usage billing is a separate rating decision against the active contract and deduplicated metering period.
+
+**Acceptance:** one test order can be accepted, fulfilled based on verified ISP evidence, invoiced from an immutable price/contract snapshot, reconciled against a simulated settlement and corrected without rewriting posted financial history.
