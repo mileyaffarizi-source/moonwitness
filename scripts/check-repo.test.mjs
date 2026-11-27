@@ -4,7 +4,7 @@ import { readFile, readdir } from "node:fs/promises";
 
 test("workspace package manager is pinned", async () => {
   const pkg = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
-  assert.equal(pkg.packageManager, "pnpm@10.8.1");
+  assert.equal(pkg.packageManager, "pnpm@12.24.0");
 });
 
 test("workspace patterns include apps and packages", async () => {
