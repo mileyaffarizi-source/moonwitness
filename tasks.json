@@ -4356,8 +4356,7 @@
         "SFX-007",
         "ART-008",
         "CHR-006",
-        "VEC-008",
-        "CHR-006"
+        "VEC-008"
       ],
       "inputs": [
         "BLUEPRINT.md",
@@ -4397,9 +4396,11 @@
       "human_approval_required": true,
       "evidence": [],
       "blocker": null,
-      "notes": [],
+      "notes": [
+        "Removed a repeated dependency reference (CHR-006); dependency meaning is unchanged."
+      ],
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2026-11-27T14:42:00.000Z",
       "completed_at": null
     },
     {
@@ -8851,7 +8852,7 @@
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "in_review",
+      "status": "done",
       "owner_role": "platform_governance_lead",
       "assigned_agent": null,
       "claim": {
@@ -8914,14 +8915,21 @@
         "GitHub recursive tree API — 77 entries; response not truncated",
         "GitHub main CI run 46016534152 — completed successfully after PR #2"
       ],
-      "blocker": "Awaiting explicit human owner review; the audit reports are committed but the task requires human approval.",
+      "blocker": null,
       "notes": [
         "Local workstation working tree and external/private systems are outside the GitHub repository audit boundary; no claims are made about them.",
-        "Status correction: deliverables exist, but this task is human_approval_required and has not received explicit owner approval; do not treat as dependency-satisfied."
+        "Status correction: deliverables exist, but this task is human_approval_required and has not received explicit owner approval; do not treat as dependency-satisfied.",
+        "Owner approval recorded for the exact bounded scope on 2026-11-27T14:42:00.000Z."
       ],
       "created_at": null,
-      "updated_at": "2026-11-27T14:37:18.909Z",
-      "completed_at": null
+      "updated_at": "2026-11-27T14:42:00.000Z",
+      "completed_at": "2026-11-27T14:42:00.000Z",
+      "approval": {
+        "approved_by": "repository_owner",
+        "approved_at": "2026-11-27T14:42:00.000Z",
+        "scope": "Approve the repository baseline and change inventory as accurate within the documented GitHub commit/tree/PR/CI audit boundary. No claim is made about inaccessible local or private systems.",
+        "evidence": "Explicit repository-owner approval in the conversation on 2026-11-27 after review of the baseline/change inventory."
+      }
     },
     {
       "id": "GOV-002",
@@ -8930,7 +8938,7 @@
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "in_review",
+      "status": "done",
       "owner_role": "platform_governance_lead",
       "assigned_agent": null,
       "claim": {
@@ -8995,14 +9003,21 @@
         "docs/governance/architecture-change-process.md — decision lifecycle, precedence and approval integrity",
         "GOV-001 dependency completed at main commit 2227104a60cbd42d395f4b4738cf2c016b056479"
       ],
-      "blocker": "Awaiting explicit human owner approval of the ADR/change-control process; GOV-001 approval is also pending.",
+      "blocker": null,
       "notes": [
         "Material architecture/security/data/canon decisions still require the designated human owner; this task establishes process, not blanket approval.",
-        "Status correction: deliverables exist, but this task is human_approval_required and has not received explicit owner approval; do not treat as dependency-satisfied."
+        "Status correction: deliverables exist, but this task is human_approval_required and has not received explicit owner approval; do not treat as dependency-satisfied.",
+        "Owner approval recorded for the exact bounded scope on 2026-11-27T14:42:00.000Z."
       ],
       "created_at": null,
-      "updated_at": "2026-11-27T14:37:18.909Z",
-      "completed_at": null
+      "updated_at": "2026-11-27T14:42:00.000Z",
+      "completed_at": "2026-11-27T14:42:00.000Z",
+      "approval": {
+        "approved_by": "repository_owner",
+        "approved_at": "2026-11-27T14:42:00.000Z",
+        "scope": "Approve the ADR template, decision register and architecture change-control process described in the reviewed documents.",
+        "evidence": "Explicit repository-owner approval in the conversation on 2026-11-27 after review of the ADR/change-control documents."
+      }
     },
     {
       "id": "GOV-003",
@@ -9305,7 +9320,7 @@
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-01",
       "priority": "P0",
-      "status": "in_review",
+      "status": "done",
       "owner_role": "platform_governance_lead",
       "assigned_agent": null,
       "claim": {
@@ -9369,13 +9384,20 @@
         "scripts/tasks/local-agent-execution-protocol.md — claim eligibility, leases, ownership locks, CAS, isolation and recovery",
         "scripts/tasks/task-validator-spec.md — structural validation, DAG/readiness, claim/path collision diagnostics and test matrix"
       ],
-      "blocker": "Awaiting explicit human owner/platform-security approval of claim/lease/path-lock protocol; GOV-008 remains dependency-blocked.",
+      "blocker": null,
       "notes": [
-        "This is a proposal for review, not an authorization to run autonomous workers. GOV-007 is marked human_approval_required in the canonical registry."
+        "This is a proposal for review, not an authorization to run autonomous workers. GOV-007 is marked human_approval_required in the canonical registry.",
+        "Owner approval recorded for the exact bounded scope on 2026-11-27T14:42:00.000Z."
       ],
       "created_at": null,
-      "updated_at": "2026-11-27T14:37:18.909Z",
-      "completed_at": null
+      "updated_at": "2026-11-27T14:42:00.000Z",
+      "completed_at": "2026-11-27T14:42:00.000Z",
+      "approval": {
+        "approved_by": "repository_owner",
+        "approved_at": "2026-11-27T14:42:00.000Z",
+        "scope": "Approve the bounded local AI task execution protocol: dependency-aware claim eligibility, lease/recovery semantics, worktree isolation, path ownership/collision rules, compare-and-swap registry updates and evidence requirements. This is not permission for production DB access, deployment, secrets, unrestricted shell, Docker socket or external side effects.",
+        "evidence": "Explicit repository-owner approval in the conversation on 2026-11-27 after review of the local agent execution protocol."
+      }
     },
     {
       "id": "GOV-008",
@@ -9384,7 +9406,7 @@
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-02",
       "priority": "P0",
-      "status": "pending",
+      "status": "in_progress",
       "owner_role": "platform_governance_lead",
       "assigned_agent": null,
       "claim": {
@@ -9447,10 +9469,18 @@
       "human_approval_required": true,
       "evidence": [],
       "blocker": null,
-      "notes": [],
+      "notes": [
+        "Read-only validator implementation started under explicit repository-owner approval; no task claims or registry writes are performed by the validator."
+      ],
       "created_at": null,
-      "updated_at": null,
-      "completed_at": null
+      "updated_at": "2026-11-27T14:42:00.000Z",
+      "completed_at": null,
+      "approval": {
+        "approved_by": "repository_owner",
+        "approved_at": "2026-11-27T14:42:00.000Z",
+        "scope": "Approve implementation of a read-only task registry schema/DAG validator and readiness calculator. It may inspect tasks.json and report readiness/conflicts; it must not mutate task state, claim/release work, execute commands or access production systems.",
+        "evidence": "Explicit repository-owner approval in the conversation on 2026-11-27 to proceed with the next stage and implement the bounded task validator."
+      }
     },
     {
       "id": "GOV-009",
@@ -9767,7 +9797,7 @@
       "blueprint": "BLUEPRINT-APPLICATIONS.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "in_review",
+      "status": "done",
       "owner_role": "application_architect",
       "assigned_agent": null,
       "claim": {
@@ -9831,13 +9861,20 @@
         "docs/architecture/application-inventory.md — fourteen app identities, ownership and overlap review",
         "docs/architecture/existing-app-baseline.json — recursive Git tree audit at c1c604801e4bbde982a44689aac7b6c48b1978ee"
       ],
-      "blocker": "Awaiting product-owner review of the fourteen-app inventory; CSS expansion and named maintainers remain unresolved.",
+      "blocker": null,
       "notes": [
-        "Review requested: CSS expansion and named maintainer assignments remain unresolved; the audit intentionally records no materialized app source."
+        "Review requested: CSS expansion and named maintainer assignments remain unresolved; the audit intentionally records no materialized app source.",
+        "Owner approval recorded for the exact bounded scope on 2026-11-27T14:42:00.000Z."
       ],
       "created_at": null,
-      "updated_at": "2026-11-27T14:37:18.909Z",
-      "completed_at": null
+      "updated_at": "2026-11-27T14:42:00.000Z",
+      "completed_at": "2026-11-27T14:42:00.000Z",
+      "approval": {
+        "approved_by": "repository_owner",
+        "approved_at": "2026-11-27T14:42:00.000Z",
+        "scope": "Approve the fourteen-app inventory, role boundaries and explicit unknowns as the planning baseline. This does not approve implementations, deployments, or an expansion of the CSS label.",
+        "evidence": "Explicit repository-owner approval in the conversation on 2026-11-27 after review of the fourteen-app inventory and its unresolved questions."
+      }
     },
     {
       "id": "APP-002",
