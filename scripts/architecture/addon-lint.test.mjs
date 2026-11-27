@@ -278,6 +278,13 @@ test("canonical schema accepts the complete valid fixture", async () => {
   assert.deepEqual(validateJsonSchema(schema, makeManifest()), []);
 });
 
+test("published reference manifest remains schema-valid and follows the linter policy", async () => {
+  const schema = JSON.parse(await readFile(new URL("../../docs/architecture/addons/addon.manifest.schema.json", import.meta.url), "utf8"));
+  const sample = JSON.parse(await readFile(new URL("../../docs/architecture/addons/addon.manifest.example.json", import.meta.url), "utf8"));
+  assert.deepEqual(validateJsonSchema(schema, sample), []);
+  assert.deepEqual(validateAddonManifest(sample, "reference"), []);
+});
+
 test("canonical schema rejects unknown nested fields and unsafe relative paths", async () => {
   const schema = JSON.parse(await readFile(new URL("../../docs/architecture/addons/addon.manifest.schema.json", import.meta.url), "utf8"));
   const manifest = makeManifest();
