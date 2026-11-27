@@ -69,3 +69,15 @@ test("agent contract and focused skills are present", async () => {
     assert.ok(lines.some((line) => /^description:\s*\S+/.test(line)));
   }
 });
+
+test("Node runtime pins are aligned to Node.js 26 Active LTS", async () => {
+  const [pkg, nvm, nodeVersion] = await Promise.all([
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
+    readFile(new URL("../.nvmrc", import.meta.url), "utf8"),
+    readFile(new URL("../.node-version", import.meta.url), "utf8"),
+  ]);
+  const manifest = JSON.parse(pkg);
+  assert.equal(nvm.trim(), "26.13.0");
+  assert.equal(nodeVersion.trim(), "26.13.0");
+  assert.equal(manifest.engines.node, ">=26.13.0 <27");
+});
