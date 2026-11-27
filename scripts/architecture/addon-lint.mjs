@@ -413,12 +413,19 @@ export function validateAddonManifest(manifest, expectedSlug = null) {
     manifest.models.forEach((model, index) => {
       const path = "models[" + index + "]";
       const prefix = (slug ?? "invalid") + ".";
-      if (!isRecord(model) || typeof model.id !== "string" || !model.id.startsWith(prefix) || !/^[a-z][a-z0-9-]*\.[a-z][a-z0-9_]*$/.test(model.id)) {
-        addError(errors, "INVALID_MODEL_ID", path + ".id", "model IDs must be namespaced by the add-on slug");
+      if (!isRecord(model)) {
+        addError(errors, "INVALID_MODEL", path, "model declaration must be an object");
         return;
       }
-      if (modelIds.has(model.id)) addError(errors, "DUPLICATE_MODEL", path + ".id", "duplicate model: " + model.id);
-      modelIds.add(model.id);
+      const validModelId = typeof model.id === "string" &&
+        model.id.startsWith(prefix) &&
+        /^[a-z][a-z0-9-]*\.[a-z][a-z0-9_]*$/.test(model.id);
+      if (!validModelId) {
+        addError(errors, "INVALID_MODEL_ID", path + ".id", "model IDs must be namespaced by the add-on slug");
+      } else {
+        if (modelIds.has(model.id)) addError(errors, "DUPLICATE_MODEL", path + ".id", "duplicate model: " + model.id);
+        modelIds.add(model.id);
+      }
       if (model.ownership !== "addon-owned") addError(errors, "INVALID_MODEL_OWNERSHIP", path + ".ownership", "new models must be owned by this add-on");
       validateFieldList(model.fields, path + ".fields", errors);
     });
@@ -493,10 +500,11 @@ export function validateAddonManifest(manifest, expectedSlug = null) {
   return errors;
 }
 
-export function validateAddonPackage(packageJson, slug) {
+export function validateAddonPackage(packageJson, slug, manifestVersion) {
   const errors = [];
   if (!isRecord(packageJson)) return [{ code: "INVALID_PACKAGE_JSON", path: "package.json", message: "must be an object" }];
   if (packageJson.name !== "@moonwitness/addon-" + slug) addError(errors, "PACKAGE_NAME_MISMATCH", "package.json.name", "must be @moonwitness/addon-" + slug);
+  if (packageJson.version !== manifestVersion) addError(errors, "PACKAGE_VERSION_MISMATCH", "package.json.version", "must exactly match the add-on manifest version");
   if (packageJson.private !== true) addError(errors, "PACKAGE_MUST_BE_PRIVATE", "package.json.private", "add-on packages are private workspace packages in v1");
   if (packageJson.type !== "module") addError(errors, "PACKAGE_MUST_BE_ESM", "package.json.type", "must be module");
   if (packageJson.engines?.node !== ">=24.22.3 <25") addError(errors, "PACKAGE_NODE_RANGE", "package.json.engines.node", "must match the repository Node 24 baseline");
@@ -663,7 +671,7 @@ export async function lintAddons(repositoryRoot = process.cwd()) {
       errors.push({ code: "MANIFEST_" + error.code, path: slug + "/" + error.path, message: error.message });
     }
     for (const error of validateAddonManifest(manifest, slug)) errors.push({ ...error, path: slug + "/" + error.path });
-    for (const error of validateAddonPackage(packageJson, slug)) errors.push({ ...error, path: slug + "/" + error.path });
+    for (const error of validateAddonPackage(packageJson, slug, manifest.version)) errors.push({ ...error, path: slug + "/" + error.path });
     const sourceFiles = await collectSources(join(addonPath, "src"));
     for (const error of inspectAddonSource(sourceFiles)) errors.push({ ...error, path: slug + "/" + error.path });
     addons.push({ slug, manifest, packageJson, sourceFiles });
