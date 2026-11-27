@@ -19012,7 +19012,7 @@
       "blueprint": "BLUEPRINT-PACKAGE.MD",
       "phase": "PHASE-01",
       "priority": "P0",
-      "status": "in_review",
+      "status": "done",
       "owner_role": "platform_architect",
       "assigned_agent": null,
       "claim": {
@@ -19108,7 +19108,12 @@
       },
       "evidence": [
         "Official Node.js Release Working Group schedule lists 26.x Lithium as Active LTS from 2026-10-28 through 2029-04-30; Node 27 remains Alpha.",
-        "Node.js 26.13.0 is the LTS patch selected for the migration as of 2026-11-27."
+        "Node.js 26.13.0 is the LTS patch selected for the migration as of 2026-11-27.",
+        "GitHub Actions Repository CI run 46040342559 passed on commit 20d7af66fbabd8762d3e173c7ecec491821c5eb1 using Node.js v26.13.0 and pnpm v12.24.0; pnpm install --frozen-lockfile succeeded.",
+        "The canonical pnpm check passed: repository lint, add-on lint, workflow SHA/trust policy lint across 6 workflows, format gate, explicit no-TypeScript implementation typecheck skip, 238-task repository validation, task registry validator, and all 65 Node tests passed with 0 failures.",
+        "Node.js 26.13.0 exact pins in .nvmrc and .node-version match package.json engines >=26.13.0 <27. Add-on manifest schema/example/linter and tests use >=26.13.0 <27.0.0.",
+        "ADR-0004 is Accepted for Node 26.13.0; ADR-0002 remains as historical and is superseded for Node runtime only. pnpm 12.24.0 and lockfile were retained.",
+        "PR #16: https://github.com/mileyaffarizi-source/moonwitness/pull/16"
       ],
       "blocker": null,
       "notes": [
@@ -19116,8 +19121,8 @@
         "The Node 26 runtime pin in the repository does not install Node 26 on the owner's local workstation; local environment verification is separate."
       ],
       "created_at": "2026-11-27T16:47:00.000Z",
-      "updated_at": "2026-11-27T17:14:58.943Z",
-      "completed_at": null
+      "updated_at": "2026-11-27T17:17:29.702Z",
+      "completed_at": "2026-11-27T17:17:29.702Z"
     },
     {
       "id": "GOV-013",
@@ -19301,7 +19306,11 @@
         "Zizmor 1.32.0 runs as a weekly and workflow-change security audit through setup-uv pinned to commit 68559e99cc807c1eb7e9238fd43a15bba460eec2 and emits GitHub annotations.",
         "Release Please v5.0.0 remains the sole version/changelog/release writer and is pinned to commit 45996ed1f6d02564a971a2fa1b5860e934307cf7.",
         "scripts/architecture/workflow-lint.mjs implements immutable SHA, explicit permissions, concurrency, secrets, dangerous-trigger, failure masking and PR write-boundary policy.",
-        "The lint:workflows command is wired into the canonical pnpm check; CI evidence will be attached after the PR workflow completes."
+        "The lint:workflows command is wired into the canonical pnpm check; CI evidence will be attached after the PR workflow completes.",
+        "Repository CI run 46040342559 passed with all 65 tests; immutable GitHub workflow policy passed for all 6 workflows.",
+        "CodeQL run 46040342407 completed successfully; Zizmor Workflow Security run 46040342368 completed successfully; Gitleaks Secret Scanning run 46040342558 completed successfully with 'No leaks detected'.",
+        "Dependency Review run 46040342338 failed before analysis with the explicit platform message: Dependency review is not supported on this repository; enable Dependency Graph in repository Settings → Security and analysis. This is tracked by blocked owner task GOV-013 and is not reported as a pass.",
+        "The automation implementation remains in PR #16 until the Dependency Graph owner prerequisite is met."
       ],
       "blocker": null,
       "notes": [
@@ -19310,7 +19319,7 @@
         "Dependency Review is available on public repositories and supported private repositories with GitHub Advanced Security; a run failure due repository visibility/plan must be recorded as an owner setting limitation, not silently bypassed."
       ],
       "created_at": "2026-11-27T16:55:00.000Z",
-      "updated_at": "2026-11-27T17:14:58.943Z",
+      "updated_at": "2026-11-27T17:17:29.702Z",
       "completed_at": null
     }
   ]
