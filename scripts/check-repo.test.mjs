@@ -92,14 +92,18 @@ test("GitHub security and release automation have non-overlapping active owners"
     readFile(new URL("../docs/adr/ADR-0004-node26-lts-and-github-automation.md", import.meta.url), "utf8"),
   ]);
 
-  assert.ok(dependencyReview.includes("actions/dependency-review-action@v5"));
+  assert.ok(dependencyReview.includes("actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294"));
   assert.ok(dependencyReview.includes("fail-on-severity: high"));
+  assert.ok(dependencyReview.includes("a1d282b36b6f3519aa1f3fc636f609c47dddb294"));
   assert.ok(!dependencyReview.includes("DEPENDENCY_REVIEW_ENABLED"));
-  assert.ok(secrets.includes("gitleaks/gitleaks-action@v3"));
+  assert.ok(secrets.includes("gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e"));
   assert.ok(secrets.includes("fetch-depth: 0"));
+  assert.ok(secrets.includes("3d3c42e5aac5ba805825da76410c181273ba90b1"));
   assert.ok(workflowSecurity.includes("zizmor@1.32.0"));
+  assert.ok(workflowSecurity.includes("68559e99cc807c1eb7e9238fd43a15bba460eec2"));
   assert.ok(workflowSecurity.includes("--format=github"));
-  assert.ok(releaseWorkflow.includes("googleapis/release-please-action@v5"));
+  assert.ok(workflowSecurity.includes("3d3c42e5aac5ba805825da76410c181273ba90b1"));
+  assert.ok(releaseWorkflow.includes("googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7"));
 
   const changelogWorkflows = releaseFiles.filter((name) => /(?:release|changelog)/i.test(name) && name.endsWith(".yml"));
   assert.deepEqual(changelogWorkflows, ["release-please.yml"]);
