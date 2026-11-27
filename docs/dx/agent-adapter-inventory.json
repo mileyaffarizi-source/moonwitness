@@ -1,0 +1,106 @@
+{
+  "audit_date": "2026-11-27",
+  "repository": "mileyaffarizi-source/moonwitness",
+  "audited_main_commit": "c00130d889f259c2b246c0e4cd6a6b8ce2016932",
+  "task_id": "DX-001",
+  "audit_state": "partial_remote_audit",
+  "repository_state": {
+    "task_registry": "tasks.json",
+    "task_count": 234,
+    "task_registry_validator": {
+      "implemented": true,
+      "entrypoint": "scripts/tasks/task-registry.mjs",
+      "mode": "read_only",
+      "calculates_readiness": true,
+      "mutates_registry": false,
+      "runs_commands": false
+    },
+    "dx_application_materialized": false,
+    "dx_desktop_or_daemon_materialized": false,
+    "local_agent_adapters_materialized": false
+  },
+  "verified_remote_capabilities": [
+    {
+      "id": "github_repository_read",
+      "status": "verified",
+      "scope": "Read repository files, refs, commits, trees and pull request metadata through the connected GitHub integration."
+    },
+    {
+      "id": "github_branch_and_commit_operations",
+      "status": "verified",
+      "scope": "Create branches, blobs, trees and commits; update refs with expected-SHA checks."
+    },
+    {
+      "id": "github_pull_request_lifecycle",
+      "status": "verified",
+      "scope": "Open, inspect and merge reviewed pull requests."
+    },
+    {
+      "id": "github_actions_status",
+      "status": "verified",
+      "scope": "Read workflow/job/check status and conclusions."
+    },
+    {
+      "id": "ci_node_runtime",
+      "status": "verified_remote_only",
+      "runtime": "Node.js 22.14.0",
+      "scope": "GitHub Actions workflow using the repository .nvmrc."
+    },
+    {
+      "id": "ci_package_manager",
+      "status": "verified_remote_only",
+      "runtime": "pnpm 10.8.1",
+      "scope": "GitHub Actions setup and frozen-lockfile install."
+    }
+  ],
+  "local_host": {
+    "access": "not_available_through_connected_github_integration",
+    "os": "unknown",
+    "architecture": "unknown",
+    "shell": "unknown",
+    "git_version": "unknown",
+    "local_node_version": "unknown",
+    "local_pnpm_version": "unknown",
+    "local_worktrees": "not_inspected",
+    "dirty_working_tree": "not_inspected",
+    "docker_daemon": "not_inspected",
+    "network_and_egress": "not_inspected",
+    "resource_limits": "not_inspected"
+  },
+  "coding_agent_adapters": [
+    {"id": "codex_cli", "executable": "codex", "installation": "not_verified", "version": null, "capabilities": "unknown", "safe_to_invoke": false},
+    {"id": "claude_code", "executable": "claude", "installation": "not_verified", "version": null, "capabilities": "unknown", "safe_to_invoke": false},
+    {"id": "gemini_cli", "executable": "gemini", "installation": "not_verified", "version": null, "capabilities": "unknown", "safe_to_invoke": false},
+    {"id": "opencode", "executable": "opencode", "installation": "not_verified", "version": null, "capabilities": "unknown", "safe_to_invoke": false},
+    {"id": "aider", "executable": "aider", "installation": "not_verified", "version": null, "capabilities": "unknown", "safe_to_invoke": false},
+    {"id": "goose", "executable": "goose", "installation": "not_verified", "version": null, "capabilities": "unknown", "safe_to_invoke": false}
+  ],
+  "model_providers": [
+    {"id": "gemini_api", "endpoint": null, "credential_status": "not_inspected", "model_capability": "not_verified"},
+    {"id": "other_remote_llm", "endpoint": null, "credential_status": "not_inspected", "model_capability": "not_verified"},
+    {"id": "local_model_endpoint", "endpoint": null, "credential_status": "not_inspected", "model_capability": "not_verified"}
+  ],
+  "supporting_tools": [
+    {"id": "git", "executable": "git", "local_status": "not_verified"},
+    {"id": "node", "executable": "node", "local_status": "not_verified"},
+    {"id": "pnpm", "executable": "pnpm", "local_status": "not_verified"},
+    {"id": "python_uv", "executable": "uv", "local_status": "not_verified"},
+    {"id": "docker_compose", "executable": "docker", "local_status": "not_verified"},
+    {"id": "github_cli", "executable": "gh", "local_status": "not_verified"},
+    {"id": "n8n", "executable": "n8n", "local_status": "not_verified"}
+  ],
+  "secret_handling": {
+    "secret_values_read": false,
+    "environment_variables_dumped": false,
+    "credential_files_inspected": false,
+    "credential_availability": "unknown",
+    "policy": "Never include secret values, tokens, private keys or credential dumps in the task registry, prompt, logs or inventory."
+  },
+  "required_follow_up": [
+    "Run the safe executable/version inventory on the target Windows or Linux workstation.",
+    "Inspect git status, remotes, existing worktrees and worktree support without modifying user data.",
+    "Verify each detected coding CLI's version, unattended mode, permission controls, output schema, timeout and cancellation.",
+    "Verify provider endpoint/model capability only with approved secret references and without logging secret material.",
+    "Complete the DX-001 owner review before DX-002 starts."
+  ]
+}
