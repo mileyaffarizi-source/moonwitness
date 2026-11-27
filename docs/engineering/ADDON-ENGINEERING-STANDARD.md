@@ -11,6 +11,8 @@ Add-ons live only in packages/addons/<slug>. The manifest is addon.manifest.json
 
 ## Manifest rules
 
+Use [the reference manifest](../architecture/addons/addon.manifest.example.json) as a schema-valid starting point. Replace its example provenance repository/commit with the actual immutable source repository and 40-character source commit before packaging; the all-zero source commit in the fixture is intentionally a placeholder and must never be released.
+
 1. Pin manifest schema version and package SemVer.
 2. Identify one owning team and explicit Node/platform/SDK compatibility.
 3. Declare required vs optional dependencies separately.
