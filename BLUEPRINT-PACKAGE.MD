@@ -2,7 +2,7 @@
 
 **Document ID:** MW-BP-PKG-001 · **Version:** 2.0.0  
 **Parent:** [BLUEPRINT.md](./BLUEPRINT.md) · **Task registry:** [tasks.json](./tasks.json)  
-**Runtime:** Node.js LTS · **Package manager:** pnpm · **Task graph:** Turborepo
+**Runtime:** Node.js 24.22.3 · **Package manager:** pnpm 12.24.0 · **Task graph:** Turborepo
 
 ## 1. Purpose
 
@@ -20,7 +20,7 @@ Pin Node.js LTS and pnpm; use pnpm Workspaces for linking and Turborepo for task
 
 **ORM Kernel:** model descriptors, fields, relations, extensions, domain AST, record interfaces, security hooks and persistence adapter contracts. Runtime composition is in API.
 
-**Domain Add-ons:** independent capabilities with explicit ownership and manifests.
+**Domain Add-ons:** independent capabilities with explicit ownership and strict manifests. The normative add-on contract is [BLUEPRINT-PACKAGE-ADDON.MD](./BLUEPRINT-PACKAGE-ADDON.MD); add-on-specific trust decisions are tracked in ADR-0003.
 
 **Clients:** browser-safe API client, service-to-service client and event contract clients; no server-only leakage.
 
@@ -75,7 +75,7 @@ Do not create a package solely because it appears in this list. Create it when a
 
 Deliver package inventory, dependency graph, public export map, naming policy, pnpm/Turbo configuration, architecture-boundary checks, version policy, local-agent ownership protocol and one working example package.
 
-Tasks **PKG-001 through PKG-009** in [tasks.json](./tasks.json).
+Tasks **PKG-001 through PKG-009** and **ADD-001 through ADD-011** in [tasks.json](./tasks.json). Add-on manifest, trust, model ownership, capability and lifecycle requirements are specified in [BLUEPRINT-PACKAGE-ADDON.MD](./BLUEPRINT-PACKAGE-ADDON.MD).
 
 ## 11. Definition of done
 
