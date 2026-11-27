@@ -60,3 +60,10 @@ Resource model, topology model, adapter SDK, alarm/event schema, telemetry fresh
 ## 10. Task ownership and definition of done
 
 Tasks OSS-* in tasks.json. Done means OSS can trace an operational service to its resources, display real freshness-aware alarms/metrics, manage incidents, and execute a bounded authorized provisioning path with verified result and rollback evidence.
+
+
+## 11. Arsy as the protocol adapter plane
+
+OSS remains owner of device/resource inventory, topology, alarms/incidents, desired configuration, provisioning workflow, approval, rollback and technical assurance. Arsy provides protocol endpoints and execution adapters: RADIUS AAA/session/accounting events, TR-069 CWMP ACS requests/RPC results, and Syslog ingestion/normalization. OSS submits approved target-scoped requests and consumes versioned results/events; it does not share a database with Arsy.
+
+Arsy may store protocol session state and bounded raw/normalized protocol evidence, but must reference OSS-owned device/resource IDs and ISP-owned subscriber/service IDs. Syslog events are not automatically incidents; OSS correlation and incident policy decide that. ACS command acceptance is not proof of configuration success; verify the observed CPE parameter/state before closing an OSS work item.
