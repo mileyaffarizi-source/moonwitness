@@ -161,11 +161,23 @@ test("rejects active claim path collisions", () => {
       owned_paths: ["apps/api/src/**"],
     },
   });
+  const secondActive = makeTask("C", {
+    status: "in_progress",
+    claim: {
+      agent_id: "worker-c",
+      claimed_at: timestamp,
+      lease_expires_at: "2026-11-27T11:00:00.000Z",
+      worktree: "../worktrees/c",
+      branch: "worker/c",
+      owned_paths: ["apps/api/src/routes/**"],
+    },
+  });
   const pending = makeTask("B", { file_ownership: ["apps/api/src/routes/**"] });
-  const result = validateTaskRegistry(makeRegistry([active, pending]));
+  const registry = makeRegistry([active, secondActive, pending]);
+  const result = validateTaskRegistry(registry);
 
   assert.ok(errorCodes(result).includes("ACTIVE_PATH_COLLISION"));
-  assert.equal(calculateReadiness(makeRegistry([active, pending])).find((item) => item.id === "B").status, "claimed_path_conflict");
+  assert.equal(calculateReadiness(registry).find((item) => item.id === "B").status, "claimed_path_conflict");
 });
 
 test("path overlap is conservative for parent, child and wildcard scopes", () => {
