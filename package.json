@@ -1,0 +1,17 @@
+{
+  "name": "moonwitness",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MoonWitness multi-application ecosystem",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.14.0 <23",
+    "pnpm": "10.8.1"
+  },
+  "packageManager": "pnpm@10.8.1",
+  "scripts": {
+    "check:repo": "node scripts/check-repo.mjs",
+    "test": "node --test",
+    "check": "pnpm check:repo && pnpm test"
+  }
+}
