@@ -72,7 +72,7 @@ test("root contract accepts canonical repository rules", () => {
   const errors = validateRootContracts({
     packageJson: {
       packageManager: "pnpm@12.24.0",
-      engines: { node: ">=24.22.3 <25" },
+      engines: { node: ">=26.13.0 <27" },
       scripts: { "lint:addons": "node scripts/architecture/addon-lint.mjs", check: "pnpm lint && pnpm lint:addons && pnpm test" },
     },
     editorConfig: "root = true\ncharset = utf-8\nend_of_line = lf\ninsert_final_newline = true\n",
