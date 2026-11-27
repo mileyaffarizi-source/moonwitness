@@ -6,7 +6,7 @@
     "branch": "main",
     "title": "The Living Platform — Coordinated Engineering and Creative Universe",
     "parent_blueprint": "BLUEPRINT.md",
-    "runtime": "Node.js 26.13.0",
+    "runtime": "Node.js 26.13.1",
     "package_manager": "pnpm 12.24.0",
     "workspace": "pnpm Workspaces + Turborepo",
     "applications": [
@@ -107,6 +107,20 @@
         "technology": "Creative/media + isolated lab client",
         "role": "Creative/media and authorized red/blue-team lab",
         "authority": "Isolated authorized lab/content workflow"
+      },
+      {
+        "id": "astronauts",
+        "path": "apps/astronauts",
+        "technology": "Go 1.27.4 · Controller + outbound Edge Agent",
+        "role": "Host and remote machine fleet control plane",
+        "authority": "Enrolled machine identity/fleet/job execution state; API authorizes exact-scope signed grants; no cloud/IaC or business DB authority"
+      },
+      {
+        "id": "arsy",
+        "path": "apps/arsy",
+        "technology": "Rust 1.100.0 · async protocol services",
+        "role": "Telecom protocol runtime: RADIUS AAA, TR-069 ACS and Syslog",
+        "authority": "Protocol-session/runtime state and normalized protocol events; ISP/BSS/OSS retain subscriber, commercial and network operational authority"
       }
     ],
     "persistence": {
@@ -115,11 +129,11 @@
       "legacy_policy": "Existing Odoo-owned data remains Odoo-owned; supported version-aware APIs only; no big-bang migration."
     },
     "generated_at": "2026-11-27",
-    "task_count": 238,
+    "task_count": 266,
     "status": "planning",
-    "application_count": 14,
+    "application_count": 16,
     "priority_workstream": "DX",
-    "application_topology": "See BLUEPRINT-APPLICATIONS.MD; fourteen app directories do not require fourteen microservices."
+    "application_topology": "Sixteen app surfaces in four cooperating planes; application directories do not require sixteen microservices."
   },
   "execution_policy": {
     "source_of_truth": "This file is the only canonical execution-status and dependency registry. Markdown explains work but does not maintain status.",
@@ -326,8 +340,8 @@
       "rule": "Do not enable autonomous parallel local-agent execution before task claims, worktree isolation, sandbox and evidence validation work."
     },
     {
-      "id": "GATE-APP-14",
-      "name": "Fourteen-app architecture baseline",
+      "id": "GATE-APP-16",
+      "name": "Sixteen-app architecture baseline",
       "required_tasks": [
         "APP-001",
         "APP-002",
@@ -337,7 +351,7 @@
         "APP-006",
         "APP-007"
       ],
-      "rule": "App boundaries, source of truth and deployment classes must be approved before broad implementation."
+      "rule": "All sixteen app boundaries, four planes, data ownership and trust zones must be approved before broad implementation."
     },
     {
       "id": "GATE-ID",
@@ -358,9 +372,12 @@
         "OSS-002",
         "BSS-002",
         "ISP-002",
-        "APP-005"
+        "APP-005",
+        "ARS-005",
+        "ARS-006",
+        "ARS-011"
       ],
-      "rule": "OSS owns operational truth, BSS commercial truth, ISP service orchestration."
+      "rule": "BSS owns commercial truth; ISP owns subscriber lifecycle/entitlements; OSS owns network operational workflows; Arsy owns protocol processing only."
     },
     {
       "id": "GATE-KNOWLEDGE",
@@ -384,6 +401,34 @@
         "RIOT-008"
       ],
       "rule": "No red-team action occurs without exact authorization and isolated lab controls."
+    },
+    {
+      "id": "GATE-ASTRONAUTS",
+      "name": "Astronauts machine-control security",
+      "required_tasks": [
+        "AST-002",
+        "AST-006",
+        "AST-008",
+        "AST-011",
+        "AST-012",
+        "AST-014"
+      ],
+      "rule": "No host/remote execution before enrolled machine identity, outbound mTLS, signed exact-scope grants, typed capability allowlists, audit, revocation and kill switch are verified."
+    },
+    {
+      "id": "GATE-ARSY",
+      "name": "Arsy telecom protocol safety",
+      "required_tasks": [
+        "ARS-002",
+        "ARS-005",
+        "ARS-006",
+        "ARS-007",
+        "ARS-009",
+        "ARS-010",
+        "ARS-012",
+        "ARS-014"
+      ],
+      "rule": "Protocol correctness, credential handling, NAS/CPE source trust, replay/DoS limits, session accounting, event contracts and failover are verified before production."
     }
   ],
   "workstreams": [
@@ -819,6 +864,50 @@
         "RIOT-007",
         "RIOT-008",
         "RIOT-009"
+      ]
+    },
+    {
+      "id": "AST",
+      "name": "ASTRONAUTS",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "owner_role": "machine_control_plane_lead",
+      "task_ids": [
+        "AST-001",
+        "AST-002",
+        "AST-003",
+        "AST-004",
+        "AST-005",
+        "AST-006",
+        "AST-007",
+        "AST-008",
+        "AST-009",
+        "AST-010",
+        "AST-011",
+        "AST-012",
+        "AST-013",
+        "AST-014"
+      ]
+    },
+    {
+      "id": "ARS",
+      "name": "ARSY",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "owner_role": "telecom_protocol_engineer",
+      "task_ids": [
+        "ARS-001",
+        "ARS-002",
+        "ARS-003",
+        "ARS-004",
+        "ARS-005",
+        "ARS-006",
+        "ARS-007",
+        "ARS-008",
+        "ARS-009",
+        "ARS-010",
+        "ARS-011",
+        "ARS-012",
+        "ARS-013",
+        "ARS-014"
       ]
     }
   ],
@@ -7951,7 +8040,7 @@
     },
     {
       "id": "PKG-009",
-      "title": "Prove clean clone and fourteen-app build matrix",
+      "title": "Prove clean clone and sixteen-app build matrix",
       "workstream": "PACKAGE",
       "blueprint": "BLUEPRINT-PACKAGE.MD",
       "phase": "PHASE-11",
@@ -7980,7 +8069,9 @@
         "PKG-005",
         "PKG-006",
         "PKG-007",
-        "PKG-008"
+        "PKG-008",
+        "AST-003",
+        "ARS-003"
       ],
       "inputs": [
         "BLUEPRINT.md",
@@ -8006,10 +8097,11 @@
         "runtime/deployment classification"
       ],
       "acceptance_criteria": [
-        "Fourteen app paths/IDs are inventoried consistently.",
+        "Sixteen app paths/IDs are inventoried consistently.",
         "Each app has build/test plan and known blockers.",
-        "Agent/API/Web and any built client/control app build as intended.",
-        "No unapproved fifteenth app or package-manager drift."
+        "Node/TypeScript apps use Node 26.13.1 and pnpm; Astronauts uses the pinned Go toolchain; Arsy uses the pinned Rust toolchain.",
+        "A clean clone verifies only available executable app slices; no empty scaffold is called built.",
+        "No package-manager drift or unapproved runtime is introduced."
       ],
       "verification": [
         "Frozen install",
@@ -8017,10 +8109,8 @@
         "Boundary scan"
       ],
       "file_ownership": [
-        "apps/**",
-        "package.json",
-        "pnpm-workspace.yaml",
-        "turbo.json"
+        "docs/architecture/build-matrix/**",
+        "scripts/architecture/build-matrix/**"
       ],
       "estimate": "L",
       "parallel_group": "PKG-PHASE-11",
@@ -10156,7 +10246,7 @@
     },
     {
       "id": "GOV-012",
-      "title": "Run cross-blueprint consistency and fourteen-app governance audit",
+      "title": "Run cross-blueprint consistency and sixteen-app governance audit",
       "workstream": "GOVERNANCE",
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-12",
@@ -10214,9 +10304,9 @@
         "consistency report"
       ],
       "acceptance_criteria": [
-        "All fourteen app IDs/paths are consistent.",
-        "No contradictory count, orphan task or dependency exists.",
-        "Security/canon/source-of-truth boundaries are coherent."
+        "All sixteen app IDs/paths are consistent.",
+        "No contradictory app count, orphan task or dependency exists.",
+        "Astronauts/Arsy trust, protocol, data-source and execution boundaries are coherent."
       ],
       "verification": [
         "Link checker",
@@ -10239,12 +10329,12 @@
     },
     {
       "id": "APP-001",
-      "title": "Audit fourteen app surfaces",
+      "title": "Re-verify sixteen app surfaces",
       "workstream": "APPLICATIONS",
       "blueprint": "BLUEPRINT-APPLICATIONS.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "done",
+      "status": "in_review",
       "owner_role": "application_architect",
       "assigned_agent": null,
       "claim": {
@@ -10290,8 +10380,9 @@
         "existing-app-baseline.json"
       ],
       "acceptance_criteria": [
-        "Exactly fourteen requested apps are recorded.",
-        "Unknowns and duplicate responsibilities are explicit."
+        "Exactly sixteen requested apps are recorded with technology and ownership.",
+        "Unknowns and duplicate responsibilities are explicit.",
+        "Astronauts and Arsy are included without overlapping DX/Cloud/OSS/ISP/BSS ownership."
       ],
       "verification": [
         "Repository tree audit",
@@ -10304,18 +10395,16 @@
       "estimate": "L",
       "parallel_group": "APP-PHASE-00",
       "human_approval_required": true,
-      "evidence": [
-        "docs/architecture/application-inventory.md — fourteen app identities, ownership and overlap review",
-        "docs/architecture/existing-app-baseline.json — recursive Git tree audit at c1c604801e4bbde982a44689aac7b6c48b1978ee"
-      ],
+      "evidence": [],
       "blocker": null,
       "notes": [
         "Review requested: CSS expansion and named maintainer assignments remain unresolved; the audit intentionally records no materialized app source.",
-        "Owner approval recorded for the exact bounded scope on 2026-11-27T14:42:00.000Z."
+        "Owner approval recorded for the exact bounded scope on 2026-11-27T14:42:00.000Z.",
+        "Scope expanded from the original fourteen-app audit after owner request on 2026-11-28; prior evidence applies only to the former inventory."
       ],
       "created_at": null,
       "updated_at": "2026-11-27T14:42:00.000Z",
-      "completed_at": "2026-11-27T14:42:00.000Z",
+      "completed_at": null,
       "approval": {
         "approved_by": "repository_owner",
         "approved_at": "2026-11-27T14:42:00.000Z",
@@ -10378,8 +10467,9 @@
         "bounded-context-map.md"
       ],
       "acceptance_criteria": [
-        "OSS/BSS/ISP do not overlap.",
-        "Each entity has one authoritative owner."
+        "OSS/BSS/ISP/Arsy/Astronauts/DX/Cloud do not overlap.",
+        "Each entity and protocol/runtime state has exactly one authoritative owner.",
+        "Astronauts owns enrolled host fleet state; Arsy owns protocol-session runtime only."
       ],
       "verification": [
         "Architecture review",
@@ -10532,8 +10622,9 @@
         "deployment-class-matrix.md"
       ],
       "acceptance_criteria": [
-        "Privileged execution is isolated.",
-        "Fourteen apps do not imply fourteen microservices."
+        "Four plane/trust-zone topology is explicit.",
+        "Astronauts host execution and Arsy telecom endpoints are isolated by identity/credential blast radius.",
+        "Sixteen apps do not imply sixteen independently deployed microservices."
       ],
       "verification": [
         "Threat review",
@@ -10612,7 +10703,8 @@
       ],
       "acceptance_criteria": [
         "No uncontrolled dual-write or big-bang migration.",
-        "Sync direction and cutover rule explicit."
+        "Sync direction and cutover rule explicit for BSS/ISP/OSS, Arsy and Astronauts.",
+        "Arsy and Astronauts own only their operational protocol/fleet records, not business masters."
       ],
       "verification": [
         "Ownership review",
@@ -10633,7 +10725,7 @@
     },
     {
       "id": "APP-006",
-      "title": "Build app integration and dependency graph",
+      "title": "Build sixteen-app integration and dependency graph",
       "workstream": "APPLICATIONS",
       "blueprint": "BLUEPRINT-APPLICATIONS.MD",
       "phase": "PHASE-04",
@@ -10687,8 +10779,9 @@
         "architecture rules"
       ],
       "acceptance_criteria": [
-        "Contracts are acyclic or use designed async boundaries.",
-        "Forbidden import tests fail."
+        "Sixteen application dependencies are acyclic or use designed async boundaries.",
+        "Forbidden imports fail for TypeScript, Go and Rust trust boundaries.",
+        "Astronauts/Arsy communicate through versioned contracts/events, not database sharing."
       ],
       "verification": [
         "Graph validation",
@@ -10787,7 +10880,7 @@
     },
     {
       "id": "APP-008",
-      "title": "Run fourteen-app consistency gate",
+      "title": "Run sixteen-app consistency gate",
       "workstream": "APPLICATIONS",
       "blueprint": "BLUEPRINT-APPLICATIONS.MD",
       "phase": "PHASE-13",
@@ -10819,7 +10912,9 @@
         "APP-005",
         "APP-006",
         "APP-007",
-        "GOV-012"
+        "GOV-012",
+        "AST-002",
+        "ARS-002"
       ],
       "inputs": [
         "BLUEPRINT.md",
@@ -10844,8 +10939,9 @@
         "fourteen-app-consistency-report.md"
       ],
       "acceptance_criteria": [
-        "Fourteen app IDs/paths are consistent.",
-        "No orphan blueprint/task or contradictory ownership."
+        "All sixteen app IDs/paths/technologies are consistent across inventory, blueprints and tasks.",
+        "No orphan blueprint/task or contradictory ownership exists.",
+        "Go/Rust toolchains and Node/pnpm workspace rules are represented without forcing Go/Rust into pnpm package scripts."
       ],
       "verification": [
         "Link check",
@@ -12986,7 +13082,8 @@
       ],
       "dependencies": [
         "OSS-003",
-        "GOV-005"
+        "GOV-005",
+        "ARS-010"
       ],
       "inputs": [
         "BLUEPRINT.md",
@@ -13013,7 +13110,8 @@
       ],
       "acceptance_criteria": [
         "Raw vendor source traceable.",
-        "Missing telemetry is not represented as healthy."
+        "Missing telemetry is not represented as healthy.",
+        "Arsy Syslog ingestion supplies authenticated, normalized, versioned events; OSS still owns alarm correlation and incident creation."
       ],
       "verification": [
         "Replay tests",
@@ -13217,7 +13315,8 @@
         "OSS-003",
         "OSS-006",
         "ID-007",
-        "GOV-010"
+        "GOV-010",
+        "ARS-008"
       ],
       "inputs": [
         "BLUEPRINT.md",
@@ -13244,7 +13343,8 @@
       ],
       "acceptance_criteria": [
         "No arbitrary device command from UI/Agent.",
-        "Partial changes recover with audit."
+        "Partial changes recover with audit.",
+        "Arsy executes only OSS-authorized CWMP RPCs; OSS owns the provisioning plan, approval and rollback."
       ],
       "verification": [
         "Sandbox device tests",
@@ -14439,7 +14539,8 @@
       ],
       "dependencies": [
         "ISP-005",
-        "OSS-007"
+        "OSS-007",
+        "ARS-011"
       ],
       "inputs": [
         "BLUEPRINT.md",
@@ -14466,7 +14567,8 @@
       ],
       "acceptance_criteria": [
         "Command success alone is not activation proof.",
-        "Observed state/freshness/source recorded."
+        "Observed state/freshness/source recorded.",
+        "AAA/session evidence is sourced from Arsy protocol events; ISP remains service-state authority."
       ],
       "verification": [
         "Activation simulation",
@@ -19012,7 +19114,7 @@
       "blueprint": "BLUEPRINT-PACKAGE.MD",
       "phase": "PHASE-01",
       "priority": "P0",
-      "status": "done",
+      "status": "in_review",
       "owner_role": "platform_architect",
       "assigned_agent": null,
       "claim": {
@@ -19066,11 +19168,11 @@
         "updated contributor/automation documentation"
       ],
       "acceptance_criteria": [
-        ".nvmrc, .node-version and package.json agree on Node 26.13.0 / >=26.13.0 <27.",
-        "Add-on schema, package linter and fixtures enforce >=26.13.0 <27.0.0.",
-        "No active blueprint or contributor guide contradicts the selected Node 26 baseline.",
-        "pnpm install --frozen-lockfile succeeds on Node 26.13.0 without unreviewed lockfile churn.",
-        "The complete canonical pnpm check passes on Node 26.13.0."
+        ".nvmrc, .node-version and package.json agree on Node 26.13.1 / >=26.13.1 <27.",
+        "Add-on schema, package linter and fixtures enforce >=26.13.1 <27.0.0.",
+        "No active blueprint or contributor guide contradicts Node 26.13.1.",
+        "pnpm install --frozen-lockfile succeeds on Node 26.13.1 without unreviewed lockfile churn.",
+        "The complete canonical pnpm check passes on Node 26.13.1."
       ],
       "verification": [
         "Node version pin parity tests",
@@ -19106,23 +19208,16 @@
         "scope": "Use Node.js 26 Active LTS as the MoonWitness runtime baseline instead of Node 24, including the exact Node 26 LTS patch, root/add-on compatibility checks, CI and blueprint/ADR updates. pnpm 12.24.0 remains unchanged unless a separately reviewed compatibility failure requires a change.",
         "evidence": "Explicit instruction in the repository-owner conversation on 2026-11-27: use Node 26 because it is LTS."
       },
-      "evidence": [
-        "Official Node.js Release Working Group schedule lists 26.x Lithium as Active LTS from 2026-10-28 through 2029-04-30; Node 27 remains Alpha.",
-        "Node.js 26.13.0 is the LTS patch selected for the migration as of 2026-11-27.",
-        "GitHub Actions Repository CI run 46040342559 passed on commit 20d7af66fbabd8762d3e173c7ecec491821c5eb1 using Node.js v26.13.0 and pnpm v12.24.0; pnpm install --frozen-lockfile succeeded.",
-        "The canonical pnpm check passed: repository lint, add-on lint, workflow SHA/trust policy lint across 6 workflows, format gate, explicit no-TypeScript implementation typecheck skip, 238-task repository validation, task registry validator, and all 65 Node tests passed with 0 failures.",
-        "Node.js 26.13.0 exact pins in .nvmrc and .node-version match package.json engines >=26.13.0 <27. Add-on manifest schema/example/linter and tests use >=26.13.0 <27.0.0.",
-        "ADR-0004 is Accepted for Node 26.13.0; ADR-0002 remains as historical and is superseded for Node runtime only. pnpm 12.24.0 and lockfile were retained.",
-        "PR #16: https://github.com/mileyaffarizi-source/moonwitness/pull/16"
-      ],
+      "evidence": [],
       "blocker": null,
       "notes": [
         "Node 24 runtime selection is retained in ADR-0002 as historical decision context and is superseded for runtime only by ADR-0004.",
-        "The Node 26 runtime pin in the repository does not install Node 26 on the owner's local workstation; local environment verification is separate."
+        "The Node 26 runtime pin in the repository does not install Node 26 on the owner's local workstation; local environment verification is separate.",
+        "Patch-refresh follow-up: rerun the frozen install and complete canonical check on 26.13.1; prior 26.13.0 evidence is not proof for this patch."
       ],
       "created_at": "2026-11-27T16:47:00.000Z",
       "updated_at": "2026-11-27T17:17:29.702Z",
-      "completed_at": "2026-11-27T17:17:29.702Z"
+      "completed_at": null
     },
     {
       "id": "GOV-013",
@@ -19320,6 +19415,2135 @@
       ],
       "created_at": "2026-11-27T16:55:00.000Z",
       "updated_at": "2026-11-27T17:17:29.702Z",
+      "completed_at": null
+    },
+    {
+      "id": "AST-001",
+      "title": "Audit host fleet, execution environments and operator workflows",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-00",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Inventory local/remote host classes, operating systems, reachability, provisioning sources, fleet scale and operator use cases without changing host state.",
+      "scope_in": [
+        "Inventory local/remote host classes, operating systems, reachability, provisioning sources, fleet scale and operator use cases without changing host state.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No host mutation, SSH credential collection or secret export."
+      ],
+      "dependencies": [
+        "APP-001",
+        "GOV-001"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Host fleet audit and unknowns register"
+      ],
+      "acceptance_criteria": [
+        "Machine classes and ownership are documented.",
+        "Existing tools and lifecycle sources are mapped.",
+        "Read-only discovery has no external side effects."
+      ],
+      "verification": [
+        "Inventory review",
+        "Source-of-truth review"
+      ],
+      "file_ownership": [
+        "apps/astronauts/docs/architecture/inventory/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-002",
+      "title": "Approve Astronauts architecture, contracts and machine threat model",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-01",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Finalize controller/agent trust zones, API-issued grant schema, enrollment lifecycle, typed capability policy, failure model and production approval gate.",
+      "scope_in": [
+        "Finalize controller/agent trust zones, API-issued grant schema, enrollment lifecycle, typed capability policy, failure model and production approval gate.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "Do not implement unrestricted command execution or cloud resource creation."
+      ],
+      "dependencies": [
+        "AST-001",
+        "APP-002",
+        "GOV-003",
+        "GOV-004",
+        "GOV-010"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Approved architecture and threat model"
+      ],
+      "acceptance_criteria": [
+        "Controller and Edge Agent have distinct identities and blast radius.",
+        "Only typed allowlisted capabilities can execute.",
+        "Exact-scope grant, signature, expiry, replay protection, revocation and audit are specified."
+      ],
+      "verification": [
+        "Architecture review",
+        "Threat model review"
+      ],
+      "file_ownership": [
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "apps/astronauts/README.md"
+      ],
+      "estimate": "L",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-003",
+      "title": "Pin Go toolchain and establish reproducible module checks",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-02",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Create one Go module for Controller and Edge Agent binaries with pinned toolchain, module verification, formatting, vet, test and build commands.",
+      "scope_in": [
+        "Create one Go module for Controller and Edge Agent binaries with pinned toolchain, module verification, formatting, vet, test and build commands.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No fake controller or agent health implementation."
+      ],
+      "dependencies": [
+        "AST-002",
+        "PKG-002"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "go.mod and build contract"
+      ],
+      "acceptance_criteria": [
+        "Go toolchain version is exact and recorded.",
+        "go fmt, go vet, go test and reproducible builds run from a clean clone.",
+        "pnpm does not claim Go package ownership."
+      ],
+      "verification": [
+        "Go toolchain verification",
+        "Clean build"
+      ],
+      "file_ownership": [
+        "apps/astronauts/go.mod",
+        "apps/astronauts/go.sum",
+        "apps/astronauts/Makefile"
+      ],
+      "estimate": "M",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [
+        "Go 1.27.4 is the current stable baseline verified 2026-11-28; re-check before implementation."
+      ],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-004",
+      "title": "Build Controller runtime bootstrap and health lifecycle",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-03",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Implement config validation, secure listener bootstrap, liveness/readiness, structured logging, graceful shutdown and dependency wiring.",
+      "scope_in": [
+        "Implement config validation, secure listener bootstrap, liveness/readiness, structured logging, graceful shutdown and dependency wiring.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No fleet actions or unauthenticated management endpoints."
+      ],
+      "dependencies": [
+        "AST-003",
+        "GOV-004"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Runnable Controller bootstrap"
+      ],
+      "acceptance_criteria": [
+        "Readiness fails on invalid config or missing dependency.",
+        "Liveness/readiness are distinct and tested.",
+        "Shutdown drains sessions within a bounded deadline."
+      ],
+      "verification": [
+        "Startup/config tests",
+        "Shutdown tests"
+      ],
+      "file_ownership": [
+        "apps/astronauts/cmd/controller/**",
+        "apps/astronauts/internal/controller/runtime/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-005",
+      "title": "Build Edge Agent bootstrap and outbound secure channel",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-03",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Build a separate Agent binary that connects outbound to a configured Controller endpoint and validates peer identity before registration.",
+      "scope_in": [
+        "Build a separate Agent binary that connects outbound to a configured Controller endpoint and validates peer identity before registration.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No inbound listener, arbitrary shell, interactive remote terminal or ambient SSH credentials."
+      ],
+      "dependencies": [
+        "AST-003",
+        "GOV-003"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Outbound-only Edge Agent"
+      ],
+      "acceptance_criteria": [
+        "Agent requires no inbound firewall opening.",
+        "Untrusted Controller identity is rejected.",
+        "Connection loss/backoff and shutdown behavior are tested."
+      ],
+      "verification": [
+        "mTLS connection tests",
+        "Reconnect/shutdown tests"
+      ],
+      "file_ownership": [
+        "apps/astronauts/cmd/agent/**",
+        "apps/astronauts/internal/agent/bootstrap/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-006",
+      "title": "Implement machine enrollment and certificate lifecycle",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-04",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Implement one-time scoped enrollment, machine identity binding, certificate issue/rotation/revocation and quarantine state.",
+      "scope_in": [
+        "Implement one-time scoped enrollment, machine identity binding, certificate issue/rotation/revocation and quarantine state.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No long-lived shared bootstrap tokens or private keys in logs/task files."
+      ],
+      "dependencies": [
+        "AST-004",
+        "AST-005",
+        "ID-006"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Machine identity lifecycle"
+      ],
+      "acceptance_criteria": [
+        "Enrollment is scoped and replay-resistant.",
+        "Machine identity is bound to approved policy.",
+        "Rotation/revocation prevents stale agent reconnect."
+      ],
+      "verification": [
+        "Enrollment integration",
+        "Rotation/revocation tests"
+      ],
+      "file_ownership": [
+        "apps/astronauts/internal/controller/enrollment/**",
+        "apps/astronauts/internal/agent/identity/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-007",
+      "title": "Implement fleet registry, host inventory and heartbeat",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-04",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Track enrolled machine identity, approved labels, OS/runtime inventory, observed capabilities, heartbeat, health/freshness and last-seen state.",
+      "scope_in": [
+        "Track enrolled machine identity, approved labels, OS/runtime inventory, observed capabilities, heartbeat, health/freshness and last-seen state.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "Do not store subscriber records, Cloud provider state or source repository contents."
+      ],
+      "dependencies": [
+        "AST-006"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Machine fleet registry"
+      ],
+      "acceptance_criteria": [
+        "Inventory is allowlisted and privacy-minimized.",
+        "Stale/offline agents are never shown healthy.",
+        "Fleet state has audit and retention rules."
+      ],
+      "verification": [
+        "Heartbeat tests",
+        "Staleness and authorization tests"
+      ],
+      "file_ownership": [
+        "apps/astronauts/internal/controller/fleet/**",
+        "apps/astronauts/internal/agent/inventory/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-008",
+      "title": "Define signed versioned Controller-Agent protocol",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-04",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Define versioned enrollment, heartbeat, job, acknowledgement, result, cancellation and error envelopes with correlation, idempotency and cryptographic binding.",
+      "scope_in": [
+        "Define versioned enrollment, heartbeat, job, acknowledgement, result, cancellation and error envelopes with correlation, idempotency and cryptographic binding.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No arbitrary scripts or model-supplied command text in the protocol."
+      ],
+      "dependencies": [
+        "AST-003",
+        "GOV-005"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Versioned signed protocol"
+      ],
+      "acceptance_criteria": [
+        "Messages have schema version, issuer, audience, host target and expiry.",
+        "Job body hash, nonce/idempotency and signature are verified.",
+        "Unknown versions and replayed messages fail closed."
+      ],
+      "verification": [
+        "Protocol contract tests",
+        "Signature/replay tests"
+      ],
+      "file_ownership": [
+        "apps/astronauts/proto/**",
+        "apps/astronauts/internal/protocol/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-009",
+      "title": "Implement durable job scheduling, dispatch and cancellation",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-05",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Schedule and dispatch authorized jobs to enrolled hosts with durable queue state, leases, retry classification, deadlines, cancellation and recovery.",
+      "scope_in": [
+        "Schedule and dispatch authorized jobs to enrolled hosts with durable queue state, leases, retry classification, deadlines, cancellation and recovery.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No hidden retry of non-idempotent job or retry after grant expiry."
+      ],
+      "dependencies": [
+        "AST-007",
+        "AST-008"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Durable machine-job scheduler"
+      ],
+      "acceptance_criteria": [
+        "Job transitions are durable and explicit.",
+        "Duplicate/replayed jobs do not duplicate side effects.",
+        "Cancellation and expired grants stop queued work safely."
+      ],
+      "verification": [
+        "Concurrency/idempotency tests",
+        "Restart/recovery tests"
+      ],
+      "file_ownership": [
+        "apps/astronauts/internal/controller/jobs/**"
+      ],
+      "estimate": "XL",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-010",
+      "title": "Build typed capability registry and read-only Edge operations",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-05",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Create a versioned allowlist of typed capabilities beginning with read-only host facts, service status and bounded diagnostics.",
+      "scope_in": [
+        "Create a versioned allowlist of typed capabilities beginning with read-only host facts, service status and bounded diagnostics.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No arbitrary shell, eval, Docker socket, unrestricted filesystem or arbitrary binary execution."
+      ],
+      "dependencies": [
+        "AST-005",
+        "AST-008"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Read-only host capability SDK"
+      ],
+      "acceptance_criteria": [
+        "Unknown capabilities are denied.",
+        "Inputs/outputs are schema-validated and resource/time bounded.",
+        "Read-only operations cannot mutate the host."
+      ],
+      "verification": [
+        "Capability allowlist tests",
+        "Sandbox-boundary tests"
+      ],
+      "file_ownership": [
+        "apps/astronauts/internal/agent/capabilities/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-011",
+      "title": "Enforce API-signed grants and governed host executor",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-06",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Verify short-lived API grants bound to actor, host, capability, input hash, policy version, expiry and approval; execute only reviewed capabilities.",
+      "scope_in": [
+        "Verify short-lived API grants bound to actor, host, capability, input hash, policy version, expiry and approval; execute only reviewed capabilities.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No generic remote command endpoint or model-controlled permission decision."
+      ],
+      "dependencies": [
+        "AST-009",
+        "AST-010",
+        "AGT-009",
+        "GOV-010"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Scoped grants and allowlisted executor"
+      ],
+      "acceptance_criteria": [
+        "Missing, expired, wrong-host, wrong-capability or modified-payload grant is rejected.",
+        "Sensitive/destructive actions require exact approval and audit.",
+        "Kill switch and certificate revoke stop future execution."
+      ],
+      "verification": [
+        "Grant mutation/expiry tests",
+        "Privilege escalation tests",
+        "Approval contract review"
+      ],
+      "file_ownership": [
+        "apps/astronauts/internal/controller/authorization/**",
+        "apps/astronauts/internal/agent/executor/**"
+      ],
+      "estimate": "XL",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-012",
+      "title": "Implement machine audit, observability and recovery controls",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-06",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Emit redacted logs, metrics and traces across Controller/Agent/job lifecycle; define retention, outage recovery and runbooks.",
+      "scope_in": [
+        "Emit redacted logs, metrics and traces across Controller/Agent/job lifecycle; define retention, outage recovery and runbooks.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No credentials, private keys or unnecessary file contents in telemetry."
+      ],
+      "dependencies": [
+        "AST-004",
+        "AST-007",
+        "AST-009",
+        "GOV-010"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Observability and operations runbook"
+      ],
+      "acceptance_criteria": [
+        "Correlation joins API grant, job, host and result.",
+        "Disconnected agent and Controller restart recover truthfully.",
+        "Queue age, latency and stale-host signals are measurable."
+      ],
+      "verification": [
+        "Telemetry redaction tests",
+        "Recovery runbook exercise"
+      ],
+      "file_ownership": [
+        "apps/astronauts/internal/observability/**",
+        "apps/astronauts/docs/operations/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-013",
+      "title": "Add signed Edge Agent packaging, staged update and rollback",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-07",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Package platform-specific Agent releases, verify signed manifests/artifacts, perform staged updates and retain a rollback slot.",
+      "scope_in": [
+        "Package platform-specific Agent releases, verify signed manifests/artifacts, perform staged updates and retain a rollback slot.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No unsigned remote code, silent fleet-wide auto-update or update by mutable tag."
+      ],
+      "dependencies": [
+        "AST-006",
+        "AST-011",
+        "AST-012",
+        "CLOUD-004"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Signed Agent distribution contract"
+      ],
+      "acceptance_criteria": [
+        "Signature and target compatibility are verified before install.",
+        "Rollout is canary/batch controlled and stoppable.",
+        "Failed update returns to last known-good version with audit."
+      ],
+      "verification": [
+        "Signature tests",
+        "Upgrade/rollback tests"
+      ],
+      "file_ownership": [
+        "apps/astronauts/internal/agent/update/**",
+        "apps/astronauts/deploy/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "AST-014",
+      "title": "Verify Astronauts end-to-end security and platform integration",
+      "workstream": "AST",
+      "blueprint": "BLUEPRINT-ASTRONAUTS.MD",
+      "phase": "PHASE-08",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "machine_control_plane_lead",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Prove one non-production enrolled host receives one API-authorized typed job, executes it, reports evidence, survives reconnect and rejects adversarial grants.",
+      "scope_in": [
+        "Prove one non-production enrolled host receives one API-authorized typed job, executes it, reports evidence, survives reconnect and rejects adversarial grants.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No production host mutation or uncontrolled external deployment."
+      ],
+      "dependencies": [
+        "AST-011",
+        "AST-012",
+        "AST-013",
+        "PKG-009",
+        "APP-007"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ASTRONAUTS.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Astronauts vertical-slice report"
+      ],
+      "acceptance_criteria": [
+        "API actor/grant/Controller/job/Agent/result share correlation and evidence.",
+        "Unauthorized/replayed/expired/changed-scope jobs fail closed.",
+        "Build, security, failure-injection and recovery checks pass."
+      ],
+      "verification": [
+        "Full E2E",
+        "Threat-model validation",
+        "CI run"
+      ],
+      "file_ownership": [
+        "apps/astronauts/tests/**",
+        "apps/astronauts/docs/reports/**"
+      ],
+      "estimate": "XL",
+      "parallel_group": "AST",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-001",
+      "title": "Audit RADIUS, BRAS/BNG/NAS, ACS, CPE and Syslog systems",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-00",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Inventory PPPoE NAS/BRAS/BNG platforms, RADIUS requirements, OLT/ONT/CPE vendors, ACS operations, Syslog sources, event rates and legacy AAA/ACS dependencies without changes.",
+      "scope_in": [
+        "Inventory PPPoE NAS/BRAS/BNG platforms, RADIUS requirements, OLT/ONT/CPE vendors, ACS operations, Syslog sources, event rates and legacy AAA/ACS dependencies without changes.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No live RADIUS/ACS configuration or credential extraction."
+      ],
+      "dependencies": [
+        "APP-001",
+        "APP-002",
+        "GOV-001",
+        "OSS-001",
+        "ISP-001"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Telecom protocol baseline"
+      ],
+      "acceptance_criteria": [
+        "NAS/vendor/protocol compatibility is mapped.",
+        "Subscriber/service/device identifiers and source-of-truth are mapped.",
+        "Read-only discovery and traffic estimates are documented."
+      ],
+      "verification": [
+        "Source inventory review",
+        "Protocol capability matrix"
+      ],
+      "file_ownership": [
+        "apps/arsy/docs/architecture/inventory/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-002",
+      "title": "Approve Arsy protocol architecture and telco threat model",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-01",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Finalize service boundaries, RADIUS/ACS/Syslog transport, session retention, secret handling, API/event contracts, abuse controls and trust zones.",
+      "scope_in": [
+        "Finalize service boundaries, RADIUS/ACS/Syslog transport, session retention, secret handling, API/event contracts, abuse controls and trust zones.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "Do not introduce a custom PPPoE access concentrator or billing system."
+      ],
+      "dependencies": [
+        "ARS-001",
+        "APP-002",
+        "GOV-002",
+        "GOV-010"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Approved Arsy protocol architecture"
+      ],
+      "acceptance_criteria": [
+        "RADIUS AAA is distinct from NAS/BRAS PPPoE termination.",
+        "ACS RPCs require OSS/ISP authorization and exact target scope.",
+        "Syslog source trust, rate limits and event retention are specified.",
+        "Credential-method feasibility is recorded, not assumed."
+      ],
+      "verification": [
+        "Architecture review",
+        "Threat model",
+        "Vendor compatibility review"
+      ],
+      "file_ownership": [
+        "BLUEPRINT-ARSY.MD",
+        "apps/arsy/README.md"
+      ],
+      "estimate": "L",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-003",
+      "title": "Pin Rust toolchain and create reproducible workspace checks",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-02",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Establish a Rust workspace with pinned stable toolchain, locked dependencies, cargo fmt, clippy, tests, audit/SBOM hooks and reproducible release profile.",
+      "scope_in": [
+        "Establish a Rust workspace with pinned stable toolchain, locked dependencies, cargo fmt, clippy, tests, audit/SBOM hooks and reproducible release profile.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "Do not add unreviewed protocol dependencies or claim empty binaries as working services."
+      ],
+      "dependencies": [
+        "ARS-002",
+        "PKG-002"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Pinned Rust workspace"
+      ],
+      "acceptance_criteria": [
+        "Rust toolchain is pinned and CI-verifiable.",
+        "Cargo.lock is committed and builds are reproducible.",
+        "Protocol crates are introduced only after compatibility/license/security review."
+      ],
+      "verification": [
+        "cargo fmt --check",
+        "cargo clippy",
+        "cargo test",
+        "Clean build"
+      ],
+      "file_ownership": [
+        "apps/arsy/Cargo.toml",
+        "apps/arsy/Cargo.lock",
+        "apps/arsy/rust-toolchain.toml",
+        "apps/arsy/Makefile"
+      ],
+      "estimate": "M",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [
+        "Rust 1.100.0 is current stable verified 2026-11-28; re-check before implementation."
+      ],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-004",
+      "title": "Define typed protocol envelopes and shared service contracts",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-03",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Define versioned schemas for RADIUS outcomes/accounting, ACS sessions/RPCs, Syslog observations and normalized events with correlation, provenance and idempotency.",
+      "scope_in": [
+        "Define versioned schemas for RADIUS outcomes/accounting, ACS sessions/RPCs, Syslog observations and normalized events with correlation, provenance and idempotency.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No direct database imports from OSS, ISP or BSS."
+      ],
+      "dependencies": [
+        "ARS-002",
+        "APP-003",
+        "GOV-004",
+        "GOV-005"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Protocol contract crate"
+      ],
+      "acceptance_criteria": [
+        "Every event has producer/schema version, source identity, observed time and correlation.",
+        "Sensitive protocol attributes are classified and redacted.",
+        "Consumers reject unsupported schema versions safely."
+      ],
+      "verification": [
+        "Schema compatibility tests",
+        "Event contract tests"
+      ],
+      "file_ownership": [
+        "apps/arsy/crates/contracts/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-005",
+      "title": "Implement RADIUS authentication service for PPPoE AAA",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-04",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Implement Access-Request/Accept/Reject/Challenge against configured NAS clients and a freshness-aware subscriber policy projection.",
+      "scope_in": [
+        "Implement Access-Request/Accept/Reject/Challenge against configured NAS clients and a freshness-aware subscriber policy projection.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No plaintext password persistence; do not guess PAP/CHAP/MS-CHAP/EAP support without credential proof and review."
+      ],
+      "dependencies": [
+        "ARS-003",
+        "ARS-004",
+        "ISP-002",
+        "ID-006"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "RADIUS authentication capability"
+      ],
+      "acceptance_criteria": [
+        "NAS identity and secret lookup are secure and scoped.",
+        "Packet authenticators and Message-Authenticator requirements are validated for supported methods.",
+        "Unknown NAS, malformed or replayed traffic fails safely.",
+        "Auth decision is traceable to policy version and freshness."
+      ],
+      "verification": [
+        "RFC-focused protocol tests",
+        "NAS authentication tests",
+        "Abuse/replay tests"
+      ],
+      "file_ownership": [
+        "apps/arsy/crates/radius-auth/**"
+      ],
+      "estimate": "XL",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-006",
+      "title": "Implement RADIUS accounting and Dynamic Authorization",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-05",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Process Accounting-Start/Interim/Stop with deduplication and session state; implement authorized CoA/Disconnect for approved NAS integrations.",
+      "scope_in": [
+        "Process Accounting-Start/Interim/Stop with deduplication and session state; implement authorized CoA/Disconnect for approved NAS integrations.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No invoice calculation or direct subscriber service-state mutation."
+      ],
+      "dependencies": [
+        "ARS-005",
+        "GOV-005"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "RADIUS accounting and dynamic authorization"
+      ],
+      "acceptance_criteria": [
+        "Accounting packets are deduplicated and correlate to stable session IDs.",
+        "Missing/out-of-order interim/stop is represented as uncertain.",
+        "CoA/Disconnect requires exact API/ISP authorization and NAS allowlisting.",
+        "RadSec is evaluated separately before enabling."
+      ],
+      "verification": [
+        "Accounting lifecycle tests",
+        "CoA/Disconnect contract tests",
+        "NAS interoperability"
+      ],
+      "file_ownership": [
+        "apps/arsy/crates/radius-accounting/**",
+        "apps/arsy/crates/radius-dynamic-auth/**"
+      ],
+      "estimate": "XL",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-007",
+      "title": "Implement TR-069/CWMP ACS transport and session core",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-04",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Implement CWMP HTTPS/SOAP session lifecycle, CPE authentication, Inform processing, bounded RPC queue and standards-aware timeout behavior.",
+      "scope_in": [
+        "Implement CWMP HTTPS/SOAP session lifecycle, CPE authentication, Inform processing, bounded RPC queue and standards-aware timeout behavior.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No unapproved provisioning policy or direct ONT inventory ownership."
+      ],
+      "dependencies": [
+        "ARS-003",
+        "ARS-004",
+        "OSS-002"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "TR-069 ACS runtime"
+      ],
+      "acceptance_criteria": [
+        "Supported CWMP versions/operations are documented and tested.",
+        "Device identity is checked against authorized OSS/ISP references.",
+        "Session and retry behavior are bounded and observable."
+      ],
+      "verification": [
+        "CWMP session tests",
+        "SOAP parser fuzzing",
+        "CPE interoperability"
+      ],
+      "file_ownership": [
+        "apps/arsy/crates/acs-cwmp/**"
+      ],
+      "estimate": "XL",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-008",
+      "title": "Implement ACS parameter model and approved RPC execution adapter",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-05",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Map vendor parameter models and extensions; accept only OSS-authorized target-bound RPC requests, then report observed result/parameter evidence.",
+      "scope_in": [
+        "Map vendor parameter models and extensions; accept only OSS-authorized target-bound RPC requests, then report observed result/parameter evidence.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No arbitrary CPE command path, hidden vendor credentials or autonomous profile selection."
+      ],
+      "dependencies": [
+        "ARS-007",
+        "OSS-002"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "ACS model and OSS adapter"
+      ],
+      "acceptance_criteria": [
+        "Target device/operation/payload is bound to an approved request.",
+        "Vendor extensions are versioned and isolated.",
+        "RPC acknowledgement differs from observed state; failed/partial outcomes persist."
+      ],
+      "verification": [
+        "RPC authorization tests",
+        "Parameter mapping fixtures",
+        "Failure recovery tests"
+      ],
+      "file_ownership": [
+        "apps/arsy/crates/acs-model/**",
+        "apps/arsy/crates/acs-oss-adapter/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-009",
+      "title": "Implement Syslog UDP/TCP/TLS ingestion",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-04",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Receive configured Syslog sources over UDP/TCP and optional TLS; parse supported RFC3164/RFC5424 messages with source metadata.",
+      "scope_in": [
+        "Receive configured Syslog sources over UDP/TCP and optional TLS; parse supported RFC3164/RFC5424 messages with source metadata.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No open unauthenticated Internet relay or unbounded packet/body allocation."
+      ],
+      "dependencies": [
+        "ARS-003",
+        "ARS-004"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Syslog receiver"
+      ],
+      "acceptance_criteria": [
+        "Sources are allowlisted or authenticated according to transport.",
+        "Malformed/oversized/flooded messages are bounded and counted.",
+        "Original timestamps/source metadata and parse failures are retained safely."
+      ],
+      "verification": [
+        "RFC parser fixtures",
+        "Transport tests",
+        "Fuzz/DoS tests"
+      ],
+      "file_ownership": [
+        "apps/arsy/crates/syslog-ingest/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-010",
+      "title": "Normalize protocol events and publish through durable event outbox",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-05",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Normalize approved Syslog, RADIUS and ACS observations, redact sensitive attributes, and publish versioned events with retry/replay support.",
+      "scope_in": [
+        "Normalize approved Syslog, RADIUS and ACS observations, redact sensitive attributes, and publish versioned events with retry/replay support.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "Do not create OSS incidents or write ISP/BSS records inside Arsy."
+      ],
+      "dependencies": [
+        "ARS-009",
+        "APP-003",
+        "GOV-005"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Normalized protocol event pipeline"
+      ],
+      "acceptance_criteria": [
+        "Outbox prevents event loss across restart.",
+        "Event IDs and deduplication prevent duplicate downstream effects.",
+        "Unknown protocol attributes are classified/redacted.",
+        "OSS remains responsible for alarm-to-incident correlation."
+      ],
+      "verification": [
+        "Outbox restart tests",
+        "Event contract tests",
+        "Redaction tests"
+      ],
+      "file_ownership": [
+        "apps/arsy/crates/event-pipeline/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-011",
+      "title": "Integrate subscriber entitlement and AAA policy projections",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-06",
+      "priority": "P1",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Consume versioned, bounded-TTL subscriber/service authorization projections from API/ISP and publish accounting evidence for downstream workflows.",
+      "scope_in": [
+        "Consume versioned, bounded-TTL subscriber/service authorization projections from API/ISP and publish accounting evidence for downstream workflows.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No direct ISP/BSS database access and no invoice generation."
+      ],
+      "dependencies": [
+        "ARS-005",
+        "ARS-006",
+        "ISP-002",
+        "BSS-002",
+        "APP-003"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "AAA policy projection adapter"
+      ],
+      "acceptance_criteria": [
+        "Stale/unknown policy follows explicit fail-closed or approved emergency policy.",
+        "Entitlement changes/revocation propagate within defined SLO.",
+        "Policy source/version is attached to every RADIUS decision.",
+        "Accounting events reference ISP IDs without becoming their authority."
+      ],
+      "verification": [
+        "Policy staleness tests",
+        "Revocation propagation",
+        "Cross-app contract tests"
+      ],
+      "file_ownership": [
+        "apps/arsy/crates/policy-adapter/**"
+      ],
+      "estimate": "L",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-012",
+      "title": "Harden Arsy protocol security, load, failover and operations",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-07",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Validate packet authentication, secret rotation, TLS/mTLS, flood controls, parser fuzzing, session durability, HA/failover, retention and recovery.",
+      "scope_in": [
+        "Validate packet authentication, secret rotation, TLS/mTLS, flood controls, parser fuzzing, session durability, HA/failover, retention and recovery.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No production cutover without reviewed capacity, compatibility and credential migration plan."
+      ],
+      "dependencies": [
+        "ARS-005",
+        "ARS-006",
+        "ARS-007",
+        "ARS-009",
+        "ARS-010",
+        "ARS-011",
+        "GOV-010"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Arsy production-readiness report"
+      ],
+      "acceptance_criteria": [
+        "Security tests cover malformed, replayed, spoofed and oversized traffic.",
+        "Load/soak results use realistic concurrent sessions and accounting rates.",
+        "HA/failover preserves protocol invariants and event delivery.",
+        "Credential rotation/revocation and audit are exercised."
+      ],
+      "verification": [
+        "Threat-model review",
+        "Load/soak report",
+        "Failover exercise"
+      ],
+      "file_ownership": [
+        "apps/arsy/tests/security/**",
+        "apps/arsy/docs/operations/**"
+      ],
+      "estimate": "XL",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-013",
+      "title": "Evaluate TR-369/USP interoperability as a future track",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-08",
+      "priority": "P2",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Evaluate USP/TR-369 model, transport, coexistence and migration with the TR-069 estate; propose an ADR only if a real need exists.",
+      "scope_in": [
+        "Evaluate USP/TR-369 model, transport, coexistence and migration with the TR-069 estate; propose an ADR only if a real need exists.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "Do not implement USP production endpoints in the initial ACS MVP."
+      ],
+      "dependencies": [
+        "ARS-007",
+        "ARS-008",
+        "ARS-012"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "USP interoperability assessment"
+      ],
+      "acceptance_criteria": [
+        "Compatibility and operational impact are documented.",
+        "No forced migration from TR-069 is proposed.",
+        "Recommendation includes vendor coverage and test requirements."
+      ],
+      "verification": [
+        "Standards review",
+        "Vendor matrix",
+        "ADR proposal"
+      ],
+      "file_ownership": [
+        "apps/arsy/docs/architecture/usp/**"
+      ],
+      "estimate": "M",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null
+    },
+    {
+      "id": "ARS-014",
+      "title": "Verify RADIUS, ACS and Syslog end-to-end integrations",
+      "workstream": "ARS",
+      "blueprint": "BLUEPRINT-ARSY.MD",
+      "phase": "PHASE-08",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "telecom_protocol_engineer",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Prove a lab NAS PPPoE AAA/accounting flow, a lab CPE CWMP session/RPC and authenticated Syslog source through API/ISP/OSS contracts.",
+      "scope_in": [
+        "Prove a lab NAS PPPoE AAA/accounting flow, a lab CPE CWMP session/RPC and authenticated Syslog source through API/ISP/OSS contracts.",
+        "Follow the specialist blueprint and documented cross-app contracts."
+      ],
+      "scope_out": [
+        "Do not alter files outside declared ownership paths.",
+        "No production credentials, subscribers, CPE changes or network cutover."
+      ],
+      "dependencies": [
+        "ARS-006",
+        "ARS-008",
+        "ARS-010",
+        "ARS-011",
+        "ARS-012",
+        "ISP-006",
+        "OSS-005",
+        "OSS-008"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-ARSY.MD",
+        "BLUEPRINT-APPLICATIONS.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Inspect the current implementation, task dependencies and owned paths before editing.",
+        "Confirm dependencies are done with evidence and claim only the declared paths.",
+        "Record protocol/API contracts, data owner, trust boundary and failure modes before coding.",
+        "Implement one bounded capability; do not add speculative layers or unrelated features.",
+        "Add unit, contract and negative/security tests with the implementation.",
+        "Run pinned toolchain format, lint, build and targeted tests; record versions and exit codes.",
+        "Review secrets, authorization, rate limits, replay/idempotency, cancellation and rollback.",
+        "Attach commit/CI/test evidence; keep status incomplete until every acceptance criterion passes."
+      ],
+      "deliverables": [
+        "Arsy integration report"
+      ],
+      "acceptance_criteria": [
+        "RADIUS authentication/accounting correlates to ISP service.",
+        "ACS RPCs are scoped by OSS workflow and verify observed device state.",
+        "Syslog reaches OSS with source, timestamp and dedup key.",
+        "All flows survive retries and report real evidence."
+      ],
+      "verification": [
+        "RADIUS integration test",
+        "CWMP CPE test",
+        "Syslog-to-OSS test",
+        "CI evidence"
+      ],
+      "file_ownership": [
+        "apps/arsy/tests/integration/**",
+        "apps/arsy/docs/reports/**"
+      ],
+      "estimate": "XL",
+      "parallel_group": "ARS",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [],
+      "created_at": null,
+      "updated_at": null,
       "completed_at": null
     }
   ]
