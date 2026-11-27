@@ -1,0 +1,14 @@
+{
+  "release-type": "node",
+  "package-name": "moonwitness",
+  "include-component-in-tag": false,
+  "include-v-in-tag": true,
+  "changelog-path": "CHANGELOG.md",
+  "packages": {
+    ".": {
+      "release-type": "node",
+      "package-name": "moonwitness",
+      "changelog-path": "CHANGELOG.md"
+    }
+  }
+}
