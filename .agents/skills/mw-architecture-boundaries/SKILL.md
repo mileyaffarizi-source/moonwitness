@@ -9,7 +9,7 @@ description: Keep MoonWitness application, package, domain ownership and runtime
 Creating or moving an app/package, splitting a domain, defining an integration or reviewing imports/deployment boundaries.
 
 ## Read first
-[Application inventory](../../../BLUEPRINT-APPLICATIONS.MD) and [package architecture](../../../BLUEPRINT-PACKAGE.MD). Then read only the affected app blueprint.
+[Application inventory](../../../BLUEPRINT-APPLICATIONS.MD) and [package architecture](../../../BLUEPRINT-PACKAGE.MD). Then read only the affected app blueprint. For add-ons, also read [BLUEPRINT-PACKAGE-ADDON.MD](../../../BLUEPRINT-PACKAGE-ADDON.MD) and [the add-on engineering standard](../../../docs/engineering/ADDON-ENGINEERING-STANDARD.md).
 
 ## Invariants
 - Exactly fourteen named application surfaces are in the current target inventory: agent, api, web, OSS, BSS, id, docs, desktop, mobile, cloud, isp, dx, A-L-L-A-H and riot.
@@ -18,7 +18,11 @@ Creating or moving an app/package, splitting a domain, defining an integration o
 - ID authenticates principals; each resource-owning API/domain authorizes access. Vault/KMS owns secret values.
 - Agent reasons and invokes allowlisted API capabilities; DX coordinates engineering work and bounded local execution. Neither bypasses API policy.
 - Frontend apps consume public/browser-safe contracts. They never import Fastify, MikroORM or server-only adapters.
+- Add-ons live in packages/addons/<slug>, use the strict manifest schema and must pass pnpm lint:addons.
 - Add-ons depend on public platform contracts, not another add-on's private internals. No cycles or deep imports outside exports.
+- Add-on permission declarations are requests, not grants; API enforces actor/tenant/resource/operation authorization.
+- Add-on code never owns DB connections/ORM internals, secrets or server composition; Web contributions are browser-safe and Agent tools call API only.
+- Third-party add-on execution remains disabled while ADR-0003 is Proposed; do not bypass the trust/identity review.
 - Existing systems retain source-of-truth ownership until explicit migration decisions are approved.
 
 ## Decision test
