@@ -7,7 +7,7 @@
 
 ## 1. Mission and ownership
 
-**apps/agent** is the shared Intelligence Runtime used by the fourteen-app ecosystem. It is distinct from **apps/dx**, which is the developer workbench and local orchestration control plane. It reasons, plans, coordinates tools, executes workflows, requests approval and reports results. It is not the system of record, a parallel API, an unrestricted database client or a general-purpose shell.
+**apps/agent** is the shared Intelligence Runtime used by the sixteen-app ecosystem. It is distinct from **apps/dx**, which is the developer workbench and local orchestration control plane. It reasons, plans, coordinates tools, executes workflows, requests approval and reports results. It is not the system of record, a parallel API, an unrestricted database client or a general-purpose shell.
 
 Authority split:
 - **Agent:** model orchestration, context assembly, agent/tool/workflow registration, evaluation, memory, checkpoints, action proposals and run history.
@@ -124,3 +124,10 @@ A real workflow executes under verified identity, calls only approved API capabi
 apps/dx may select and invoke approved Agent adapters, but it does not bypass Agent tool policies or API authorization. The DX local daemon can launch a configured coding agent within a bounded repository/worktree sandbox. It must not expose host shell, production secrets or Docker privileges as ordinary Mastra tools.
 
 Desktop, Mobile, OSS, BSS, Cloud, ISP, A-L-L-A-H, RIOT and Web experiences call approved API contracts. The Agent does not import their UI code or internal domain repositories.
+
+
+## 17. Remote machine and telecom execution boundary
+
+Agent does not own host connectivity. A model-generated machine operation must become a typed API capability request with a verified actor, exact host set, capability, input hash, expiry and approval policy. The API authorizes and issues a short-lived signed execution grant; Astronauts accepts only that grant and forwards only an allowlisted signed job to an enrolled Edge Agent. Agent never receives machine credentials, SSH keys, RADIUS shared secrets or ACS device credentials.
+
+Agent does not call RADIUS/ACS/Syslog protocols directly. It requests approved API/OSS/ISP operations; Arsy is the protocol runtime behind those service boundaries. Retrieved protocol output is untrusted data and cannot broaden Agent permissions.
