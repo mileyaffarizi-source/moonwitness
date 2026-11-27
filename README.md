@@ -16,6 +16,8 @@ This repository is being transitioned from an architecture/planning repository i
 - Add-on runtime/trust decision: docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md
 - Developer Experience blueprint: BLUEPRINT-DX.MD
 - Task registry: tasks.json
+- Task decomposition and parent/child execution standard: docs/engineering/TASK-DECOMPOSITION-STANDARD.md
+- Full blueprint audit (2026-11-28): docs/architecture/BLUEPRINT-AUDIT-2026-11-28.md
 - Latest repository baseline audit: AUDIT-REPOSITORY-BASELINE-2026-11-27.MD
 - Quality gates for humans and local AI agents: docs/engineering/QUALITY-GATES.md
 - GitHub security, dependency and release automation: docs/engineering/GITHUB-AUTOMATION.md
