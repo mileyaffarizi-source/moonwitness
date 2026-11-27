@@ -11,6 +11,12 @@ const requiredFiles = [
   ".github/workflows/release-please.yml",
   "release-please-config.json",
   ".release-please-manifest.json",
+  "BLUEPRINT-PACKAGE-ADDON.MD",
+  "docs/engineering/ADDON-ENGINEERING-STANDARD.md",
+  "docs/architecture/addons/addon.manifest.schema.json",
+  "docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md",
+  "scripts/architecture/addon-lint.mjs",
+  "scripts/architecture/addon-lint.test.mjs",
 ];
 for (const file of requiredFiles) await access(resolve(file));
 
@@ -116,6 +122,31 @@ for (const task of tasks.tasks) {
   if (!task.id || typeof task.id !== "string") throw new Error("Every task must have a non-empty string id");
   if (ids.has(task.id)) throw new Error("Duplicate task id: " + task.id);
   ids.add(task.id);
+}
+
+if (tasks.project?.task_count !== tasks.tasks.length) {
+  throw new Error("tasks.json project.task_count must match the canonical task array length");
+}
+const addonTasks = new Map(tasks.tasks.filter((task) => task.id.startsWith("ADD-")).map((task) => [task.id, task]));
+for (const taskId of ["ADD-001", "ADD-002", "ADD-003", "ADD-004", "ADD-005", "ADD-006", "ADD-007", "ADD-008", "ADD-009", "ADD-010", "ADD-011", "ADD-012"]) {
+  if (!addonTasks.has(taskId)) throw new Error("Add-on task missing from the canonical registry: " + taskId);
+}
+if (!addonTasks.get("ADD-001").dependencies.includes("ADD-012")) {
+  throw new Error("ADD-001 must depend on the add-on engineering standard/lint gate ADD-012");
+}
+if (!addonTasks.get("ADD-002").dependencies.includes("GOV-010")) {
+  throw new Error("ADD-002 must remain gated by the identity/trust governance review GOV-010");
+}
+const addonSchema = JSON.parse(await readFile("docs/architecture/addons/addon.manifest.schema.json", "utf8"));
+if (addonSchema.$schema !== "https://json-schema.org/draft/2020-12/schema" || addonSchema.additionalProperties !== false) {
+  throw new Error("Add-on manifest schema must be strict JSON Schema draft 2020-12");
+}
+const addonAdr = await readFile("docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md", "utf8");
+if (!addonAdr.includes("Status:** Proposed") || !addonAdr.includes("Third-party add-ons remain disabled")) {
+  throw new Error("ADR-0003 must keep unapproved third-party add-on execution disabled");
+}
+if (!pkg.scripts?.["lint:addons"] || !String(pkg.scripts?.check ?? "").includes("pnpm lint:addons")) {
+  throw new Error("Root quality gate must execute pnpm lint:addons");
 }
 
 const skillRoot = resolve(".agents/skills");
