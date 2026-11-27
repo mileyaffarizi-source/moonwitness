@@ -57,8 +57,9 @@ The engineering must be strong enough to support the creative ambition. The crea
 
 The platform has four cooperating architectural planes and sixteen named applications: Intelligence, Authority, Protocol & Operations, and Experience. Their ownership boundaries are defined in BLUEPRINT-APPLICATIONS.MD.
 
-- **THE INTELLIGENCE — AGENT:** the ability to reason, understand context, coordinate capabilities, and execute authorized missions.
-- **THE AUTHORITY — API:** the ability to define business truth, protect data, govern models, and coordinate the platform.
+- **THE INTELLIGENCE — AGENT:** the ability to reason, understand context, coordinate capabilities, and propose authorized missions.
+- **THE AUTHORITY — API:** the ability to establish identity context, authorize operations, define business truth, protect data and issue scoped grants.
+- **THE PROTOCOL & OPERATIONS — ASTRONAUTS + ARSY + OSS:** the ability to operate enrolled machines and execute telecom protocols under explicit policy.
 - **THE EXPERIENCE — WEB:** the ability to turn the system into a world that humans can enter, understand, explore, and control.
 
 Underneath them lies **THE FOUNDATION — THE LAWS OF THE UNIVERSE**.
