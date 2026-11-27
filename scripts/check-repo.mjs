@@ -6,6 +6,7 @@ const requiredFiles = [
   "tsconfig.base.json", ".nvmrc", ".node-version", "AGENTS.md",
   ".agents/skills/README.md",
   ".github/dependabot.yml",
+  "docs/engineering/GITHUB-AUTOMATION.md",
   ".github/workflows/codeql.yml",
   ".github/workflows/dependency-review.yml",
   ".github/workflows/secrets.yml",
@@ -128,6 +129,9 @@ if (!releaseWorkflow.includes("googleapis/release-please-action@45996ed1f6d02564
 if (!dependabotConfig.includes("package-ecosystem: github-actions") ||
     !dependabotConfig.includes("package-ecosystem: npm")) {
   throw new Error("Dependabot must update GitHub Actions and npm/pnpm dependencies");
+}
+if ((dependabotConfig.match(/default-days: 7/g) ?? []).length !== 2) {
+  throw new Error("Both Dependabot update groups must define an explicit seven-day version-update cooldown");
 }
 const releaseConfig = JSON.parse(releaseConfigText);
 const releaseManifest = JSON.parse(releaseManifestText);
