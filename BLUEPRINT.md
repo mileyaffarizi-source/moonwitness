@@ -4,7 +4,7 @@
 **Version:** 4.0  
 **Status:** Architecture baseline; implementation not yet verified  
 **Target repository:** `mileyaffarizi-source/moonwitness`  
-**Runtime:** Node.js LTS · pnpm Workspaces · Turborepo  
+**Runtime:** Node.js 24.22.3 · pnpm 12.24.0 Workspaces · Turborepo  
 **Applications:** Mastra Agent · Fastify API · Next.js Web  
 **Persistence:** Odoo-inspired Platform ORM backed by MikroORM  
 **Operating principle:** Preserve existing data; no big-bang migration.
@@ -26,6 +26,13 @@ Before implementation:
 5. Update this blueprint only when an architectural or creative decision is explicitly accepted and recorded.
 6. Mark checklist items complete only when their acceptance criteria have evidence.
 7. Do not create empty packages just to match a proposed directory tree.
+
+## Foundation and implementation order
+
+Use [BLUEPRINT-FOUNDATIONS.MD](./BLUEPRINT-FOUNDATIONS.MD) for the dependency-aware foundation sequence, owner-only decision gates and cross-domain implementation order. Use [BLUEPRINT-PACKAGE.MD](./BLUEPRINT-PACKAGE.MD) for package boundaries and [BLUEPRINT-PACKAGE-ADDON.MD](./BLUEPRINT-PACKAGE-ADDON.MD) for the strict add-on manifest, capability, artifact, data-ownership and lifecycle contract.
+
+The current add-on trust/lifecycle proposal is [ADR-0003](./docs/adr/ADR-0003-addon-manifest-trust-and-lifecycle.md) and remains Proposed until the repository owner and required domain/security reviewers approve its exact scope. Proposed architecture is not permission to load executable artifacts or perform privileged operations.
+
 
 ## Initial repository baseline
 
@@ -79,7 +86,7 @@ The Living Platform is the technical and operational foundation connecting appli
 
 Core ideas:
 
-- One platform identity and three independently deployable applications.
+- One platform identity, three architectural planes and fourteen named application surfaces; deployment boundaries are decided by trust, scale and lifecycle, not app count.
 - A shared Base Platform and Odoo-inspired modular add-ons.
 - Explicit model, domain, package, and data ownership.
 - Controlled AI capabilities and shared contracts.
