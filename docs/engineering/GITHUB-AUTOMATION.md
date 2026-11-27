@@ -1,7 +1,7 @@
 # GitHub automation policy
 
 **Owner:** Platform Engineering  
-**Runtime baseline:** Node.js 26.13.0 Active LTS · pnpm 12.24.0  
+**Runtime baseline:** Node.js 26.13.1 Active LTS · pnpm 12.24.0  
 **Scope:** repository CI, source security, workflow security, dependency risk, dependency update proposals and release metadata.
 
 ## Automation ownership — one owner per responsibility
@@ -22,8 +22,8 @@ Do not add Changesets, semantic-release, Release Drafter, Changelogithub or anot
 
 ## Supported toolchain
 
-- Node.js: exact repository pin in `.nvmrc` and `.node-version`: `26.13.0` (Lithium, Active LTS).
-- Node engine contract: `>=26.13.0 <27`.
+- Node.js: exact repository pin in `.nvmrc` and `.node-version`: `26.13.1` (Lithium, Active LTS).
+- Node engine contract: `>=26.13.1 <27`.
 - pnpm: exact `packageManager` and `engines.pnpm`: `12.24.0`.
 - Workspace: pnpm 12 Workspaces; one root `pnpm-lock.yaml`; no Bun/npm/yarn lockfiles.
 - CI actions: checkout v7, setup-node v7, pnpm/action-setup v6.
@@ -33,7 +33,7 @@ Do not add Changesets, semantic-release, Release Drafter, Changelogithub or anot
 - The root `pnpm lint:workflows` gate rejects mutable Action tags/branches, missing explicit permissions/concurrency, `pull_request_target`, unexpected repository secret references and unreviewed PR write permissions. Zizmor runs in addition to this deterministic gate.
 - Dependabot updates GitHub Actions and the pnpm/npm workspace manifest/lockfile.
 
-The Node.js version used by GitHub Actions themselves is separate from the Node.js project runtime selected by `.nvmrc`. The root CI installs Node 26.13.0 and runs the project there; third-party Actions may have their own supported runtime. Do not add Actions that depend on removed Node 20 runtimes.
+The Node.js version used by GitHub Actions themselves is separate from the Node.js project runtime selected by `.nvmrc`. The root CI installs Node 26.13.1 and runs the project there; third-party Actions may have their own supported runtime. Do not add Actions that depend on removed Node 20 runtimes.
 
 The pinned Node patch is reproducible. Upgrade it through a reviewed runtime PR: update both version files, package engine policy, add-on compatibility schema/linter, checks, blueprints, ADR and task evidence together, then prove a frozen install and all gates.
 
