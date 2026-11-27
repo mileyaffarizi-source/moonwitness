@@ -56,3 +56,18 @@ Tasks **ART-001 through ART-008** in [tasks.json](./tasks.json).
 ## 10. Definition of done
 
 Artwork has a documented purpose, correct world identity, editable source and optimized variants, safe/accessible composition, traceable rights/provenance, real UI integration and approved canon compliance.
+
+
+## 11. Artwork delivery and review matrix
+
+For each brief, separate source-backed facts, authored creative direction and exploratory invention. The reviewer records which elements are canon facts, which are approved interpretations and which are non-canon atmosphere. A generated image prompt cannot resolve missing source material or create a new canonical character/relationship.
+
+Delivery includes editable master, layer manifest, approved crops/focal points, responsive variants, exact text/typography source, alt/decorative metadata, checksums, rights record and destination screenshots. A final image is reviewed in its actual route and viewport; detached preview approval alone is insufficient.
+
+## 12. Technical and safety tests
+
+Validate color profile, dimensions, compression, safe-area/crop, text legibility, responsive focal point, overlay contrast, loading fallback, asset path and checksum. Motion-ready layers must have static fallback and must not place interactive controls inside moving/obscuring content.
+
+Review prompts and all derivatives against restricted visual identities and source ambiguity. If the source brief implies a restricted depiction or a stand-in/representation, stop generation and mark blocked_policy; stylistic abstraction is not an exception.
+
+**Acceptance:** the artwork can be traced to its brief/source and approved derivative, works in the real UI, meets performance/accessibility criteria and does not invent canon.
