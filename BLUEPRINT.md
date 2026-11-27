@@ -67,7 +67,7 @@ Above it exists **THE ADD-ON ECOSYSTEM — WORLDS WITHIN WORLDS**.
 
 The platform must grow without losing its identity.
 
-**One Universe. Fourteen Applications. One Foundation. Independent Capabilities. Multiple Creative Worlds. One Coherent Experience.**
+**One Universe. Sixteen Applications. One Foundation. Independent Capabilities. Multiple Creative Worlds. One Coherent Experience.**
 
 # 2. Product identity and creative canon
 
@@ -206,7 +206,7 @@ Never destroy a prior version when a creative item is revised. AI may organize, 
 
 # PART II — FINAL APPLICATION TOPOLOGY
 
-# 3. Fourteen applications, one platform
+# 3. Sixteen applications, one platform
 
 The platform has exactly sixteen named application surfaces/runtimes. This replaces the previous three-application constraint. An application directory is a product/runtime boundary, not automatically a separate microservice or database. See [BLUEPRINT-APPLICATIONS.MD](./BLUEPRINT-APPLICATIONS.MD) for the authoritative app map.
 
