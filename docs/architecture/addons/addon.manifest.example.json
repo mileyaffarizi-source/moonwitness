@@ -11,7 +11,7 @@
   "compatibility": {
     "platformApi": ">=1.0.0 <2.0.0",
     "addonSdk": ">=1.0.0 <2.0.0",
-    "node": ">=24.22.3 <25.0.0"
+    "node": ">=26.13.0 <27.0.0"
   },
   "dependencies": {
     "required": [],
