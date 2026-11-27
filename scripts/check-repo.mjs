@@ -86,7 +86,7 @@ if (automationWorkflows.length !== 1 || automationWorkflows[0] !== "release-plea
 }
 
 const lockfile = await readFile("pnpm-lock.yaml", "utf8");
-const lockfileDocuments = lockfile.split(/^---\\s*$/m).map((document) => document.trim()).filter(Boolean);
+const lockfileDocuments = (lockfile.startsWith("---\n") ? lockfile.slice(4) : lockfile).split("\n---\n").map((document) => document.trim()).filter(Boolean);
 if (lockfileDocuments.length !== 2 ||
     lockfileDocuments.some((document) => !document.startsWith("lockfileVersion: '9.0'"))) {
   throw new Error("pnpm-lock.yaml must contain valid pnpm v9 two-document boot/project lockfile data");
