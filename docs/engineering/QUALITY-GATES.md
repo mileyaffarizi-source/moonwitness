@@ -21,7 +21,9 @@ pnpm test
 pnpm check
 ~~~
 
-pnpm check is the canonical pre-commit/pre-PR gate. CI runs the same command after a frozen install.\n\nThe current pinned runtime is Node.js 24.22.3 with pnpm 12.24.0. GitHub Actions use checkout v7, setup-node v7 and pnpm/action-setup v6. See [the automation policy](./GITHUB-AUTOMATION.md) for CodeQL, Dependency Review, Dependabot and Release Please ownership.
+pnpm check is the canonical pre-commit/pre-PR gate. CI runs the same command after a frozen install.
+
+The current pinned runtime is Node.js 24.22.3 with pnpm 12.24.0. Project-level pnpm settings belong in pnpm-workspace.yaml; .npmrc is optional and reserved for registry, auth, TLS and proxy settings. The configuration and lockfile contracts are enforced by check:repo.
 
 ## What each gate verifies
 
