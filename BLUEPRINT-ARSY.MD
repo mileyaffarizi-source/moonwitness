@@ -162,3 +162,64 @@ A lab NAS authenticates an explicitly authorized PPPoE subscriber through RADIUS
 - Rust stable release announcements: https://blog.rust-lang.org/releases/
 
 Rust 1.100.0 is the latest stable release verified on 2026-11-28. Re-check official stable before locking the first Cargo workspace.
+
+
+## 13. RADIUS client registry, policy decision and attribute contract
+
+Each NAS client record includes stable client ID, device/resource reference, allowed source address/range, vendor/model/software version, shared-secret vault reference, supported transports, authenticator/Message-Authenticator policy, allowed packet types/attributes, rate/timeout limits, failover group and lifecycle. Network address alone is not sufficient identity; pair it with scoped secret/transport authentication.
+
+Subscriber policy projection includes subscriber/service IDs, status, entitlement/profile version, effective interval, allowed access attributes, source version, freshness expiry and revocation version. The projection must not contain plaintext credentials. Arsy decision logs store policy version and redacted attributes, not the secret.
+
+Authentication result is one of accept/reject/challenge/unsupported/temporarily_unavailable with a reason class. Unknown NAS, malformed packets, invalid authenticators, expired policy and unsupported authentication method follow explicit fail-closed or documented emergency behavior. Do not silently accept on cache miss.
+
+Supported subscriber credential methods (PAP, CHAP, MS-CHAP variants and EAP where required) are discovered against the existing credential source and NAS fleet. Each requires a method-specific proof of compatible secret/challenge material; a generic password hash is not assumed interchangeable. Production acceptance requires test vectors and approved handling for the actual methods in use.
+
+RADIUS response attributes are generated from an allowlisted service-profile mapping owned by ISP/OSS. Do not allow subscriber-provided fields or vendor attributes to override policy. Preserve vendor-specific attribute mapping and version fixtures.
+
+## 14. Accounting session identity and reconciliation
+
+An accounting session key binds NAS identity, Acct-Session-Id, subscriber/service reference and session start identity; handle missing/reused IDs explicitly. Store packet/event ID, status type, counters, event time, receive time, NAS port/circuit identifiers, policy/profile version and deduplication key.
+
+Accounting state: **start_seen → active → interim_observed → stop_seen → reconciled**, with states for missing_start, missing_stop, out_of_order, duplicate, stale and unknown. Counter resets, wraparound, NAS reboot and delayed Stop packets are explicit reconciliation cases. Accounting packet receipt does not prove a subscriber is online at present; use freshness and latest observed event.
+
+RADIUS Accounting is at-least-once evidence. Publish events through a durable outbox and deduplicate by stable event key. ISP consumes session observations; BSS consumes only an approved usage/rating projection. Arsy does not compute invoice totals.
+
+## 15. Dynamic Authorization and NAS change safety
+
+CoA/Disconnect is a privileged outbound network operation. The request must bind to exact NAS identity, subscriber/session identifiers, intended attribute/profile change, API/ISP authorization, expiry, reason and idempotency key. Validate response authenticator and expected NAS source. Unknown or mismatched session identifiers fail closed.
+
+Track requested, sent, acknowledged, rejected, timed_out, unknown and reconciled separately. A timeout is not proof the session was disconnected. Re-query the session/accounting state or expose unknown for OSS/ISP reconciliation. Rate-limit per NAS and require maintenance/approval policy for bulk or disruptive operations.
+
+## 16. TR-069/CWMP ACS session and RPC lifecycle
+
+ACS device identity is referenced from OSS inventory; serial number/MAC alone is not treated as cryptographic identity. Define CPE authentication mode, credential rotation, TLS validation, source policy, connection-request handling and vendor/model compatibility per device cohort.
+
+A CWMP session records device/resource ID, CPE identity, session ID, Inform event codes, protocol version, RPC request ID, request hash, authorization reference, expiry, attempt, CPE response and observed parameter state. RPC states: **queued → eligible → delivered → acknowledged → executing / response_pending → completed / faulted / timed_out / unknown → verified**.
+
+Support only an explicitly reviewed initial RPC allowlist, such as read/diagnostic operations and selected configuration operations. Every write RPC is bound to an OSS-approved target/parameter/value set and maintenance window. SOAP parsing must reject unsafe XML constructs and enforce body, nesting, entity, timeout and concurrency limits. A CWMP success/fault response is not automatically proof of observed configuration; verify parameters in a subsequent observation where required.
+
+## 17. Syslog source, normalization and event contract
+
+Syslog source registry stores resource/device reference, source identity, expected address/certificate, transport, message format, facility/severity expectations, parsing profile, rate/size limits, retention and enablement state. UDP provides no inherent source authentication; use network segmentation/source policy and mark trust limitations. TLS source identity must map to an authorized source record.
+
+Raw message is retained only according to explicit retention/PII policy; normalized event records parsed timestamp, receive timestamp, source/resource ID, transport, facility, severity, app/process/message ID, structured attributes, parser version, parse status, redaction status and dedup fingerprint.
+
+Malformed/oversized/unknown messages are counted and isolated; never allow log content to trigger a privileged action. Syslog text is untrusted data and cannot modify Agent prompts, policies or device configuration.
+
+## 18. Arsy service topology and reliability
+
+Separate RADIUS, ACS and Syslog listener configuration, credentials, OS permissions, rate limits, queues and health. The first deployment may be one binary grouping, but the fault/credential/security boundary is independent. Do not expose management listeners on public interfaces without an approved network design.
+
+RADIUS needs low-latency bounded packet processing and tested NAS failover; ACS needs per-CPE session limits and retry semantics; Syslog needs bounded ingestion/backpressure and loss/overflow visibility. Define persistence durability, active-active/active-standby behavior and failover after the equipment inventory. No universal HA model is assumed.
+
+## 19. Arsy production readiness and acceptance
+
+- RADIUS test vectors verify packet lengths, authenticators, NAS identity, supported auth methods, Access-Accept/Reject/Challenge and policy freshness.
+- Accounting tests cover duplicate, missing, out-of-order, reset/wrap counters, NAS restart and outbox recovery.
+- CoA/Disconnect tests prove exact session binding, authorization, response authentication, timeout/unknown semantics and rate limits.
+- ACS tests cover Inform, session correlation, RPC allowlist, TLS/device auth, malformed SOAP, timeouts, retry and observed-state verification.
+- Syslog tests cover source policy, UDP/TCP/TLS, RFC parser fixtures, malformed/oversized payload, spoofing limitations, redaction, dedup and backpressure.
+- Soak/failover tests reflect measured concurrent sessions, packet rate and device estate.
+- Secret rotation, credential revoke, log redaction, audit retention and restore are verified before production.
+
+**Acceptance:** a lab NAS completes approved RADIUS AAA/accounting, a lab CPE completes an authorized CWMP operation with observed-state verification, and an approved Syslog source generates a normalized OSS event with source/time provenance. No direct subscriber/OSS/BSS database write exists.
