@@ -500,7 +500,15 @@ export function validateAddonManifest(manifest, expectedSlug = null) {
   return errors;
 }
 
-export function validateAddonPackage(packageJson, slug, manifestVersion) {
+function collectExportTargets(value, output = []) {
+  if (typeof value === "string") output.push(value);
+  else if (isRecord(value)) {
+    for (const nested of Object.values(value)) collectExportTargets(nested, output);
+  }
+  return output;
+}
+
+export function validateAddonPackage(packageJson, slug, manifestVersion, manifest = null) {
   const errors = [];
   if (!isRecord(packageJson)) return [{ code: "INVALID_PACKAGE_JSON", path: "package.json", message: "must be an object" }];
   if (packageJson.name !== "@moonwitness/addon-" + slug) addError(errors, "PACKAGE_NAME_MISMATCH", "package.json.name", "must be @moonwitness/addon-" + slug);
@@ -529,10 +537,29 @@ export function validateAddonPackage(packageJson, slug, manifestVersion) {
       if (FORBIDDEN_DEPENDENCIES.some((pattern) => pattern.test(name))) {
         addError(errors, "FORBIDDEN_PACKAGE_DEPENDENCY", "package.json." + section + "." + name, "add-ons may not own persistence or HTTP server runtimes");
       }
-      if (["*", "latest"].includes(dependencies[name])) {
+      const requested = dependencies[name];
+      if (typeof requested !== "string") {
+        addError(errors, "INVALID_PACKAGE_VERSION", "package.json." + section + "." + name, "dependency version must be a string");
+      } else if (requested === "*" || requested.toLowerCase() === "latest") {
         addError(errors, "UNPINNED_PACKAGE_DEPENDENCY", "package.json." + section + "." + name, "wildcard/latest dependencies are forbidden");
+      } else if (requested.startsWith("workspace:")) {
+        if (!/^workspace:(?:\\*|\\^|~|(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*))$/.test(requested)) {
+          addError(errors, "UNSUPPORTED_WORKSPACE_RANGE", "package.json." + section + "." + name, "use workspace:*, workspace:^, workspace:~ or an exact workspace SemVer");
+        }
+      } else if (/^(?:file:|link:|portal:|git:|git\\+|github:|https?:|ssh:)/i.test(requested)) {
+        addError(errors, "UNTRUSTED_PACKAGE_SOURCE", "package.json." + section + "." + name, "local paths, Git branches and direct URLs are not allowed as package sources");
+      } else if (!parseSemver(requested)) {
+        addError(errors, "NON_EXACT_PACKAGE_DEPENDENCY", "package.json." + section + "." + name, "external dependencies must be pinned to an exact SemVer version");
       }
     }
+  }
+  if (manifest && Array.isArray(manifest.contributions)) {
+    const exportedTargets = new Set(collectExportTargets(packageJson.exports));
+    manifest.contributions.forEach((contribution, index) => {
+      if (typeof contribution?.entrypoint === "string" && !exportedTargets.has(contribution.entrypoint)) {
+        addError(errors, "CONTRIBUTION_NOT_EXPORTED", "addon.manifest.json.contributions[" + index + "].entrypoint", "every contribution entrypoint must be exposed through package.json exports");
+      }
+    });
   }
   return errors;
 }
@@ -671,7 +698,7 @@ export async function lintAddons(repositoryRoot = process.cwd()) {
       errors.push({ code: "MANIFEST_" + error.code, path: slug + "/" + error.path, message: error.message });
     }
     for (const error of validateAddonManifest(manifest, slug)) errors.push({ ...error, path: slug + "/" + error.path });
-    for (const error of validateAddonPackage(packageJson, slug, manifest.version)) errors.push({ ...error, path: slug + "/" + error.path });
+    for (const error of validateAddonPackage(packageJson, slug, manifest.version, manifest)) errors.push({ ...error, path: slug + "/" + error.path });
     const sourceFiles = await collectSources(join(addonPath, "src"));
     for (const error of inspectAddonSource(sourceFiles)) errors.push({ ...error, path: slug + "/" + error.path });
     addons.push({ slug, manifest, packageJson, sourceFiles });
