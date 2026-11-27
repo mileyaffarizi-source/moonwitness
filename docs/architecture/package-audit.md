@@ -40,4 +40,4 @@ The repository has a reproducible minimal Node.js/pnpm workspace foundation. It 
 
 Repository inspection and lockfile review used the complete recursive Git tree and the exact root manifests. The main-branch CI run installed from the lockfile with frozen mode, validated the repository and ran Node tests successfully. No Turbo command, app build, TypeScript compilation, external database, local workstation or deployment host was inspected.
 
-**Review state:** package/runtime observations are complete; Turbo compatibility remains explicitly unverified and must be exercised before PKG-001 is finalized as fully accepted.
+**Audit status:** complete. Node/pnpm/workspace/lockfile state and the unverified Turbo state are documented. Actual Turbo runtime/task-graph verification remains assigned to PKG-008.
