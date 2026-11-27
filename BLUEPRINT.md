@@ -29,7 +29,7 @@ Before implementation:
 
 ## Initial repository baseline
 
-The initial architecture baseline was committed to the repository before this expanded application topology. This document records the target architecture as of version 4.0. It is not evidence that the fourteen apps or their capabilities are already implemented. Re-inspect the current repository, source files and runtime behavior before beginning implementation phases.
+The initial architecture baseline was committed to the repository before this expanded application topology. This document records the target architecture as of version 4.0. It is not evidence that the sixteen apps or their capabilities are already implemented. Re-inspect the current repository, source files and runtime behavior before beginning implementation phases.
 
 ---
 
@@ -55,7 +55,7 @@ This platform brings together two forces that must reinforce one another.
 
 The engineering must be strong enough to support the creative ambition. The creative experience must be meaningful enough to give the technology an identity.
 
-The platform has three architectural planes and fourteen named applications. The planes remain Intelligence, Authority and Experience; the application topology is defined in BLUEPRINT-APPLICATIONS.MD.
+The platform has four cooperating architectural planes and sixteen named applications: Intelligence, Authority, Protocol & Operations, and Experience. Their ownership boundaries are defined in BLUEPRINT-APPLICATIONS.MD.
 
 - **THE INTELLIGENCE — AGENT:** the ability to reason, understand context, coordinate capabilities, and execute authorized missions.
 - **THE AUTHORITY — API:** the ability to define business truth, protect data, govern models, and coordinate the platform.
@@ -208,7 +208,7 @@ Never destroy a prior version when a creative item is revised. AI may organize, 
 
 # 3. Fourteen applications, one platform
 
-The platform has exactly fourteen named application surfaces/runtimes. This replaces the previous three-application constraint. An application directory is a product/runtime boundary, not automatically a separate microservice or database. See [BLUEPRINT-APPLICATIONS.MD](./BLUEPRINT-APPLICATIONS.MD) for the authoritative app map.
+The platform has exactly sixteen named application surfaces/runtimes. This replaces the previous three-application constraint. An application directory is a product/runtime boundary, not automatically a separate microservice or database. See [BLUEPRINT-APPLICATIONS.MD](./BLUEPRINT-APPLICATIONS.MD) for the authoritative app map.
 
 | # | Application | Technology / Role | Primary authority |
 |---:|---|---|---|
@@ -1325,7 +1325,7 @@ Work in dependency order. Parallel work is allowed only after package ownership,
 - [ ] Verify persistence and restart recovery.
 - [ ] Document operations.
 
-**Acceptance:** all fourteen application surfaces build, validate, and release according to their deployment class; only justified trust/scaling boundaries become independent services.
+**Acceptance:** all sixteen application surfaces build, validate, and release according to their deployment class; only justified trust/scaling boundaries become independent services.
 
 ## PHASE 12 — Final verification
 
@@ -1384,7 +1384,7 @@ Every major technical decision requires an ADR containing context, options, deci
 
 ## Platform
 
-1. One platform, exactly fourteen named applications; app count does not force fourteen microservices.
+1. One platform, exactly sixteen named applications; app count does not force sixteen microservices.
 2. Mastra owns AI orchestration.
 3. Fastify API owns business execution and data authority.
 4. Next.js owns human experience.
@@ -1454,7 +1454,7 @@ Every major technical decision requires an ADR containing context, options, deci
 - Package boundaries are checked.
 - ADRs and ownership are documented.
 
-**FOURTEEN-APP ECOSYSTEM**
+**SIXTEEN-APP ECOSYSTEM**
 - Mastra Agent starts and executes real authorized workflows.
 - Fastify API owns business operations.
 - Next.js Web communicates through API contracts.
@@ -1567,9 +1567,11 @@ THE WORLDS ARE THE EXPERIENCE.
 THE ADD-ONS ARE THE CAPABILITIES.  
 THE STORIES ARE THE MEMORY.  
 THE AGENTS ARE THE INTELLIGENCE.  
+ASTRONAUTS CONNECTS THE MACHINES.  
+ARSY SPEAKS THE TELCO PROTOCOLS.  
 THE HUMAN REMAINS IN CONTROL.**
 
-**ONE UNIVERSE. FOURTEEN APPLICATIONS. INFINITE CAPABILITIES.**
+**ONE UNIVERSE. SIXTEEN APPLICATIONS. INFINITE CAPABILITIES.**
 
 **BUILD THE FOUNDATION.  
 PRESERVE THE STORIES.  
@@ -1581,6 +1583,8 @@ BRING THE UNIVERSE TO LIFE.**
 The authoritative application topology, trust boundaries, source-of-truth map and deployment classes are maintained in [BLUEPRINT-APPLICATIONS.MD](./BLUEPRINT-APPLICATIONS.MD).
 
 Specialist contracts:
+- [Astronauts](./BLUEPRINT-ASTRONAUTS.MD) — Go host/remote machine control plane and outbound edge agents.
+- [Arsy](./BLUEPRINT-ARSY.MD) — Rust telecom protocol services: RADIUS AAA, TR-069 ACS and Syslog.
 - [DX Workbench](./BLUEPRINT-DX.MD) — implementation factory and first priority.
 - [Central Identity](./BLUEPRINT-ID.MD) — OIDC/SSO and service identity; secrets remain in a dedicated vault.
 - [OSS](./BLUEPRINT-OSS.MD), [BSS](./BLUEPRINT-BSS.MD), [ISP](./BLUEPRINT-ISP.MD) — separated operational, commercial and subscriber-service responsibilities.
@@ -1589,4 +1593,4 @@ Specialist contracts:
 - [A-L-L-A-H](./BLUEPRINT-A-L-L-A-H.MD) — flagship corpus/ontology/legal/government knowledge.
 - [RIOT](./BLUEPRINT-RIOT.MD) — creative studio and isolated authorized security lab.
 
-**Do not interpret fourteen app directories as an obligation to deploy fourteen microservices.**
+**Do not interpret sixteen app directories as an obligation to deploy sixteen microservices.**
