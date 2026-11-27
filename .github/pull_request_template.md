@@ -1,4 +1,4 @@
-## Task and scope
+## PR title and commit convention\n\nUse a Conventional Commit title (for example `feat(web): add the MoonWitness landing shell` or `docs(architecture): clarify add-on boundaries`). The squash commit title must preserve the convention so Release Please can classify it.\n\n## Task and scope
 
 - Task ID:
 - Objective:

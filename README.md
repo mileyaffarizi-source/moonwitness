@@ -13,11 +13,13 @@ This repository is being transitioned from an architecture/planning repository i
 - Task registry: tasks.json
 - Latest repository baseline audit: AUDIT-REPOSITORY-BASELINE-2026-11-27.MD
 - Quality gates for humans and local AI agents: docs/engineering/QUALITY-GATES.md
+- GitHub security, dependency and release automation: docs/engineering/GITHUB-AUTOMATION.md
+- Accepted runtime/automation ADR: docs/adr/ADR-0002-runtime-and-github-automation.md
 
 ## Requirements
 
-- Node.js 22.14.x (see .nvmrc)
-- pnpm 10.8.1 (managed through Corepack)
+- Node.js 24.22.3 (pinned in .nvmrc and .node-version; consistency is checked by pnpm check:repo)
+- pnpm 12.24.0 (managed through Corepack)
 
 ## Setup
 

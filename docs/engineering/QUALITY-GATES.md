@@ -8,7 +8,7 @@ This foundation gate is not a substitute for application-specific ESLint, framew
 
 ## Canonical commands
 
-Run from the repository root with Node.js 22.14.x and pnpm 10.8.1:
+Run from the repository root with Node.js 24.22.3 and pnpm 12.24.0:
 
 ~~~sh
 pnpm lint
@@ -20,7 +20,7 @@ pnpm test
 pnpm check
 ~~~
 
-pnpm check is the canonical pre-commit/pre-PR gate. CI runs the same command after a frozen install.
+pnpm check is the canonical pre-commit/pre-PR gate. CI runs the same command after a frozen install.\n\nThe current pinned runtime is Node.js 24.22.3 with pnpm 12.24.0. GitHub Actions use checkout v7, setup-node v7 and pnpm/action-setup v6. See [the automation policy](./GITHUB-AUTOMATION.md) for CodeQL, Dependency Review, Dependabot and Release Please ownership.
 
 ## What each gate verifies
 

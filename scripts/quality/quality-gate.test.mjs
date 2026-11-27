@@ -71,13 +71,13 @@ test("root contract rejects package-manager drift and missing CI gate", () => {
 test("root contract accepts canonical repository rules", () => {
   const errors = validateRootContracts({
     packageJson: {
-      packageManager: "pnpm@10.8.1",
-      engines: { node: ">=22.14.0 <23" },
+      packageManager: "pnpm@12.24.0",
+      engines: { node: ">=24.22.3 <25" },
       scripts: { check: "pnpm lint && pnpm test" },
     },
     editorConfig: "root = true\ncharset = utf-8\nend_of_line = lf\ninsert_final_newline = true\n",
     agents: "Inspect before changing. Use the task ledger. Security by default. Anti-slop engineering and product craft Token and context budget Mandatory quality gate",
-    ci: "run: pnpm install --frozen-lockfile\nrun: pnpm check\n",
+    ci: "uses: actions/checkout@v7\nuses: pnpm/action-setup@v6\nuses: actions/setup-node@v7\nrun: pnpm install --frozen-lockfile\nrun: pnpm check\n",
   });
   assert.deepEqual(errors, []);
 });
