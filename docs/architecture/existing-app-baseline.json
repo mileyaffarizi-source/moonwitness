@@ -1,0 +1,51 @@
+{
+  "audit_date": "2026-11-27",
+  "repository": "mileyaffarizi-source/moonwitness",
+  "branch": "main",
+  "commit": "c1c604801e4bbde982a44689aac7b6c48b1978ee",
+  "source_of_truth": [
+    "BLUEPRINT-APPLICATIONS.MD",
+    "tasks.json"
+  ],
+  "git_tree": {
+    "entry_count": 72,
+    "truncated": false,
+    "apps_entries": [
+      "apps/README.md"
+    ],
+    "packages_entries": [
+      "packages/README.md"
+    ]
+  },
+  "target_application_count": 14,
+  "materialized_application_count": 0,
+  "applications": [
+    {"id":"agent","path":"apps/agent","owner":"Agent Engineering","responsibility":"Mastra AI orchestration, agents and workflows","status":"not_materialized","boundary":"Approved tools only; no direct business database writes"},
+    {"id":"api","path":"apps/api","owner":"Platform/API Engineering","responsibility":"Fastify platform authority and business APIs","status":"not_materialized","boundary":"Business use cases, authorization, transactions and records"},
+    {"id":"web","path":"apps/web","owner":"MoonWitness Product","responsibility":"MoonWitness public landing and Community","status":"not_materialized","boundary":"Meaning of CSS remains unconfirmed"},
+    {"id":"oss","path":"apps/OSS","owner":"Network Operations","responsibility":"Operational Support System for network and service operations","status":"not_materialized","boundary":"Technical inventory, alarms, provisioning and assurance"},
+    {"id":"bss","path":"apps/BSS","owner":"Business Operations","responsibility":"Business Support System for commercial and customer lifecycle","status":"not_materialized","boundary":"Commercial customer, offer, order, contract, subscription and billing authority"},
+    {"id":"id","path":"apps/id","owner":"Security/Identity","responsibility":"Central identity, login, OIDC/SSO and federation","status":"not_materialized","boundary":"Authentication and identity; resource owners authorize"},
+    {"id":"docs","path":"apps/docs","owner":"Documentation/DX","responsibility":"Documentation, wiki, DX knowledge and progress portal","status":"not_materialized","boundary":"Projects canonical docs and task status; no parallel task ledger"},
+    {"id":"desktop","path":"apps/desktop","owner":"Client Experience","responsibility":"General end-user desktop experience","status":"not_materialized","boundary":"Not the DX developer workbench"},
+    {"id":"mobile","path":"apps/mobile","owner":"Mobile Product","responsibility":"Native mobile experience","status":"not_materialized","boundary":"Consumes approved identity/API contracts"},
+    {"id":"cloud","path":"apps/cloud","owner":"Cloud Platform","responsibility":"Cloud/infrastructure business control plane","status":"not_materialized","boundary":"Separates control plane from isolated privileged runners"},
+    {"id":"isp","path":"apps/isp","owner":"ISP Product","responsibility":"ISP/telco vertical service lifecycle","status":"not_materialized","boundary":"Owns subscriber-service orchestration; not billing or NMS"},
+    {"id":"dx","path":"apps/dx","owner":"Developer Platform","responsibility":"Developer Experience workbench and local engineering orchestration","status":"not_materialized","boundary":"Developer control tower; privileged daemon is separate from UI"},
+    {"id":"A-L-L-A-H","path":"apps/A-L-L-A-H","owner":"Corpus/Knowledge Product","responsibility":"Flagship landing and Divine Corpus/Ontology/Law/Government Knowledge","status":"not_materialized","boundary":"Distinct from MoonWitness Web editorial authority"},
+    {"id":"riot","path":"apps/riot","owner":"Creative & Security Lab","responsibility":"Creative/media/content studio and isolated red-team/blue-team lab","status":"not_materialized","boundary":"Studio and lab execution require separate trust boundaries"}
+  ],
+  "open_questions": [
+    "Meaning of CSS in the Web/Community description is unconfirmed.",
+    "Named individual maintainers are not defined; only owner roles/teams exist.",
+    "No source-level runtime, route, API contract or deployment maturity can be inferred.",
+    "Separate deployment/database boundaries have not been proven necessary."
+  ],
+  "verification": {
+    "method": "GitHub recursive Git tree inspection plus blueprint/task-registry comparison",
+    "tree_response_truncated": false,
+    "application_directories_found": [],
+    "application_source_files_found": [],
+    "conclusion": "The fourteen-app architecture is documented but no app has been materialized in the audited commit."
+  }
+}
