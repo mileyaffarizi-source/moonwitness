@@ -19114,7 +19114,10 @@
       "notes": [
         "Node 24 runtime selection is retained in ADR-0002 as historical decision context and is superseded for runtime only by ADR-0004.",
         "The Node 26 runtime pin in the repository does not install Node 26 on the owner's local workstation; local environment verification is separate."
-      ]
+      ],
+      "created_at": "2026-11-27T16:47:00.000Z",
+      "updated_at": "2026-11-27T17:14:58.943Z",
+      "completed_at": null
     },
     {
       "id": "GOV-013",
@@ -19187,7 +19190,10 @@
       "blocker": "The connected GitHub integration exposes repository-file and workflow operations but not repository Settings/branch-ruleset mutation or effective-state inspection. The repository owner must enable and verify these settings.",
       "notes": [
         "Workflow files for CodeQL, Dependency Review, Dependabot, Release Please, Gitleaks and Zizmor are not proof that repository-level features or branch protection are enabled."
-      ]
+      ],
+      "created_at": "2026-11-27T16:47:00.000Z",
+      "updated_at": "2026-11-27T17:14:58.943Z",
+      "completed_at": null
     },
     {
       "id": "GOV-014",
@@ -19303,8 +19309,8 @@
         "Gitleaks Action v3 is supported for the current personal repository owner account; moving the repository to a GitHub Organization requires confirming its licensing requirement.",
         "Dependency Review is available on public repositories and supported private repositories with GitHub Advanced Security; a run failure due repository visibility/plan must be recorded as an owner setting limitation, not silently bypassed."
       ],
-      "created_at": null,
-      "updated_at": "2026-11-27T16:55:00.000Z",
+      "created_at": "2026-11-27T16:55:00.000Z",
+      "updated_at": "2026-11-27T17:14:58.943Z",
       "completed_at": null
     }
   ]
