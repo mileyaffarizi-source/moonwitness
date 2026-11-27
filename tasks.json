@@ -8927,7 +8927,7 @@
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "pending",
+      "status": "done",
       "owner_role": "platform_governance_lead",
       "assigned_agent": null,
       "claim": {
@@ -8986,12 +8986,19 @@
       "estimate": "M",
       "parallel_group": "GOV-PHASE-00",
       "human_approval_required": true,
-      "evidence": [],
+      "evidence": [
+        "docs/adr/ADR-TEMPLATE.md — structured decision record template",
+        "docs/adr/decision-register.md — canonical register including ADR-0001",
+        "docs/governance/architecture-change-process.md — decision lifecycle, precedence and approval integrity",
+        "GOV-001 dependency completed at main commit 2227104a60cbd42d395f4b4738cf2c016b056479"
+      ],
       "blocker": null,
-      "notes": [],
+      "notes": [
+        "Material architecture/security/data/canon decisions still require the designated human owner; this task establishes process, not blanket approval."
+      ],
       "created_at": null,
-      "updated_at": null,
-      "completed_at": null
+      "updated_at": "2026-11-27T14:34:16.339Z",
+      "completed_at": "2026-11-27T14:34:16.339Z"
     },
     {
       "id": "GOV-003",

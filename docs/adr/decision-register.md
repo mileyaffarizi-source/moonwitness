@@ -24,6 +24,6 @@ No additional ADR is recorded in the register at this audit. Do not infer that a
 
 ## Decision authority
 
-Apply the precedence order in [the governance contract](../..//BLUEPRINT-RULES-GOVERN-CONTRACT.MD): applicable safety/legal restrictions and explicit human decisions; governance contract and accepted ADRs; master blueprint; specialist blueprint; task registry; implementation notes.
+Apply the precedence order in [the governance contract](../../BLUEPRINT-RULES-GOVERN-CONTRACT.MD): applicable safety/legal restrictions and explicit human decisions; governance contract and accepted ADRs; master blueprint; specialist blueprint; task registry; implementation notes.
 
 A decision that affects security, data ownership, identity, production privilege, external contracts, destructive migration, canon or release policy requires the designated human owner and any required security/domain review. AI agents may draft, compare and test options; they cannot approve their own proposed decision.
