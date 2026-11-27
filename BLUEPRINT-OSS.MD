@@ -67,3 +67,34 @@ Tasks OSS-* in tasks.json. Done means OSS can trace an operational service to it
 OSS remains owner of device/resource inventory, topology, alarms/incidents, desired configuration, provisioning workflow, approval, rollback and technical assurance. Arsy provides protocol endpoints and execution adapters: RADIUS AAA/session/accounting events, TR-069 CWMP ACS requests/RPC results, and Syslog ingestion/normalization. OSS submits approved target-scoped requests and consumes versioned results/events; it does not share a database with Arsy.
 
 Arsy may store protocol session state and bounded raw/normalized protocol evidence, but must reference OSS-owned device/resource IDs and ISP-owned subscriber/service IDs. Syslog events are not automatically incidents; OSS correlation and incident policy decide that. ACS command acceptance is not proof of configuration success; verify the observed CPE parameter/state before closing an OSS work item.
+
+
+## 12. Canonical resource inventory and state model
+
+An OSS resource has one stable resource ID, type, owner/source system, external IDs, parent/child topology, lifecycle, observed/desired versions, location/scope, management path reference, credentials reference (never a secret), freshness and audit. Model sites/POPs, racks, devices, interfaces/ports, links, VLANs, OLT/PON/ONU/ONT, NAS/BNG/BRAS, service resources and logical dependencies without duplicating customer/subscriber ownership.
+
+Resource state separates **planned, discovered, managed, maintenance, degraded, unreachable, retired, unknown**. Observations have source, timestamp, collector version, quality and expiry/freshness rule. Absence of a recent observation is stale/unknown, never healthy.
+
+## 13. Alarm, incident and configuration workflows
+
+Alarm lifecycle: **observed → normalized → correlated → active / cleared / suppressed / flapping**. Incident lifecycle: **new → triaged → assigned → investigating → mitigated → resolved → closed** with reopen path. A raw Syslog message is evidence, not automatically an alarm/incident; correlation policy belongs to OSS.
+
+Configuration change lifecycle: **draft → validated → diff_ready → approval_pending → approved → scheduled → executing → verifying → applied / partial / failed / rolled_back / needs_manual_reconciliation**. A command acknowledgement is not applied; compare observed state to expected postcondition.
+
+## 14. Adapter contract, including Arsy
+
+Every adapter declares supported resource/vendor/protocol versions, auth method and secret reference, network zone, request schema, timeout, retry/idempotency class, rate limit, concurrency budget, event schema, observation parser and recovery method.
+
+- Arsy is the protocol adapter for RADIUS session/accounting facts, CWMP ACS RPC/session delivery and Syslog ingestion/normalization.
+- OSS owns the resource mapping, alarm correlation, change approval, requested desired configuration, rollback and service assurance.
+- Before an ACS RPC is submitted, OSS validates device/resource ID, allowed method/parameter, expected state, approval, expiry and maintenance window.
+- After Arsy returns RPC outcome, OSS verifies the CPE observed parameter/state and records applied, partial, failed or reconciliation status.
+- Astronauts is used only for explicitly enrolled general-purpose hosts; it is not the default device management path for routers/OLTs/ONTs.
+
+## 15. Operations, SLO and failure handling
+
+Track collector lag, stale inventory %, device query success, alarm ingestion rate, incident correlation backlog, configuration job age, adapter retry/dead-letter count, rollback/reconciliation queue, poll cost and protocol source availability. Define SLOs only after baseline measurements.
+
+On network partition, provider outage or bad credentials: preserve last observed state with an explicit stale timestamp, stop unsafe writes, rate-limit retries and expose a recovery queue. Credential rotation failure must be visible and not fall back to plaintext or shared admin credentials.
+
+**Acceptance:** one lab resource can be discovered, linked to topology, generate a normalized observation/alarm, enter an incident workflow and receive an authorized config change whose postcondition is independently verified.
