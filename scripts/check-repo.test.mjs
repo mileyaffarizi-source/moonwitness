@@ -118,3 +118,20 @@ test("Dependabot update groups enforce a seven-day version-update cooldown", asy
   const config = await readFile(new URL("../.github/dependabot.yml", import.meta.url), "utf8");
   assert.equal((config.match(/default-days: 7/g) ?? []).length, 2);
 });
+
+test("master and foundation blueprints agree on Node 26 and fourteen app surfaces", async () => {
+  const [master, foundation, applications] = await Promise.all([
+    readFile(new URL("../BLUEPRINT.md", import.meta.url), "utf8"),
+    readFile(new URL("../BLUEPRINT-FOUNDATIONS.MD", import.meta.url), "utf8"),
+    readFile(new URL("../BLUEPRINT-APPLICATIONS.MD", import.meta.url), "utf8"),
+  ]);
+  assert.match(master, /Node\.js 26\.13\.0 Active LTS/);
+  assert.match(master, /Fourteen named application surfaces/);
+  assert.match(master, /BLUEPRINT-FOUNDATIONS\.MD/);
+  assert.match(foundation, /### 4\.3\.1 Shared contract inventory/);
+  assert.match(foundation, /GOV-013/);
+  assert.match(foundation, /GOV-014/);
+  assert.match(foundation, /ADR-0004/);
+  assert.doesNotMatch(foundation, /Node\.js 24\.22\.3/);
+  assert.match(applications, /fourteen/i);
+});
