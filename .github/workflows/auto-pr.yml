@@ -97,4 +97,4 @@ jobs:
             --title "${pr_title}" \
             --body-file "${body_file}"
 
-          echo "::notice::Created a pull request for ${SOURCE_BRANCH}. CI and security workflows remain responsible for validation; merging is still review-gated."
+          echo "::notice::Created a pull request for ${SOURCE_BRANCH}. Auto PR does not enable auto-merge; merge requirements depend on the main-branch ruleset."
