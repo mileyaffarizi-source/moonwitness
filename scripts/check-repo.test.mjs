@@ -39,6 +39,8 @@ test("add-on standard and task sequence are part of the repository baseline", as
   const pkg = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
   assert.equal(pkg.scripts["lint:addons"], "node scripts/architecture/addon-lint.mjs");
   assert.ok(pkg.scripts.check.includes("pnpm lint:addons"));
+  assert.equal(pkg.scripts["lint:workflows"], "node scripts/architecture/workflow-lint.mjs");
+  assert.ok(pkg.scripts.check.includes("pnpm lint:workflows"));
 
   const registry = JSON.parse(await readFile(new URL("../tasks.json", import.meta.url), "utf8"));
   assert.equal(registry.project.task_count, registry.tasks.length);
@@ -103,6 +105,7 @@ test("GitHub security and release automation have non-overlapping active owners"
   assert.ok(workflowSecurity.includes("68559e99cc807c1eb7e9238fd43a15bba460eec2"));
   assert.ok(workflowSecurity.includes("--format=github"));
   assert.ok(workflowSecurity.includes("3d3c42e5aac5ba805825da76410c181273ba90b1"));
+  assert.ok(secrets.includes("REVIEWED_EXCEPTION_GITLEAKS_COMMENT_ONLY"));
   assert.ok(releaseWorkflow.includes("googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7"));
 
   const changelogWorkflows = releaseFiles.filter((name) => /(?:release|changelog)/i.test(name) && name.endsWith(".yml"));
