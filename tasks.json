@@ -10435,7 +10435,7 @@
       "blueprint": "BLUEPRINT-DX.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "pending",
+      "status": "blocked",
       "owner_role": "developer_platform_lead",
       "assigned_agent": null,
       "claim": {
@@ -10498,11 +10498,17 @@
       "estimate": "L",
       "parallel_group": "DX-PHASE-00",
       "human_approval_required": false,
-      "evidence": [],
-      "blocker": null,
-      "notes": [],
+      "evidence": [
+        "docs/dx/dx-workflow-audit.md — verified repository-side GitHub/CI workflow and explicit local-host access boundary",
+        "docs/dx/agent-adapter-inventory.json — verified remote GitHub/CI capabilities separated from unverified local CLI/provider inventory",
+        "Main commit c00130d889f259c2b246c0e4cd6a6b8ce2016932 and CI run 46020198447 — pinned Node.js 22.14.0/pnpm 10.8.1 frozen install, repository checks and tests passed"
+      ],
+      "blocker": "Target workstation is not accessible through the connected GitHub repository integration; OS/shell/Git worktrees/installed coding CLIs/provider capabilities cannot be verified from the remote repository.",
+      "notes": [
+        "Partial remote audit completed. Do not mark done until the target workstation inventory is obtained and provider executable/capability checks pass. The safe PowerShell/Bash probes are included in the report; they do not read secrets."
+      ],
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2026-11-27T15:00:00.000Z",
       "completed_at": null
     },
     {
