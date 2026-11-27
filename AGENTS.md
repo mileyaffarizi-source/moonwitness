@@ -48,6 +48,14 @@ The canonical gate runs repository lint, format hygiene, the TypeScript gate, re
 
 Do not bypass a failing check with continue-on-error, || true, broad lint suppressions or fabricated output. Fix the cause, or report the exact failure and leave the task incomplete. See the quality-gate contract in docs/engineering/QUALITY-GATES.md.
 
+## Commit and release conventions
+
+- Use Conventional Commit titles for pull requests and squash commits: `feat(scope):`, `fix(scope):`, `docs(scope):`, `refactor(scope):`, `test(scope):`, `build(scope):`, `ci(scope):` or `chore(scope):`.
+- Mark breaking changes with `!` and a `BREAKING CHANGE:` footer.
+- Release Please is the only automated CHANGELOG/release writer. Do not add a second changelog or release bot without an ADR.
+- Dependabot proposes dependency updates; do not enable auto-merge. Every bot PR must pass `pnpm check` and the applicable security gates.
+- Follow [GitHub automation ownership](./docs/engineering/GITHUB-AUTOMATION.md).
+
 ## Architecture quick map
 
 - apps/api: shared modular authority, domain use cases, model/record/field access and persistence composition.
