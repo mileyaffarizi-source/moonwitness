@@ -140,3 +140,45 @@ DX can safely read and validate the central registry, claim one ready task atomi
 DX owns the developer's repository/worktree, coding-agent process, build/test commands and review evidence in an explicitly bounded development workspace. It is not the fleet registry, machine enrollment authority or general-purpose remote host shell. When a dedicated remote execution host is required, DX requests a scoped API capability and Astronauts dispatches the approved typed job to its enrolled Edge Agent.
 
 Cloud owns compute/network/storage resource creation, IaC state and provider lifecycle. Astronauts may bootstrap and operate a host only after Cloud or an operator has created/enrolled that resource. DX must not invoke Cloud apply or Astronauts host execution through ambient credentials.
+
+
+## 15. Task reader and registry consistency contract
+
+The registry reader consumes tasks.json as an untrusted structured document. It validates JSON/schema version, unique IDs, project task/application counts, workstream membership, dependency DAG, parent-child relations, allowed statuses, claim fields, approvals and file ownership before displaying readiness. It never repairs or writes invalid registry content.
+
+Readiness is derived. Distinguish ready, blocked_by_dependency, approval_required, path_conflict, blocked_policy, in_review and invalid. Show why a task is not ready, including incomplete dependency IDs and conflicting claim IDs. A parent integration task is not executable until all child tasks are done with evidence.
+
+## 16. Serialized registry writer and compare-and-swap
+
+Only one logical registry writer commits task status/claim mutations. It fetches the current branch ref and task blob SHA, validates the latest document, patches only the target record, writes deterministic JSON, then updates the ref using expected SHA. If the ref changes, it discards the stale snapshot, refetches and recomputes; never force-pushes stale full-file content.
+
+A claim operation atomically reserves one task, agent identity, lease, branch/worktree and normalized owned paths. Parent/child/glob overlap is conservative. Root manifests, lockfiles, tasks.json, shared contract registries, ORM composition and global design tokens are serialized integration surfaces with named integrator ownership.
+
+## 17. Execution profile, capability and remote dispatch
+
+Every worker adapter has an explicit capability profile: supported language/toolchain, read/write roots, command allowlist, network policy, CPU/memory/time/output limits, artifact policy, cancellation behavior and supported approval modes. A task request cannot increase the adapter's profile.
+
+DX local daemon is responsible for local developer worktree/process execution. For a dedicated remote host, it requests an API capability; API issues the exact-scope signed grant and Astronauts dispatches the typed job to an enrolled Edge Agent. DX does not connect directly to the host agent, store host credentials or become a remote shell. Cloud remains responsible for provisioning compute resources.
+
+## 18. Evidence, review and status proposal
+
+An agent's completion report is a proposal. DX verifies commit SHA, changed paths, task-owned files, commands and exit codes, CI run/commit identity, acceptance evidence, environment/toolchain, unresolved gaps and security/data impact. Evidence must refer to the exact code commit; tests from another commit do not qualify.
+
+Task statuses remain separate from PR status. A merged PR does not automatically complete every related task; a task becomes done only when its own acceptance criteria and human approval requirements are met. Parent integration status remains pending/in_review until child evidence and integration verification pass.
+
+## 19. Cancellation and lease recovery
+
+A lease expiry does not permit immediate task reassignment. Inspect the worker process, branch, worktree, dirty files, commits and artifact output. Preserve uncommitted work and create a reconciliation record. Confirm process-tree termination before release so a cancelled worker cannot continue writing. Reclaim must be a compare-and-swap against the latest task revision.
+
+## 20. DX acceptance matrix
+
+- Two workers racing for the same task: exactly one claim succeeds.
+- Two task claims with parent/child/glob path collision: second claim is rejected.
+- Disjoint tasks can run concurrently in separate worktrees.
+- A ref change between read and write causes refetch/recompute, not stale overwrite.
+- An expired worker with dirty worktree preserves all data and blocks automatic reassignment pending reconciliation.
+- A cancelled command terminates its process tree and cannot write after release.
+- A completed child does not mark its parent integration complete.
+- A remote host job cannot bypass API authorization or Astronauts grant verification.
+
+**Acceptance:** DX reads and validates the exact canonical task registry, safely claims one dependency-ready atomic task, executes it in a bounded local or explicitly authorized remote environment, proves the result against exact commit/CI evidence and updates only the intended task record.
