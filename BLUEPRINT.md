@@ -80,7 +80,7 @@ The Living Platform is the technical and operational foundation connecting appli
 
 Core ideas:
 
-- One platform identity and three independently deployable applications.
+- One platform identity and sixteen bounded application surfaces organized into four cooperating planes; deployable processes are split by trust, scale and lifecycle, not by directory count.
 - A shared Base Platform and Odoo-inspired modular add-ons.
 - Explicit model, domain, package, and data ownership.
 - Controlled AI capabilities and shared contracts.
@@ -227,6 +227,8 @@ The platform has exactly sixteen named application surfaces/runtimes. This repla
 | 12 | apps/dx | Developer Experience Workbench | Local AI orchestration, repository/task/worktree/test/review workflows |
 | 13 | apps/A-L-L-A-H | Flagship landing and knowledge experience | Divine Corpus, ontology, law and government knowledge |
 | 14 | apps/riot | Creative/media and isolated security lab | Studio, media, authorized red/blue-team research lab |
+| 15 | apps/astronauts | Go Controller and outbound Edge Agent | Enrolled host/remote-machine fleet, signed typed job execution |
+| 16 | apps/arsy | Rust telecom protocol runtime | RADIUS AAA, TR-069/CWMP ACS and Syslog ingestion |
 
 Use the requested directory spelling where practical. Use lowercase stable package IDs, service IDs and import aliases for portability. Application paths do not imply that each app must be independently deployed from the first release.
 
@@ -282,6 +284,8 @@ See [BLUEPRINT-WEB.MD](./BLUEPRINT-WEB.MD).
 - **apps/dx:** highest-priority engineering workbench to coordinate local AI agents, task registry, Git worktrees, tests, diffs and approvals.
 - **apps/A-L-L-A-H:** flagship landing and source-aware knowledge experience; separates Divine Corpus, translations, commentary, ontology, human law and government sources.
 - **apps/riot:** creative/media studio and isolated, explicitly authorized red-team/blue-team lab; never a production backdoor.
+- **apps/astronauts:** Go machine control plane with Controller and outbound Edge Agent; owns enrolled host fleet/job execution evidence, never Cloud resource creation or arbitrary remote shell.
+- **apps/arsy:** Rust telecom protocol runtime for RADIUS AAA, TR-069/CWMP ACS and Syslog; owns protocol-session state, never subscriber, billing or OSS inventory truth.
 
 Detailed ownership, source-of-truth and dependency boundaries are in [BLUEPRINT-APPLICATIONS.MD](./BLUEPRINT-APPLICATIONS.MD) and each app-specific blueprint.
 
@@ -307,13 +311,14 @@ DX has local filesystem/process capability only through its protected daemon and
 
 ## 4.4 Telecom commercial-to-technical flow
 
-BSS accepted commercial order → ISP service orchestration → OSS qualification/resource reservation/provisioning → activation verification/RFS evidence → ISP service state → BSS commercial milestone/billing event.
+BSS accepted commercial order → ISP service orchestration → OSS qualification/resource reservation/provisioning workflow → Arsy protocol adapter for RADIUS/ACS/Syslog where required → OSS observed-state verification → ISP activation/RFS evidence → BSS commercial milestone/billing event. Arsy reports protocol facts; it does not close the OSS change or start billing.
+
 
 BSS owns the commercial order and financial state. OSS owns the technical resource and observed network state. ISP owns the subscriber-service orchestration and correlation across both.
 
 ## 4.5 Infrastructure control flow — apps/cloud
 
-Cloud control-plane request → identity/workload verification → scoped resource policy → immutable plan → policy/cost/impact review → human approval where required → isolated execution runner → cloud/provider API → observed-state verification → audit/event/result.
+Cloud control-plane request → identity/workload verification → scoped resource policy → immutable plan → policy/cost/impact review → human approval where required → isolated execution runner → cloud/provider API → observed resource verification → optional Astronauts enrollment/bootstrap grant → host heartbeat/identity verification → audit/event/result. Cloud remains owner of the provider resource; Astronauts is responsible only after a machine has been created and explicitly enrolled.
 
 No public request worker, generic Agent or Web component directly controls host Docker, production cloud credentials or infrastructure runner.
 
@@ -1000,17 +1005,20 @@ Do not log secrets, private source material, sensitive prompts, credentials, or 
 
 # PART XI — INFRASTRUCTURE AND RELEASE
 
-# 17. Three independently deployable runtimes
+# 17. Runtime families and deployment boundaries
 
-Build separate production artifacts:
+Build independently testable artifacts by language and trust boundary, then group them into deployment units only when justified:
 
-- `living-platform-agent`
-- `living-platform-api`
-- `living-platform-web`
+- **Node.js 26.13.1 / pnpm 12.24.0:** `living-platform-agent`, `living-platform-api`, `living-platform-web` and Node-based app/client surfaces.
+- **Go:** `astronauts-controller` and `astronauts-edge-agent` as separate binaries and service identities within one Go module.
+- **Rust:** Arsy protocol binaries/processes for `radiusd`, `acs` and `syslogd` may share one Cargo workspace but retain independent listeners, secrets, resource budgets and deployment lifecycle.
+- **Clients and portals:** OSS, BSS, ISP, ID, Docs, Desktop, Mobile, DX, A-L-L-A-H and RIOT follow their own app deployment class; do not force a server process where a client/static package is sufficient.
+
+Sixteen app directories do not imply sixteen microservices. An independently deployable artifact is justified by security isolation, scaling, availability, lifecycle or ownership evidence.
 
 Docker requirements: multi-stage builds, minimal runtime dependencies, non-root user, reproducible builds, environment validation, secure secrets, health/readiness checks, graceful shutdown, image scanning, immutable image tags, and rollback capability.
 
-Docker Compose development includes Agent, API, Web, database, Redis, and required supporting services. Use managed/external infrastructure where appropriate.
+Local development uses the smallest dependency set needed by the target vertical slice. A Compose profile may include Agent, API, Web, database, Redis and required support services; separate profiles are used for Astronauts controller/lab agent, Arsy protocol lab and integration test devices. Do not expose management protocol listeners on public interfaces.
 
 Kubernetes is an expansion path, not a mandatory first deployment. Do not introduce unnecessary operational complexity.
 
@@ -1289,10 +1297,12 @@ Work in dependency order. Parallel work is allowed only after package ownership,
 
 **Acceptance:** the Web application has an original, cohesive anime-game visual identity while remaining readable and operationally useful.
 
-## PHASE 09 — Three-realm integration
+## PHASE 09 — Four-plane and protocol integration
 
 - [ ] Validate shared contracts.
 - [ ] Integrate Web/API and Agent/API.
+- [ ] Integrate API-issued execution grants with Astronauts Controller and outbound Edge Agent.
+- [ ] Integrate ISP/OSS policy and provisioning contracts with Arsy RADIUS/ACS/Syslog adapters.
 - [ ] Integrate add-on capability discovery.
 - [ ] Propagate identity and permissions safely.
 - [ ] Propagate correlation IDs.
@@ -1301,7 +1311,7 @@ Work in dependency order. Parallel work is allowed only after package ownership,
 - [ ] Run complete vertical slice.
 - [ ] Test partial failures and recovery.
 
-**Acceptance:** one real user workflow crosses the required realms with consistent identity, authorization, data, and status.
+**Acceptance:** one real workflow crosses Experience, Intelligence, Authority and the required Protocol/Operations adapters with consistent identity, authorization, correlation, data ownership and observed-state verification.
 
 ## PHASE 10 — Security and observability
 
@@ -1326,7 +1336,7 @@ Work in dependency order. Parallel work is allowed only after package ownership,
 - [ ] Verify persistence and restart recovery.
 - [ ] Document operations.
 
-**Acceptance:** all sixteen application surfaces build, validate, and release according to their deployment class; only justified trust/scaling boundaries become independent services.
+**Acceptance:** all sixteen application surfaces have verified build/test/deployment contracts by their language and deployment class; only justified trust/scaling boundaries become independent processes/services.
 
 ## PHASE 12 — Final verification
 
@@ -1373,7 +1383,7 @@ Every task records task ID, owner, scope, dependencies, package/file ownership, 
 
 # 22. Required documentation
 
-Maintain architecture overview, three-realm architecture, dependency graph, package boundaries, Odoo-inspired ORM specification, model/field conventions, extension/inheritance specification, domain query specification, security/record-rule specification, MikroORM adapter specification, database ownership policy, legacy Odoo integration guide, add-on development guide, Agent tool/workflow guide, API contract guide, Web design system, RockSoul experience guide, MoonWitness research/evidence guide, creative canon governance, deployment guide, security guide, and operations/recovery guide.
+Maintain architecture overview, four-plane architecture, application dependency graph, language/toolchain matrix, package boundaries, Odoo-inspired ORM specification, model/field conventions, extension/inheritance specification, domain query specification, security/record-rule specification, MikroORM adapter specification, database ownership policy, legacy Odoo integration guide, add-on development guide, Agent tool/workflow guide, API contract guide, Web design system, RockSoul experience guide, MoonWitness research/evidence guide, creative canon governance, deployment guide, security guide, and operations/recovery guide.
 
 Every major technical decision requires an ADR containing context, options, decision, consequences, compatibility impact, and validation evidence. Creative decisions also require provenance and revision history. Technical ADRs must not replace or overwrite the creative canon.
 
@@ -1595,3 +1605,13 @@ Specialist contracts:
 - [RIOT](./BLUEPRINT-RIOT.MD) — creative studio and isolated authorized security lab.
 
 **Do not interpret sixteen app directories as an obligation to deploy sixteen microservices.**
+
+
+## 27. Cross-language runtime and ownership reconciliation
+
+- Node.js apps use the repository's exact Node 26.13.1 pin and pnpm 12.24.0. Do not allow app-local Node major drift.
+- Astronauts uses Go modules/toolchain and its own `go test`, `go vet`, formatting, static analysis and release verification. Go sources are not treated as pnpm workspace packages.
+- Arsy uses Cargo workspace/lockfile and Rust formatting, clippy, tests, dependency audit and fuzz/integration gates. Rust crates are not installed or versioned through pnpm.
+- API remains the shared authorization authority. Astronauts enforces signed machine grants at enrolled hosts; Arsy enforces protocol/client policy at network listeners. Neither becomes a new business API or direct database writer.
+- Build/test automation must expose separate per-language jobs and one aggregate status; a skipped language job is never reported as a pass.
+- The authoritative 16-app inventory is `BLUEPRINT-APPLICATIONS.MD`; `tasks.json` is the sole task/status ledger; specialist blueprints define their detailed contracts. If a narrative/visual phrase conflicts with a technical boundary, preserve authored text as canon but do not treat it as an architecture decision.
