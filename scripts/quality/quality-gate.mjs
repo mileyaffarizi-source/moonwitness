@@ -65,7 +65,7 @@ export function validateTypeScriptGate({ files, packageJson, hasRootTsconfig }) 
 export function validateRootContracts({ packageJson, editorConfig, agents, ci }) {
   const errors = [];
   if (packageJson.packageManager !== "pnpm@12.24.0") errors.push("packageManager must remain pnpm@12.24.0.");
-  if (packageJson.engines?.node !== ">=24.22.3 <25") errors.push("Node engine range must remain >=24.22.3 <25.");
+  if (packageJson.engines?.node !== ">=26.13.0 <27") errors.push("Node engine range must remain >=26.13.0 <27.");
   const checkScript = String(packageJson.scripts?.check ?? "");
   if (!checkScript.includes("pnpm lint") || !checkScript.includes("pnpm lint:addons") || !checkScript.includes("pnpm test")) {
     errors.push("The canonical check script must include repository lint, add-on lint and tests.");
@@ -83,7 +83,7 @@ export function validateRootContracts({ packageJson, editorConfig, agents, ci })
   }
   if (!ci.includes("pnpm install --frozen-lockfile")) errors.push("CI must use a frozen lockfile install.");
   for (const action of ["actions/checkout@v7", "pnpm/action-setup@v6", "actions/setup-node@v7"]) {
-    if (!ci.includes(action)) errors.push("CI must use the Node 24-compatible action baseline: " + action);
+    if (!ci.includes(action)) errors.push("CI must use the Node 26-compatible action baseline: " + action);
   }
   if (!/run:\s*pnpm check\b/.test(ci)) errors.push("CI must run the canonical pnpm check command.");
   return errors;
