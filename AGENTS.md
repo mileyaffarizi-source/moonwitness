@@ -84,3 +84,13 @@ Before creating or changing an add-on, read [BLUEPRINT-PACKAGE-ADDON.MD](./BLUEP
 ## Specialist instructions
 
 Use the skill index at .agents/skills/README.md. Skills are task-scoped references, not a reason to load every instruction file.
+
+
+## Atomic task and integration-parent rules
+
+- The canonical task registry classifies work as `task`, `subtask` or `integration`. Prefer the smallest claimable `task`/`subtask` that has complete prerequisites and one independently verifiable output.
+- Do not claim an `integration` parent for source implementation. First complete its children; then claim the parent only for cross-child verification, failure/recovery checks and the final evidence report.
+- A child must never depend on its parent. The integration parent must depend on every child. Parent and child file ownership must not overlap.
+- Two children may run in parallel only when their dependency sets are ready and their normalized ownership paths are disjoint. Shared root manifests, tasks.json, lockfiles, global registries, ORM/API composition and design tokens remain serialized integration surfaces.
+- Do not add `XL` tasks. Split independently testable outputs into XS/S/M/L tasks with exact path ownership, acceptance criteria and verification.
+- Do not update a parent to done when its children finish; the parent requires its own integration evidence and review.
