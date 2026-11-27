@@ -8,7 +8,7 @@ This foundation gate is not a substitute for application-specific ESLint, framew
 
 ## Canonical commands
 
-Run from the repository root with Node.js 26.13.0 and pnpm 12.24.0:
+Run from the repository root with Node.js 26.13.1 and pnpm 12.24.0:
 
 ~~~sh
 pnpm lint
@@ -24,7 +24,7 @@ pnpm check
 
 pnpm check is the canonical pre-commit/pre-PR gate. CI runs the same command after a frozen install.
 
-The current pinned runtime is Node.js 26.13.0 with pnpm 12.24.0. Project-level pnpm settings belong in pnpm-workspace.yaml; .npmrc is optional and reserved for registry, auth, TLS and proxy settings. The configuration and lockfile contracts are enforced by check:repo.
+The current pinned runtime is Node.js 26.13.1 with pnpm 12.24.0. Project-level pnpm settings belong in pnpm-workspace.yaml; .npmrc is optional and reserved for registry, auth, TLS and proxy settings. The configuration and lockfile contracts are enforced by check:repo.
 
 ## What each gate verifies
 
