@@ -55,3 +55,30 @@ The exact package nodes and edges are intentionally left undefined until actual 
 - No dependency extraction or architecture-boundary checker.
 
 Do not create a guessed graph from blueprint names. Build the graph from manifests/imports after the first real packages exist.
+
+
+## Machine and telecom execution flows
+
+```mermaid
+flowchart TD
+  HUMAN[Human / Operator] --> SURFACE[Web / DX / Desktop]
+  SURFACE --> AGENT[Agent reasoning]
+  AGENT --> API[API authorization and approval]
+  API -->|short-lived signed exact-scope grant| AST[Astronauts Controller]
+  AST <-->|outbound mTLS control stream| EDGE[Go Edge Agent on enrolled host]
+  EDGE --> RESULT[Typed result, telemetry and audit]
+  RESULT --> API
+
+  BSS[BSS commercial order] --> ISP[ISP subscriber lifecycle]
+  ISP -->|versioned entitlement projection| ARSY[Arsy RADIUS / ACS / Syslog]
+  NAS[PPPoE NAS / BRAS / BNG] <-->|RADIUS auth/accounting| ARSY
+  CPE[TR-069 CPE] <-->|CWMP over HTTPS| ARSY
+  DEVICE[Network devices] -->|Syslog UDP/TCP/TLS| ARSY
+  ARSY -->|versioned protocol events| OSS[OSS inventory / incidents / provisioning]
+  OSS -->|approved ACS request| ARSY
+```
+
+- Cloud provisions the machine resource; Astronauts enrolls and controls its host agent afterward.
+- DX owns local coding worktrees; Astronauts owns remote fleet execution. These are not competing terminal implementations.
+- Arsy terminates/handles telecom protocols; OSS and ISP remain the workflow/domain owners.
+- API authorization and audit contracts are mandatory across all arrows; none of the app runtimes share private databases.
