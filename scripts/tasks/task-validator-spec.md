@@ -2,7 +2,7 @@
 
 **Task:** GOV-007  
 **Consumer:** GOV-008 validator and DX-003 task reader  
-**Status:** Draft; schema and code are implemented in GOV-008 only after this contract is approved.
+**Status:** Approved contract; GOV-008 implements the read-only validator and readiness model.
 
 ## 1. Input/output
 

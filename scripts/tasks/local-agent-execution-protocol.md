@@ -1,7 +1,7 @@
 # Local AI task execution protocol — proposal
 
 **Task:** GOV-007  
-**Status:** Draft for owner/security review  
+**Status:** Accepted by repository owner on 2026-11-27 for the bounded local task-execution policy  
 **Canonical ledger:** [`tasks.json`](../../tasks.json)
 
 ## 1. Authority and scope
