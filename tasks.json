@@ -9301,7 +9301,7 @@
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-01",
       "priority": "P0",
-      "status": "pending",
+      "status": "in_review",
       "owner_role": "platform_governance_lead",
       "assigned_agent": null,
       "claim": {
@@ -9361,11 +9361,16 @@
       "estimate": "L",
       "parallel_group": "GOV-PHASE-01",
       "human_approval_required": true,
-      "evidence": [],
-      "blocker": null,
-      "notes": [],
+      "evidence": [
+        "scripts/tasks/local-agent-execution-protocol.md — claim eligibility, leases, ownership locks, CAS, isolation and recovery",
+        "scripts/tasks/task-validator-spec.md — structural validation, DAG/readiness, claim/path collision diagnostics and test matrix"
+      ],
+      "blocker": "Awaiting explicit human owner/platform-security approval of claim/lease/path-lock protocol; GOV-008 remains dependency-blocked.",
+      "notes": [
+        "This is a proposal for review, not an authorization to run autonomous workers. GOV-007 is marked human_approval_required in the canonical registry."
+      ],
       "created_at": null,
-      "updated_at": null,
+      "updated_at": "2026-11-27T14:35:49.942Z",
       "completed_at": null
     },
     {
