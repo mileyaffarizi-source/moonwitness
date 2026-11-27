@@ -16,7 +16,8 @@ const [nvmVersion, nodeVersion] = await Promise.all([
   readFile(".nvmrc", "utf8"),
   readFile(".node-version", "utf8"),
 ]);
-if (!/^\\d+\\.\\d+\\.\\d+\\n?$/.test(nodeVersion)) {
+const versionParts = nodeVersion.trim().split(".");
+if (versionParts.length !== 3 || versionParts.some((part) => !/^[0-9]+$/.test(part))) {
   throw new Error(".node-version must contain one exact Node.js version");
 }
 if (nvmVersion.trim() !== nodeVersion.trim()) {
@@ -26,22 +27,18 @@ if (nodeVersion.trim() !== "22.14.0") {
   throw new Error("Node.js must remain pinned to the audited 22.14.0 baseline");
 }
 
-const npmConfig = await readFile(".npmrc", "utf8");
+const npmConfig = new Set((await readFile(".npmrc", "utf8")).split("\n").map((line) => line.trim()));
 for (const setting of ["engine-strict=true", "save-exact=true"]) {
-  if (!npmConfig.split(/\\r?\\n/).includes(setting)) {
-    throw new Error(".npmrc must include " + setting);
-  }
+  if (!npmConfig.has(setting)) throw new Error(".npmrc must include " + setting);
 }
 
-const workspace = await readFile("pnpm-workspace.yaml", "utf8");
+const workspaceLines = (await readFile("pnpm-workspace.yaml", "utf8")).split("\n").map((line) => line.trim());
 for (const pattern of ['- "apps/*"', '- "packages/*"']) {
-  if (!workspace.split(/\\r?\\n/).some((line) => line.trim() === pattern)) {
-    throw new Error("pnpm-workspace.yaml must include " + pattern);
-  }
+  if (!workspaceLines.includes(pattern)) throw new Error("pnpm-workspace.yaml must include " + pattern);
 }
 
 const lockfile = await readFile("pnpm-lock.yaml", "utf8");
-if (!/^lockfileVersion:\\s*'9\\.0'$/m.test(lockfile) || !/^importers:/m.test(lockfile)) {
+if (lockfile.split("\n")[0].trim() !== "lockfileVersion: '9.0'" || !lockfile.includes("importers:")) {
   throw new Error("pnpm-lock.yaml must be a valid pnpm v9 workspace lockfile");
 }
 
@@ -57,7 +54,7 @@ if (!Array.isArray(tasks.tasks)) throw new Error("tasks.json must expose a top-l
 const ids = new Set();
 for (const task of tasks.tasks) {
   if (!task.id || typeof task.id !== "string") throw new Error("Every task must have a non-empty string id");
-  if (ids.has(task.id)) throw new Error(`Duplicate task id: ${task.id}`);
+  if (ids.has(task.id)) throw new Error("Duplicate task id: " + task.id);
   ids.add(task.id);
 }
 
@@ -69,13 +66,13 @@ for (const entry of entries) {
   const path = resolve(skillRoot, entry.name, "SKILL.md");
   await access(path);
   const content = await readFile(path, "utf8");
-  const lines = content.split(/\\r?\\n/);
+  const lines = content.split("\n").map((line) => line.endsWith("\r") ? line.slice(0, -1) : line);
   const closing = lines.indexOf("---", 1);
   const frontmatter = lines.slice(1, closing);
   if (lines[0] !== "---" || closing < 0 ||
-      !frontmatter.some((line) => /^name:\\s*\\S+/.test(line)) ||
-      !frontmatter.some((line) => /^description:\\s*\\S+/.test(line))) {
-    throw new Error(`Invalid skill metadata: ${entry.name}/SKILL.md`);
+      !frontmatter.some((line) => line.startsWith("name:") && line.slice(5).trim().length > 0) ||
+      !frontmatter.some((line) => line.startsWith("description:") && line.slice(12).trim().length > 0)) {
+    throw new Error("Invalid skill metadata: " + entry.name + "/SKILL.md");
   }
   skillNames.push(entry.name);
 }
@@ -83,6 +80,6 @@ if (skillNames.length < 8) throw new Error("Skill pack is incomplete (expected a
 
 const index = await readFile(resolve(skillRoot, "README.md"), "utf8");
 for (const name of skillNames) {
-  if (!index.includes(`./${name}/SKILL.md`)) throw new Error(`Skill missing from index: ${name}`);
+  if (!index.includes("./" + name + "/SKILL.md")) throw new Error("Skill missing from index: " + name);
 }
-console.log(`Repository valid; ${ids.size} task IDs and ${skillNames.length} skills checked.`);
+console.log("Repository valid; " + ids.size + " task IDs and " + skillNames.length + " skills checked.");
