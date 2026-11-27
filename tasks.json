@@ -6,8 +6,8 @@
     "branch": "main",
     "title": "The Living Platform — Coordinated Engineering and Creative Universe",
     "parent_blueprint": "BLUEPRINT.md",
-    "runtime": "Node.js LTS",
-    "package_manager": "pnpm",
+    "runtime": "Node.js 24.22.3",
+    "package_manager": "pnpm 12.24.0",
     "workspace": "pnpm Workspaces + Turborepo",
     "applications": [
       {
