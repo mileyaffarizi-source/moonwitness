@@ -113,3 +113,8 @@ test("GitHub security and release automation have non-overlapping active owners"
   assert.match(adr, /Status:\*\* Accepted/);
   assert.match(adr, /Node.js 26 Active LTS/);
 });
+
+test("Dependabot update groups enforce a seven-day version-update cooldown", async () => {
+  const config = await readFile(new URL("../.github/dependabot.yml", import.meta.url), "utf8");
+  assert.equal((config.match(/default-days: 7/g) ?? []).length, 2);
+});
