@@ -52,6 +52,13 @@ const FORBIDDEN_IMPORTS = [
   /^(?:node:)?tls$/,
   /^(?:node:)?dns$/,
   /^@moonwitness\/(?:api|orm-internal|persistence-internal)(?:\/|$)/,
+  /^(?:node:)?fs(?:\/.*)?$/,
+  /^(?:node:)?process$/,
+  /^(?:node:)?module$/,
+  /^(?:node:)?os$/,
+  /^(?:node:)?inspector$/,
+  /^(?:node:)?repl$/,
+  /^(?:node:)?dgram$/,
   /^apps\/(?:api|id|agent)(?:\/|$)/,
 ];
 
@@ -524,7 +531,7 @@ export function validateAddonPackage(packageJson, slug) {
 
 export function inspectAddonSource(sourceFiles) {
   const errors = [];
-  const importPattern = /\b(?:from\s*|import\s*|require\s*\()\s*["']([^"']+)["']/g;
+  const importPattern = /\b(?:from\s*|import\s*(?:\(\s*)?|require\s*\()\s*["']([^"']+)["']/g;
   for (const file of sourceFiles) {
     let match;
     while ((match = importPattern.exec(file.content)) !== null) {
