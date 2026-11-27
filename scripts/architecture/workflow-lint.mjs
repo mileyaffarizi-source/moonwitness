@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(".");
 const WORKFLOW_ROOT = resolve(ROOT, ".github/workflows");
-const REMOTE_ACTION = /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+@[a-f0-9]{40}$/;
+const REMOTE_ACTION = /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)*@[a-f0-9]{40}$/;
 const LOCAL_ACTION = /^\.\//;
 const DOCKER_ACTION = /^docker:\/\/[^@\s]+@sha256:[a-f0-9]{64}$/;
 
