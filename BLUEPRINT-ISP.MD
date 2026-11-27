@@ -59,3 +59,10 @@ Service lifecycle state machine, service qualification contract, subscriber/serv
 ## 10. Task ownership and definition of done
 
 Tasks ISP-* in tasks.json. Done means one real test subscriber/order traverses accepted order, qualification, OSS provisioning, activation verification, BSS confirmation and support state without duplicated ownership or lost correlation.
+
+
+## 11. Arsy protocol integration
+
+ISP remains authoritative for subscriber-service lifecycle, entitlement and service state. It provides a versioned, time-bounded service-policy projection to Arsy for RADIUS AAA decisions; Arsy returns authentication/accounting/CoA outcomes and usage-session events with source and freshness metadata. The BRAS/BNG/NAS still terminates PPPoE; Arsy is its RADIUS AAA backend, not the PPPoE access concentrator.
+
+ACS/CWMP operations are initiated by an OSS-owned provisioning/change workflow or approved ISP service transition. Arsy transports and records the authorized protocol RPC; it does not choose the commercial profile, own the ONT inventory or determine billing. RADIUS accounting facts are evidence/input to downstream service and billing processes, not invoices. Subscriber entitlements and billing triggers remain under ISP/BSS policy.
