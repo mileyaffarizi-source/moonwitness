@@ -1,0 +1,134 @@
+{
+  "schema_version": "1.0.0",
+  "audit_date": "2026-11-27",
+  "repository": "mileyaffarizi-source/moonwitness",
+  "audited_main_commit": "a4318676e91292bcb0cfc3f1138ad42ab6709354",
+  "task_id": "DOCS-001",
+  "policy": {
+    "default_classification": "internal",
+    "classifications": {
+      "internal": "Repository engineering/product documentation for authenticated team use. Not public by default.",
+      "public_candidate": "May be published only after product-owner, editorial, privacy and security review.",
+      "restricted": "Secrets, customer data, private network topology, privileged access and sensitive security material. Never public or in public search indexes.",
+      "unknown": "Owner, audience, rights or sensitivity not yet verified. Keep internal until classified."
+    },
+    "access_rule": "Enforce source ACL before rendering or exposing titles, snippets, metadata, search facets, exports or attachments.",
+    "source_of_truth": "Version-controlled repository file and its commit, not a copied Docs database record."
+  },
+  "authorities": [
+    {
+      "source": "tasks.json",
+      "authority": "Canonical task identity, dependency, status, owner, approval and evidence ledger",
+      "class": "internal",
+      "write_policy": "DX/task coordination protocol only"
+    },
+    {
+      "source": "BLUEPRINT*.MD",
+      "authority": "Target architecture and product specifications",
+      "class": "internal",
+      "write_policy": "Governed source changes; implementation truth must be separately evidenced"
+    },
+    {
+      "source": "docs/adr/ADR-*.md",
+      "authority": "Accepted architecture decisions",
+      "class": "internal",
+      "write_policy": "Authorized owner approval required"
+    },
+    {
+      "source": "docs/adr/decision-register.md",
+      "authority": "ADR index and lifecycle references",
+      "class": "internal",
+      "write_policy": "Update with the corresponding ADR decision"
+    },
+    {
+      "source": "docs/architecture/**",
+      "authority": "Audited architecture and package snapshots",
+      "class": "internal",
+      "write_policy": "Refresh evidence commit and audit date when re-audited"
+    },
+    {
+      "source": "docs/governance/**",
+      "authority": "Governance, change and historical audit records",
+      "class": "internal",
+      "write_policy": "Append or supersede; preserve historical records"
+    },
+    {
+      "source": "docs/dx/**",
+      "authority": "DX environment observations and agent capability inventory",
+      "class": "internal",
+      "write_policy": "Only observed facts; unknown host/provider data remains unknown"
+    },
+    {
+      "source": "docs/engineering/**",
+      "authority": "Engineering decisions and quality contracts",
+      "class": "internal",
+      "write_policy": "Reviewed engineering change"
+    },
+    {
+      "source": "scripts/tasks/**",
+      "authority": "Executable task protocols, schema specifications and validator code",
+      "class": "internal",
+      "write_policy": "Code-reviewed change with regression tests"
+    },
+    {
+      "source": "AGENTS.md and .agents/skills/**",
+      "authority": "Contributor/AI operating policy",
+      "class": "internal",
+      "write_policy": "Reviewed policy change"
+    },
+    {
+      "source": "README.md, apps/README.md, packages/README.md",
+      "authority": "Repository setup and top-level navigation",
+      "class": "public_candidate",
+      "write_policy": "Review for disclosure before publishing externally"
+    },
+    {
+      "source": "GitHub Actions runs/checks",
+      "authority": "Commit-specific build and test evidence",
+      "class": "internal",
+      "write_policy": "Generated platform evidence; cannot be authored by Docs UI"
+    },
+    {
+      "source": "apps/docs/**",
+      "authority": "Future read/search/render/progress projection only",
+      "class": "internal",
+      "write_policy": "No independent status or ADR authority"
+    }
+  ],
+  "verified_surfaces": {
+    "docs_portal": "not_materialized",
+    "docs_search_index": "not_verified",
+    "openapi_reference_pipeline": "not_verified",
+    "wiki_backend": "not_verified",
+    "runbook_publication_pipeline": "not_verified",
+    "external_wiki_connector": "not_verified",
+    "public_document_set": "not_approved_by_this_audit"
+  },
+  "known_conflicts": [
+    {
+      "source": "docs/governance/baseline-report.md",
+      "issue": "Historical task statuses for APP-001/PKG-001 and old audited commit are stale relative to the current task ledger.",
+      "resolution": "Treat as historical; refresh in a separate governance audit."
+    },
+    {
+      "source": "docs/governance/change-inventory.md",
+      "issue": "Current-main commit and PR list stop before subsequent merged work.",
+      "resolution": "Append a new audit snapshot; do not rewrite historical change records."
+    },
+    {
+      "source": "docs/architecture/application-inventory.md; docs/architecture/existing-app-baseline.json; docs/architecture/dependency-graph.md; docs/architecture/package-audit.md",
+      "issue": "Evidence commit identifiers are older than the currently inspected main commit.",
+      "resolution": "Re-run the file-tree and package baseline audit before presenting as current."
+    },
+    {
+      "source": "docs/dx/dx-workflow-audit.md; docs/dx/agent-adapter-inventory.json",
+      "issue": "Commit and CI references identify the earlier DX baseline.",
+      "resolution": "Keep capability distinctions but refresh references after the next DX audit."
+    }
+  ],
+  "non_goals": [
+    "No Docs app scaffold or publishing backend is created by this inventory.",
+    "No document is made public by this classification.",
+    "No external wiki, private host, customer data source, secrets store or production system is accessed."
+  ]
+}
