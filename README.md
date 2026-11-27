@@ -16,8 +16,8 @@ This repository is being transitioned from an architecture/planning repository i
 
 ## Requirements
 
-- Node.js 22.14.0 (pinned in .nvmrc and .node-version; consistency is checked by pnpm check:repo)
-- pnpm 10.8.1 (managed through Corepack)
+- Node.js 24.22.3 (pinned in .nvmrc and .node-version; consistency is checked by pnpm check:repo)
+- pnpm 12.24.0 (managed through Corepack)
 
 ## Setup
 
