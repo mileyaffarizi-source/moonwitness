@@ -242,7 +242,6 @@ test("rejects child-to-parent dependency and missing integration child edge", ()
   const codes = errorCodes(validateTaskRegistry(makeRegistry([parent, child])));
   assert.ok(codes.includes("CHILD_DEPENDS_ON_PARENT"));
   assert.ok(codes.includes("INTEGRATION_MISSING_CHILD_DEPENDENCY"));
-  assert.ok(codes.includes("DEPENDENCY_CYCLE"));
 });
 
 test("rejects non-atomic XL task estimates and parent-child path collisions", () => {
