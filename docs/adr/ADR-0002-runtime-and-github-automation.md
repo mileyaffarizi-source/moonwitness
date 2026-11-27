@@ -1,11 +1,11 @@
 # ADR-0002: Node.js 24 runtime, pnpm 12 and GitHub automation baseline
 
-- **Status:** Accepted
+- **Status:** Superseded by ADR-0004 for Node runtime selection only; pnpm 12 and automation ownership remain accepted
 - **Date:** 2026-11-27
 - **Decision owner:** Repository owner
 - **Authors:** Platform engineering
 - **Related tasks:** PKG-002, PKG-003, GOV-011
-- **Supersedes / superseded by:** Supersedes the Node.js 22.14.0 / pnpm 10.8.1 baseline in ADR-0001 for the runtime/package-manager versions only.
+- **Supersedes / superseded by:** Superseded by ADR-0004 for Node.js runtime only. The pnpm 12.24.0 and GitHub automation ownership decisions remain in force.
 
 ## Context and problem
 
