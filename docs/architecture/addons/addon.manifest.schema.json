@@ -1,0 +1,540 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moonwitness.dev/schemas/addon.manifest.schema.json",
+  "title": "MoonWitness Add-on Manifest",
+  "description": "Declarative, strict add-on metadata. This manifest does not grant runtime permission.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifestVersion",
+    "id",
+    "name",
+    "version",
+    "description",
+    "owner",
+    "license",
+    "compatibility",
+    "dependencies",
+    "capabilities",
+    "permissions",
+    "contributions",
+    "models",
+    "extensions",
+    "storage",
+    "configuration",
+    "provenance"
+  ],
+  "properties": {
+    "manifestVersion": {
+      "const": "1.0.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^moonwitness\\.addon\\.[a-z][a-z0-9-]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100
+    },
+    "version": {
+      "$ref": "#/$defs/semver"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 500
+    },
+    "owner": {
+      "$ref": "#/$defs/owner"
+    },
+    "license": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 80
+    },
+    "compatibility": {
+      "$ref": "#/$defs/compatibility"
+    },
+    "dependencies": {
+      "$ref": "#/$defs/dependencies"
+    },
+    "capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/capability"
+      }
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/permission"
+      }
+    },
+    "contributions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/contribution"
+      }
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/model"
+      }
+    },
+    "extensions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/extension"
+      }
+    },
+    "storage": {
+      "$ref": "#/$defs/storage"
+    },
+    "configuration": {
+      "$ref": "#/$defs/configuration"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "health": {
+      "$ref": "#/$defs/health"
+    }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$"
+    },
+    "versionRange": {
+      "type": "string",
+      "pattern": "^>=(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*) <(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "relativePath": {
+      "type": "string",
+      "pattern": "^\\./(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+$"
+    },
+    "owner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "team"
+      ],
+      "properties": {
+        "team": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{1,39}$"
+        },
+        "contact": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120
+        }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platformApi",
+        "addonSdk",
+        "node"
+      ],
+      "properties": {
+        "platformApi": {
+          "$ref": "#/$defs/versionRange"
+        },
+        "addonSdk": {
+          "$ref": "#/$defs/versionRange"
+        },
+        "node": {
+          "const": ">=24.22.3 <25.0.0"
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "optional"
+      ],
+      "properties": {
+        "required": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dependency"
+          }
+        },
+        "optional": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dependency"
+          }
+        }
+      }
+    },
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^moonwitness\\.addon\\.[a-z][a-z0-9-]*$"
+        },
+        "version": {
+          "$ref": "#/$defs/versionRange"
+        }
+      }
+    },
+    "capability": {
+      "type": "string",
+      "enum": [
+        "api.route",
+        "api.usecase",
+        "api.model",
+        "api.model-extension",
+        "agent.tool",
+        "agent.workflow",
+        "web.navigation",
+        "web.component",
+        "event.publisher",
+        "event.subscriber",
+        "job.worker",
+        "oss.contribution",
+        "bss.contribution"
+      ]
+    },
+    "permission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "scope",
+        "risk",
+        "approval",
+        "rationale"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "records.read",
+            "records.write",
+            "events.publish",
+            "events.subscribe",
+            "jobs.schedule",
+            "agent.invoke-api",
+            "web.navigation",
+            "storage.addon-owned",
+            "external.side-effect"
+          ]
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "risk": {
+          "type": "string",
+          "enum": [
+            "read_only",
+            "write_reversible",
+            "external_side_effect"
+          ]
+        },
+        "approval": {
+          "type": "string",
+          "enum": [
+            "none",
+            "per_operation",
+            "human_required"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 12,
+          "maxLength": 400
+        }
+      }
+    },
+    "contribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type",
+        "entrypoint",
+        "capabilities",
+        "permissions"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "api.route",
+            "api.usecase",
+            "agent.tool",
+            "agent.workflow",
+            "web.navigation",
+            "web.component",
+            "event.publisher",
+            "event.subscriber",
+            "job.worker",
+            "oss.contribution",
+            "bss.contribution"
+          ]
+        },
+        "entrypoint": {
+          "$ref": "#/$defs/relativePath"
+        },
+        "capabilities": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/capability"
+          }
+        },
+        "permissions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "records.read",
+              "records.write",
+              "events.publish",
+              "events.subscribe",
+              "jobs.schedule",
+              "agent.invoke-api",
+              "web.navigation",
+              "storage.addon-owned",
+              "external.side-effect"
+            ]
+          }
+        }
+      }
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "string",
+            "text",
+            "integer",
+            "decimal",
+            "boolean",
+            "date",
+            "datetime",
+            "json",
+            "reference"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 300
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "ownership",
+        "fields"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9_]*$"
+        },
+        "ownership": {
+          "const": "addon-owned"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        }
+      }
+    },
+    "extension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "targetModel",
+        "mode",
+        "fields",
+        "dependsOn"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$"
+        },
+        "targetModel": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9_]*$"
+        },
+        "mode": {
+          "const": "additive"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "dependsOn": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^moonwitness\\.addon\\.[a-z][a-z0-9-]*$"
+          }
+        }
+      }
+    },
+    "storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ownership",
+        "modelIds",
+        "migrations"
+      ],
+      "properties": {
+        "ownership": {
+          "type": "string",
+          "enum": [
+            "addon-owned",
+            "domain-owned",
+            "external"
+          ]
+        },
+        "modelIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9_]*$"
+          }
+        },
+        "migrations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relativePath"
+          }
+        },
+        "domainOwner": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "approvalRef": {
+          "type": "string",
+          "pattern": "^(ADR-[0-9]{4}|GOV-[0-9]{3}|API-[0-9]{3}):[A-Za-z0-9._/-]+$"
+        }
+      }
+    },
+    "configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema"
+      ],
+      "properties": {
+        "schema": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/relativePath"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "sourceCommit",
+        "license"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 240
+        },
+        "sourceCommit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "license": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80
+        },
+        "integrity": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "signatureKeyId": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 120
+        }
+      }
+    },
+    "health": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "process",
+            "api-check",
+            "none"
+          ]
+        },
+        "entrypoint": {
+          "$ref": "#/$defs/relativePath"
+        }
+      }
+    }
+  }
+}
