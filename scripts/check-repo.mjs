@@ -9,8 +9,8 @@ const requiredFiles = [
 for (const file of requiredFiles) await access(resolve(file));
 
 const pkg = JSON.parse(await readFile("package.json", "utf8"));
-if (pkg.packageManager !== "pnpm@10.8.1") throw new Error("packageManager must remain pinned to pnpm@10.8.1");
-if (pkg.engines?.node !== ">=22.14.0 <23") throw new Error("Node.js engine range does not match the repository baseline");
+if (pkg.packageManager !== "pnpm@12.24.0") throw new Error("packageManager must remain pinned to pnpm@10.8.1");
+if (pkg.engines?.node !== ">=24.22.3 <25") throw new Error("Node.js engine range does not match the repository baseline");
 
 const [nvmVersion, nodeVersion] = await Promise.all([
   readFile(".nvmrc", "utf8"),
@@ -23,7 +23,7 @@ if (versionParts.length !== 3 || versionParts.some((part) => !/^[0-9]+$/.test(pa
 if (nvmVersion.trim() !== nodeVersion.trim()) {
   throw new Error(".nvmrc and .node-version must pin the same Node.js version");
 }
-if (nodeVersion.trim() !== "22.14.0") {
+if (nodeVersion.trim() !== "24.22.3") {
   throw new Error("Node.js must remain pinned to the audited 22.14.0 baseline");
 }
 
@@ -39,7 +39,7 @@ for (const pattern of ['- "apps/*"', '- "packages/*"']) {
 
 const lockfile = await readFile("pnpm-lock.yaml", "utf8");
 if (lockfile.split("\n")[0].trim() !== "lockfileVersion: '9.0'" || !lockfile.includes("importers:")) {
-  throw new Error("pnpm-lock.yaml must be a valid pnpm v9 workspace lockfile");
+  throw new Error("pnpm-lock.yaml must be a valid pnpm v9/v10-compatible workspace lockfile");
 }
 
 const rootEntries = new Set(await readdir("."));
