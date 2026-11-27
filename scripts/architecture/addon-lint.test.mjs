@@ -9,6 +9,7 @@ import {
   satisfiesSupportedRange,
   validateAddonManifest,
   validateAddonPackage,
+  validateJsonSchema,
   validateAddonSet,
 } from "./addon-lint.mjs";
 
@@ -270,4 +271,19 @@ test("manifest schema is valid JSON Schema draft 2020-12 and strict", async () =
   assert.equal(schema.$schema, "https://json-schema.org/draft/2020-12/schema");
   assert.equal(schema.additionalProperties, false);
   assert.ok(schema.$defs.capability.enum.every((item) => ADDON_CAPABILITIES.includes(item)));
+});
+
+test("canonical schema accepts the complete valid fixture", async () => {
+  const schema = JSON.parse(await readFile(new URL("../../docs/architecture/addons/addon.manifest.schema.json", import.meta.url), "utf8"));
+  assert.deepEqual(validateJsonSchema(schema, makeManifest()), []);
+});
+
+test("canonical schema rejects unknown nested fields and unsafe relative paths", async () => {
+  const schema = JSON.parse(await readFile(new URL("../../docs/architecture/addons/addon.manifest.schema.json", import.meta.url), "utf8"));
+  const manifest = makeManifest();
+  manifest.owner.unreviewed = true;
+  manifest.contributions[0].entrypoint = "../../escape.js";
+  const errors = validateJsonSchema(schema, manifest);
+  assert.ok(errors.some((error) => error.code === "SCHEMA_ADDITIONAL_PROPERTY" && error.path === "$.owner.unreviewed"));
+  assert.ok(errors.some((error) => error.code === "SCHEMA_PATTERN" && error.path === "$.contributions[0].entrypoint"));
 });
