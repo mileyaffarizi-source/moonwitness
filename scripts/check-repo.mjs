@@ -14,6 +14,7 @@ const requiredFiles = [
   "BLUEPRINT-PACKAGE-ADDON.MD",
   "docs/engineering/ADDON-ENGINEERING-STANDARD.md",
   "docs/architecture/addons/addon.manifest.schema.json",
+  "docs/architecture/addons/addon.manifest.example.json",
   "docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md",
   "scripts/architecture/addon-lint.mjs",
   "scripts/architecture/addon-lint.test.mjs",
