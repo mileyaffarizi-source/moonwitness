@@ -18,6 +18,7 @@ Use a Conventional Commit title (for example `feat(web): add the MoonWitness lan
 ## Verification evidence
 
 - [ ] pnpm check completed after the final code change.
+- [ ] pnpm lint:addons passed when add-on paths or manifests changed.
 - [ ] Any skipped gate is explicitly described with its reason.
 - [ ] Relevant focused tests and manual checks are recorded below.
 - [ ] No secrets, generated build output or unrelated files were added.
