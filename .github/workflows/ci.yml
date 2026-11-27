@@ -2,7 +2,7 @@ name: Repository CI
 
 on:
   push:
-    branches: [main, "foundation/**"]
+    branches: [main, "foundation/**", "dx/**"]
   pull_request:
   workflow_dispatch:
 
@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate repository baseline
+    name: Quality and consistency gates
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,8 +36,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Validate repository
-        run: pnpm check:repo
-
-      - name: Run tests
-        run: pnpm test
+      - name: Run canonical quality gates
+        run: pnpm check

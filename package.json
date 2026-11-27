@@ -10,8 +10,12 @@
   },
   "packageManager": "pnpm@10.8.1",
   "scripts": {
+    "lint": "node scripts/quality/quality-gate.mjs lint",
+    "format:check": "node scripts/quality/quality-gate.mjs format",
+    "typecheck": "node scripts/quality/quality-gate.mjs typecheck",
     "check:repo": "node scripts/check-repo.mjs",
+    "check:tasks": "node scripts/tasks/task-registry.mjs",
     "test": "node --test",
-    "check": "pnpm check:repo && pnpm test"
+    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm check:repo && pnpm check:tasks && pnpm test"
   }
 }
