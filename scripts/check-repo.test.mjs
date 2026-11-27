@@ -81,3 +81,28 @@ test("Node runtime pins are aligned to Node.js 26 Active LTS", async () => {
   assert.equal(nodeVersion.trim(), "26.13.0");
   assert.equal(manifest.engines.node, ">=26.13.0 <27");
 });
+
+test("GitHub security and release automation have non-overlapping active owners", async () => {
+  const [dependencyReview, secrets, workflowSecurity, releaseWorkflow, releaseFiles, adr] = await Promise.all([
+    readFile(new URL("../.github/workflows/dependency-review.yml", import.meta.url), "utf8"),
+    readFile(new URL("../.github/workflows/secrets.yml", import.meta.url), "utf8"),
+    readFile(new URL("../.github/workflows/workflow-security.yml", import.meta.url), "utf8"),
+    readFile(new URL("../.github/workflows/release-please.yml", import.meta.url), "utf8"),
+    readdir(new URL("../.github/workflows/", import.meta.url)),
+    readFile(new URL("../docs/adr/ADR-0004-node26-lts-and-github-automation.md", import.meta.url), "utf8"),
+  ]);
+
+  assert.ok(dependencyReview.includes("actions/dependency-review-action@v5"));
+  assert.ok(dependencyReview.includes("fail-on-severity: high"));
+  assert.ok(!dependencyReview.includes("DEPENDENCY_REVIEW_ENABLED"));
+  assert.ok(secrets.includes("gitleaks/gitleaks-action@v3"));
+  assert.ok(secrets.includes("fetch-depth: 0"));
+  assert.ok(workflowSecurity.includes("zizmor@1.32.0"));
+  assert.ok(workflowSecurity.includes("--format=github"));
+  assert.ok(releaseWorkflow.includes("googleapis/release-please-action@v5"));
+
+  const changelogWorkflows = releaseFiles.filter((name) => /(?:release|changelog)/i.test(name) && name.endsWith(".yml"));
+  assert.deepEqual(changelogWorkflows, ["release-please.yml"]);
+  assert.match(adr, /Status:\*\* Accepted/);
+  assert.match(adr, /Node.js 26 Active LTS/);
+});
