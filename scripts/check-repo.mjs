@@ -7,6 +7,8 @@ const requiredFiles = [
   ".agents/skills/README.md",
   ".github/dependabot.yml",
   "docs/engineering/GITHUB-AUTOMATION.md",
+  "docs/engineering/TASK-DECOMPOSITION-STANDARD.md",
+  "docs/architecture/BLUEPRINT-AUDIT-2026-11-28.md",
   ".github/workflows/codeql.yml",
   ".github/workflows/dependency-review.yml",
   ".github/workflows/secrets.yml",
