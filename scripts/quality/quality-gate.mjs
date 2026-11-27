@@ -67,8 +67,11 @@ export function validateRootContracts({ packageJson, editorConfig, agents, ci })
   if (packageJson.packageManager !== "pnpm@12.24.0") errors.push("packageManager must remain pnpm@12.24.0.");
   if (packageJson.engines?.node !== ">=24.22.3 <25") errors.push("Node engine range must remain >=24.22.3 <25.");
   const checkScript = String(packageJson.scripts?.check ?? "");
-  if (!checkScript.includes("pnpm lint") || !checkScript.includes("pnpm test")) {
-    errors.push("The canonical check script must include lint and test.");
+  if (!checkScript.includes("pnpm lint") || !checkScript.includes("pnpm lint:addons") || !checkScript.includes("pnpm test")) {
+    errors.push("The canonical check script must include repository lint, add-on lint and tests.");
+  }
+  if (packageJson.scripts?.["lint:addons"] !== "node scripts/architecture/addon-lint.mjs") {
+    errors.push("The root lint:addons script must invoke the canonical add-on policy linter.");
   }
   if (/\bbun\b/i.test(JSON.stringify(packageJson.scripts ?? {}))) errors.push("Do not add Bun commands; pnpm is canonical.");
 
