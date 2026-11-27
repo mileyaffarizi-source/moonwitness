@@ -58,12 +58,18 @@ export function validateWorkflowFile(path, content) {
 
   const pullRequestTriggered = /^\s*pull_request\s*:/m.test(normalized);
   if (pullRequestTriggered && /^\s*permissions:\s*\n(?:[ \t]+[^\s#][^\n]*\n)*?[ \t]+(?:contents|pull-requests|issues):\s*write\b/m.test(normalized)) {
-    errors.push({
-      code: "PULL_REQUEST_WRITE_PERMISSION_REVIEW",
-      path,
-      line: 1,
-      message: "Pull-request workflows with write permissions need an explicit reviewed trust-boundary exception; do not execute fork-controlled code with write access.",
-    });
+    const isGitleaksCommentOnlyException =
+      normalized.includes("REVIEWED_EXCEPTION_GITLEAKS_COMMENT_ONLY") &&
+      normalized.includes("gitleaks/gitleaks-action@") &&
+      !/^\s*run:/m.test(normalized);
+    if (!isGitleaksCommentOnlyException) {
+      errors.push({
+        code: "PULL_REQUEST_WRITE_PERMISSION_REVIEW",
+        path,
+        line: 1,
+        message: "Pull-request workflows with write permissions need an explicit reviewed trust-boundary exception; do not execute fork-controlled code with write access.",
+      });
+    }
   }
 
   return errors;
