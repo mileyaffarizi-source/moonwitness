@@ -1,7 +1,8 @@
 # BLUEPRINT-PACKAGE-ADDON — ODOO-STYLE ADD-ON SDK & LIFECYCLE
 
-**Document ID:** MW-BP-ADD-001 · **Version:** 1.0.0  
-**Parent:** [BLUEPRINT-PACKAGE.MD](./BLUEPRINT-PACKAGE.MD) · **Task registry:** [tasks.json](./tasks.json)
+**Document ID:** MW-BP-ADD-001 · **Version:** 2.0.0  
+**Parent:** [BLUEPRINT-PACKAGE.MD](./BLUEPRINT-PACKAGE.MD) · **Task registry:** [tasks.json](./tasks.json)  
+**Engineering standard:** [ADDON-ENGINEERING-STANDARD.md](./docs/engineering/ADDON-ENGINEERING-STANDARD.md) · **Manifest schema:** [addon.manifest.schema.json](./docs/architecture/addons/addon.manifest.schema.json)
 
 ## 1. Purpose
 
@@ -125,3 +126,108 @@ Every add-on has one model owner and one authoritative write path. Cross-add-on 
 ## 16. High-risk add-on constraints
 
 Network configuration, cloud apply, secret access, production deploy and security-lab operations are privileged capabilities. They must not be exposed as ordinary generic add-on hooks. Each requires separate capability ID, service identity, exact resource scope, risk class, audit and human approval according to policy.
+
+
+## 17. Canonical workspace layout
+
+Each TypeScript add-on lives under packages/addons/<slug>. The canonical descriptor is addon.manifest.json; the npm workspace package is named @moonwitness/addon-<slug>; the immutable add-on ID is moonwitness.addon.<slug>.
+
+~~~text
+packages/addons/<slug>/
+├── addon.manifest.json
+├── package.json
+├── README.md
+├── CHANGELOG.md
+├── config.schema.json
+├── src/
+│   ├── index.ts
+│   ├── api/
+│   ├── agent/
+│   └── web/
+├── tests/
+│   ├── unit/
+│   ├── contract/
+│   └── integration/
+└── migrations/
+~~~
+
+Do not create empty realm directories. Each add-on declares only the entrypoints it actually provides. Native Odoo Python add-ons stay outside the Node workspace.
+
+## 18. Manifest v1 exact contract
+
+The machine-readable JSON Schema is docs/architecture/addons/addon.manifest.schema.json. Schema version 1.0.0 is strict and rejects unknown fields. The schema-valid [reference manifest example](./docs/architecture/addons/addon.manifest.example.json) is a starting point only; replace its placeholder provenance before use. It requires:
+
+- manifestVersion, stable id, display name, SemVer version and description;
+- owner team, SPDX/license identifier and provenance;
+- bounded platformApi/addonSdk compatibility ranges and Node >=24.22.3 <25.0.0;
+- required and optional dependency IDs with explicit bounded SemVer ranges;
+- allowlisted capability contributions and separately declared permission requests;
+- unique contributions with type, safe package-relative entrypoint, capabilities and permissions;
+- namespaced add-on-owned model declarations and additive model extensions;
+- storage ownership, model IDs, migration references and approval for domain/external storage;
+- optional configuration schema and health declaration.
+
+Manifests are declarative data only. Inline code, shell commands, raw SQL, secret values, arbitrary URLs as executable handlers, wildcard grants and unknown extension fields are invalid.
+
+## 19. Public capabilities and permission policy
+
+Capability types v1:
+
+- API: api.route, api.usecase, api.model, api.model-extension.
+- Agent: agent.tool, agent.workflow.
+- Experience: web.navigation, web.component.
+- Async/event: event.publisher, event.subscriber, job.worker.
+- Vertical: oss.contribution, bss.contribution.
+
+Permission IDs v1:
+
+- records.read, records.write;
+- events.publish, events.subscribe;
+- jobs.schedule;
+- agent.invoke-api;
+- web.navigation;
+- storage.addon-owned;
+- external.side-effect.
+
+The linter enforces a minimum risk/approval class. Read-only permissions may request no approval; reversible writes require per-operation authorization; external side effects require human approval. Privileged infrastructure, secret retrieval, direct network egress, shell, cloud apply and production deploy are not granted by this v1 manifest contract.
+
+Permission declarations are requests only. Runtime authorization is owned by apps/api and bound to the trusted actor, tenant, add-on/version, resource and exact operation. Client-side hiding is never authorization.
+
+## 20. Package and source restrictions
+
+Add-on packages are private ESM workspace packages targeting the repository Node major. They must expose explicit package exports and build/lint/typecheck/test scripts. Automatic lifecycle hooks (preinstall/install/postinstall/prepare) are forbidden.
+
+Add-on dependencies and source may not create a parallel database/ORM or HTTP server. Block direct imports of MikroORM, Prisma, Sequelize, TypeORM, Drizzle, raw DB drivers, Fastify, Express, child_process, vm and direct secret reads via process.env. Direct outbound HTTP/fetch is prohibited unless a future reviewed capability adapter explicitly owns it.
+
+Add-ons import public SDK/contracts and call approved API use cases. They never import another add-on's private implementation, API internal repository, persistence adapter or global EntityManager.
+
+## 21. Storage, extensions and migration ownership
+
+An add-on-owned model ID is namespaced with its slug. An extension explicitly names a target model and is additive only in v1. Changes to field type/nullability, primary key, storage owner, deletion behavior or business validation require a new approved ADR and migration plan.
+
+Storage defaults to addon-owned. domain-owned or external storage must declare a data owner and approval reference. Existing Odoo-owned records/tables cannot be claimed. No add-on may run global schema synchronization or destructive DDL at startup.
+
+Disable withdraws routes/tools/jobs/navigation and preserves data. Decommission is a separate approved operation with backup/recovery plan; it must never be implemented as an implicit delete.
+
+## 22. Dependency resolver contract
+
+- Required dependencies missing or incompatible block readiness.
+- Optional dependencies may be absent; affected contributions remain unavailable.
+- Self-dependencies, duplicates, missing required IDs and cycles fail.
+- The resolver returns a deterministic topological order.
+- Required dependency ranges must be explicit bounded ranges; no wildcards or latest tags.
+- Cross-add-on model extensions require a declared required dependency on the target owner add-on, except for platform-owned core models.
+
+## 23. Lint, test and merge contract
+
+Run pnpm lint:addons and the root pnpm check. The add-on gate validates JSON/schema shape, ID/package agreement, versions, compatibility, dependencies, cycles, capabilities, permission minimums, contribution IDs/entrypoints, model ownership and forbidden dependency/import patterns. No add-ons present is an explicit baseline result, not proof that a runtime exists.
+
+A new add-on must also pass the owning package's build, lint, typecheck, unit/contract/integration tests, API authorization tests, migration/restore tests and cross-realm tests as applicable. It cannot be marked done because its manifest merely parses.
+
+## 24. Trust boundary remains a separate decision
+
+This contract blocks arbitrary runtime installs and unreviewed artifacts. It does not by itself provide process isolation, artifact signing, key management or egress sandboxing. The third-party trust model is Proposed in ADR-0003; until approved and tested, third-party add-ons remain disabled. A manifest is not a sandbox.
+
+## 25. Ownership and sequencing
+
+ADD-012 establishes the static engineering contract and lint gate. ADD-001 implements the Base SDK and schema types only after PKG-004/API-004. ADD-002 performs API discovery/trust checks only after ADD-001/PKG-008 and the required governance approval. The remaining ADD-001 through ADD-011 dependencies remain authoritative; no task may bypass them.

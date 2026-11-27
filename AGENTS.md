@@ -56,6 +56,20 @@ Do not bypass a failing check with continue-on-error, || true, broad lint suppre
 - Dependabot proposes dependency updates; do not enable auto-merge. Every bot PR must pass `pnpm check` and the applicable security gates.
 - Follow [GitHub automation ownership](./docs/engineering/GITHUB-AUTOMATION.md).
 
+## Add-on engineering boundary
+
+Before creating or changing an add-on, read [BLUEPRINT-PACKAGE-ADDON.MD](./BLUEPRINT-PACKAGE-ADDON.MD) and the [Add-on Engineering Standard](./docs/engineering/ADDON-ENGINEERING-STANDARD.md). Validate manifest/package changes with `pnpm lint:addons` and always run `pnpm check`.
+
+- Add-ons live under `packages/addons/<slug>`; each uses the canonical `addon.manifest.json`, stable ID `moonwitness.addon.<slug>` and package name `@moonwitness/addon-<slug>`.
+- Do not create empty add-on folders, duplicate manifests, undocumented registries or placeholder capabilities.
+- The API owns business persistence, authorization, transactions and audit. Add-ons must not import DB drivers, MikroORM internals, EntityManager, API private repositories or another add-on's private source.
+- Agent tools call approved API capabilities only. Web contributions are browser-safe; no server runtime, database drivers, secrets or Node-only implementation enters browser bundles.
+- Manifests declare requested permissions; they never grant themselves authority. Unknown capabilities/permissions, wildcard scopes and understated risk/approval fail closed.
+- New models must be add-on-owned and namespaced. Extensions are additive only. Existing Odoo/domain-owned records are not add-on-owned by assumption.
+- No runtime package installation, arbitrary remote code, shell/eval, ambient secret access or automatic install lifecycle scripts.
+- Disable withdraws contributions but preserves data. Decommission is a separately approved, recoverable operation.
+- Third-party add-on execution remains disabled while [ADR-0003](./docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md) is Proposed. A valid manifest is not a sandbox.
+
 ## Architecture quick map
 
 - apps/api: shared modular authority, domain use cases, model/record/field access and persistence composition.

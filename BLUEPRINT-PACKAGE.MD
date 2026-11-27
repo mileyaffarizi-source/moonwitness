@@ -20,7 +20,7 @@ Pin Node.js LTS and pnpm; use pnpm Workspaces for linking and Turborepo for task
 
 **ORM Kernel:** model descriptors, fields, relations, extensions, domain AST, record interfaces, security hooks and persistence adapter contracts. Runtime composition is in API.
 
-**Domain Add-ons:** independent capabilities with explicit ownership and manifests.
+**Domain Add-ons:** independent capabilities with explicit ownership and manifests. Every TypeScript add-on follows [BLUEPRINT-PACKAGE-ADDON.MD](./BLUEPRINT-PACKAGE-ADDON.MD), the strict v1 manifest schema and the static `pnpm lint:addons` gate.
 
 **Clients:** browser-safe API client, service-to-service client and event contract clients; no server-only leakage.
 
@@ -75,7 +75,7 @@ Do not create a package solely because it appears in this list. Create it when a
 
 Deliver package inventory, dependency graph, public export map, naming policy, pnpm/Turbo configuration, architecture-boundary checks, version policy, local-agent ownership protocol and one working example package.
 
-Tasks **PKG-001 through PKG-009** in [tasks.json](./tasks.json).
+Tasks **PKG-001 through PKG-009** and add-on tasks **ADD-001 through ADD-012** in [tasks.json](./tasks.json).
 
 ## 11. Definition of done
 

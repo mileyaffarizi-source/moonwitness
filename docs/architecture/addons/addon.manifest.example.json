@@ -1,0 +1,79 @@
+{
+  "manifestVersion": "1.0.0",
+  "id": "moonwitness.addon.reference",
+  "name": "Reference Add-on",
+  "version": "0.1.0",
+  "description": "A minimal schema example for a reviewed first-party add-on capability.",
+  "owner": {
+    "team": "platform"
+  },
+  "license": "MIT",
+  "compatibility": {
+    "platformApi": ">=1.0.0 <2.0.0",
+    "addonSdk": ">=1.0.0 <2.0.0",
+    "node": ">=24.22.3 <25.0.0"
+  },
+  "dependencies": {
+    "required": [],
+    "optional": []
+  },
+  "capabilities": [
+    "api.route"
+  ],
+  "permissions": [
+    {
+      "id": "records.read",
+      "scope": "model:reference.record",
+      "risk": "read_only",
+      "approval": "none",
+      "rationale": "Read the add-on-owned reference record through an authorized API use case."
+    }
+  ],
+  "contributions": [
+    {
+      "id": "reference.list-records",
+      "type": "api.route",
+      "entrypoint": "./dist/api/index.js",
+      "capabilities": [
+        "api.route"
+      ],
+      "permissions": [
+        "records.read"
+      ]
+    }
+  ],
+  "models": [
+    {
+      "id": "reference.record",
+      "ownership": "addon-owned",
+      "fields": [
+        {
+          "id": "name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "id": "description",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "extensions": [],
+  "storage": {
+    "ownership": "addon-owned",
+    "modelIds": [
+      "reference.record"
+    ],
+    "migrations": []
+  },
+  "configuration": {
+    "schema": null
+  },
+  "provenance": {
+    "repository": "https://github.com/mileyaffarizi-source/moonwitness",
+    "sourceCommit": "0000000000000000000000000000000000000000",
+    "license": "MIT"
+  }
+}

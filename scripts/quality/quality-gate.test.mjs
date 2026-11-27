@@ -73,7 +73,7 @@ test("root contract accepts canonical repository rules", () => {
     packageJson: {
       packageManager: "pnpm@12.24.0",
       engines: { node: ">=24.22.3 <25" },
-      scripts: { check: "pnpm lint && pnpm test" },
+      scripts: { "lint:addons": "node scripts/architecture/addon-lint.mjs", check: "pnpm lint && pnpm lint:addons && pnpm test" },
     },
     editorConfig: "root = true\ncharset = utf-8\nend_of_line = lf\ninsert_final_newline = true\n",
     agents: "Inspect before changing. Use the task ledger. Security by default. Anti-slop engineering and product craft Token and context budget Mandatory quality gate",
