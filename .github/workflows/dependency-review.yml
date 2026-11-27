@@ -15,7 +15,6 @@ concurrency:
 
 jobs:
   review:
-    if: vars.DEPENDENCY_REVIEW_ENABLED == 'true'
     name: Review dependency changes
     runs-on: ubuntu-latest
     steps:
