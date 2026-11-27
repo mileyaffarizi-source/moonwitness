@@ -21,6 +21,8 @@ const requiredFiles = [
   "docs/adr/ADR-0004-node26-lts-and-github-automation.md",
   "scripts/architecture/addon-lint.mjs",
   "scripts/architecture/addon-lint.test.mjs",
+  "scripts/architecture/workflow-lint.mjs",
+  "scripts/architecture/workflow-lint.test.mjs",
 ];
 for (const file of requiredFiles) await access(resolve(file));
 
@@ -80,8 +82,12 @@ try {
 }
 
 const ciWorkflow = await readFile(".github/workflows/ci.yml", "utf8");
-for (const action of ["actions/checkout@v7", "pnpm/action-setup@v6", "actions/setup-node@v7"]) {
-  if (!ciWorkflow.includes(action)) throw new Error("CI must use the current Node 26-compatible action baseline: " + action);
+for (const action of [
+  "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+  "pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413",
+  "actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+]) {
+  if (!ciWorkflow.includes(action)) throw new Error("CI must use the reviewed, immutable Node 26-compatible action pin: " + action);
 }
 
 const [codeqlWorkflow, dependencyReviewWorkflow, secretWorkflow, workflowSecurity, releaseWorkflow, dependabotConfig, releaseConfigText, releaseManifestText] = await Promise.all([
@@ -94,17 +100,17 @@ const [codeqlWorkflow, dependencyReviewWorkflow, secretWorkflow, workflowSecurit
   readFile("release-please-config.json", "utf8"),
   readFile(".release-please-manifest.json", "utf8"),
 ]);
-if (!codeqlWorkflow.includes("github/codeql-action/init@v4") ||
-    !codeqlWorkflow.includes("github/codeql-action/analyze@v4") ||
+if (!codeqlWorkflow.includes("github/codeql-action/init@915412ff23e8b7659517e607487dbeae018f2934") ||
+    !codeqlWorkflow.includes("github/codeql-action/analyze@915412ff23e8b7659517e607487dbeae018f2934") ||
     !codeqlWorkflow.includes("security-events: write")) {
   throw new Error("CodeQL must use the official v4 analysis actions with the security-events permission");
 }
-if (!dependencyReviewWorkflow.includes("actions/dependency-review-action@v5") ||
+if (!dependencyReviewWorkflow.includes("actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294") ||
     !dependencyReviewWorkflow.includes("fail-on-severity: high") ||
     dependencyReviewWorkflow.includes("DEPENDENCY_REVIEW_ENABLED")) {
   throw new Error("Dependency Review must run on eligible PRs with v5 and fail on high severity; no opt-in flag is permitted");
 }
-if (!secretWorkflow.includes("gitleaks/gitleaks-action@v3") ||
+if (!secretWorkflow.includes("gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e") ||
     !secretWorkflow.includes("fetch-depth: 0") ||
     !secretWorkflow.includes("GITHUB_TOKEN")) {
   throw new Error("Secret scanning must use Gitleaks v3 with full Git history and the GitHub token");
@@ -115,7 +121,7 @@ if (!workflowSecurity.includes("astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a1
   throw new Error("Workflow Security must run the pinned Zizmor version with GitHub annotations");
 }
 
-if (!releaseWorkflow.includes("googleapis/release-please-action@v5") ||
+if (!releaseWorkflow.includes("googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7") ||
     !releaseWorkflow.includes("config-file: release-please-config.json")) {
   throw new Error("Release Please v5 must be the sole changelog/release workflow");
 }
@@ -198,6 +204,10 @@ if (addonSchema.$defs?.compatibility?.properties?.node?.const !== ">=26.13.0 <27
 }
 if (!pkg.scripts?.["lint:addons"] || !String(pkg.scripts?.check ?? "").includes("pnpm lint:addons")) {
   throw new Error("Root quality gate must execute pnpm lint:addons");
+}
+if (pkg.scripts?.["lint:workflows"] !== "node scripts/architecture/workflow-lint.mjs" ||
+    !String(pkg.scripts?.check ?? "").includes("pnpm lint:workflows")) {
+  throw new Error("Root quality gate must execute the immutable GitHub workflow policy lint");
 }
 
 const skillRoot = resolve(".agents/skills");
