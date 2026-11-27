@@ -168,3 +168,32 @@ Tasks APP-*, AST-* (Astronauts), ARS-* (Arsy) and other app-specific workstreams
 ## 11. Definition of done
 
 The ecosystem has sixteen distinct app identities, documented source-of-truth boundaries, no overlapping OSS/BSS/ISP responsibilities, centrally governed identity, externalized secret storage, traceable app-to-app contracts, isolated privileged control planes, reproducible builds and an executable dependency graph. Directory count alone is not completion.
+
+
+## 12. Operational contract and hand-off matrix
+
+| Producer | Consumer | Contract | Required guard |
+|---|---|---|---|
+| Web/Desktop/Mobile/OSS/BSS/ISP/Docs | API | Versioned HTTP/OpenAPI capabilities | OIDC actor, audience, record scope, CSRF where cookie-authenticated, idempotency for mutations |
+| Agent / DX | API | Typed tool/task capability request | Verified initiating human + workload identity; no direct database or listener access |
+| API | Astronauts | Short-lived signed execution grant | Exact host, capability, payload hash, expiry, nonce, policy version, approval reference |
+| Astronauts Controller | Edge Agent | Signed versioned job over outbound mTLS channel | Peer certificate, agent identity, anti-replay, capability allowlist, deadlines and resource limits |
+| ISP/API | Arsy RADIUS | Fresh versioned subscriber/service policy projection | NAS client identity, secret reference, policy expiry and explicit stale-policy behavior |
+| OSS/API | Arsy ACS | Target-bound approved CWMP RPC | Device inventory reference, operation/parameter allowlist, expiry, approval and observed-state verification |
+| Network devices | Arsy Syslog | Configured UDP/TCP/TLS source stream | Source allowlist or authenticated TLS, packet limits, parser bounds and redaction |
+| Arsy | OSS/ISP/BSS | Versioned protocol facts/events | Outbox, schema version, source/time provenance, deduplication; receiver remains domain owner |
+| Cloud | Astronauts | Post-provisioning enrollment/bootstrap request | Cloud resource ID and signed bootstrap scope; resource destroy revokes machine identity |
+
+## 13. Cross-plane invariants
+
+1. **One business owner per record.** Protocol/fleet stores hold runtime state, not duplicate customer, subscriber, network inventory or billing masters.
+2. **No ambient authority.** Credentials and capabilities are time-bound, exact-scope and attributable to both initiating human and executing workload.
+3. **Observed state beats command acknowledgement.** A successful request, queue acknowledgement or protocol response does not prove service/device state changed.
+4. **Events are facts, not workflows.** Producers publish facts; domain owners decide incidents, billing, subscriber state and recovery.
+5. **All external boundaries are versioned.** Include schema/API compatibility, idempotency, correlation/causation, expiry and error semantics.
+6. **Failures remain visible.** Stale, partial, unknown and reconciling are first-class states, never silently coerced to healthy/succeeded.
+7. **The API does not erase trust zones.** Network protocol listeners and machine control plane use separately scoped identities and deployment boundaries.
+
+## 14. Definition-of-ready for application work
+
+An app task is ready only when its owning blueprint is current, direct dependencies have evidence-backed `done` status, the data/API/event contract is identifiable, all write paths are owned, threat/risk class is known, external system/test environment is available or explicitly mocked, and verification can distinguish real behavior from scaffolding. Unknown vendor capability, credential compatibility or production authorization remains a discovery task/blocker rather than an implementation guess.
