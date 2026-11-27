@@ -14,6 +14,9 @@ const timestamp = "2026-11-27T10:00:00.000Z";
 function makeTask(id, overrides = {}) {
   return {
     id,
+    task_type: "task",
+    parent_task: null,
+    child_tasks: [],
     title: `Task ${id}`,
     workstream: "TEST",
     blueprint: "TEST.md",
@@ -57,10 +60,10 @@ function makeRegistry(tasks) {
   return {
     schema_version: "1.0.0",
     registry_id: "TEST-REGISTRY",
-    project: {},
+    project: { task_count: tasks.length, application_count: 0, applications: [] },
     execution_policy: {},
     global_gates: [],
-    workstreams: [],
+    workstreams: [{ id: "TEST", name: "TEST", task_ids: tasks.map((task) => task.id) }],
     tasks,
   };
 }
@@ -188,6 +191,78 @@ test("path overlap is conservative for parent, child and wildcard scopes", () =>
   assert.equal(pathsOverlap("docs/architecture/**", "docs/security/**"), false);
 });
 
+
+test("rejects project task and application count drift", () => {
+  const taskCountRegistry = makeRegistry([makeTask("A")]);
+  taskCountRegistry.project.task_count = 2;
+  assert.ok(errorCodes(validateTaskRegistry(taskCountRegistry)).includes("PROJECT_TASK_COUNT_MISMATCH"));
+
+  const appCountRegistry = makeRegistry([makeTask("A")]);
+  appCountRegistry.project.application_count = 1;
+  assert.ok(errorCodes(validateTaskRegistry(appCountRegistry)).includes("PROJECT_APPLICATION_COUNT_MISMATCH"));
+});
+
+test("rejects missing, duplicate and mismatched workstream membership", () => {
+  const missing = makeRegistry([makeTask("A"), makeTask("B")]);
+  missing.workstreams[0].task_ids = ["A"];
+  assert.ok(errorCodes(validateTaskRegistry(missing)).includes("TASK_WORKSTREAM_MEMBERSHIP"));
+
+  const duplicate = makeRegistry([makeTask("A")]);
+  duplicate.workstreams[0].task_ids.push("A");
+  assert.ok(errorCodes(validateTaskRegistry(duplicate)).includes("DUPLICATE_WORKSTREAM_MEMBERSHIP"));
+
+  const mismatch = makeRegistry([makeTask("A", { workstream: "OTHER" })]);
+  assert.ok(errorCodes(validateTaskRegistry(mismatch)).includes("UNKNOWN_TASK_WORKSTREAM"));
+});
+
+test("accepts a symmetric integration parent and independent child tasks", () => {
+  const parent = makeTask("P", {
+    task_type: "integration",
+    child_tasks: ["C1", "C2"],
+    dependencies: ["C1", "C2"],
+    file_ownership: ["artifacts/task-evidence/P/**"],
+  });
+  const child1 = makeTask("C1", {
+    task_type: "subtask",
+    parent_task: "P",
+    file_ownership: ["apps/example/contracts/**"],
+  });
+  const child2 = makeTask("C2", {
+    task_type: "subtask",
+    parent_task: "P",
+    file_ownership: ["apps/example/implementation/**"],
+  });
+  const result = validateTaskRegistry(makeRegistry([parent, child1, child2]));
+  assert.equal(result.valid, true, result.errors.map((error) => error.code).join(", "));
+});
+
+test("rejects child-to-parent dependency and missing integration child edge", () => {
+  const parent = makeTask("P", { task_type: "integration", child_tasks: ["C"], dependencies: [] });
+  const child = makeTask("C", { task_type: "subtask", parent_task: "P", dependencies: ["P"] });
+  const codes = errorCodes(validateTaskRegistry(makeRegistry([parent, child])));
+  assert.ok(codes.includes("CHILD_DEPENDS_ON_PARENT"));
+  assert.ok(codes.includes("INTEGRATION_MISSING_CHILD_DEPENDENCY"));
+  assert.ok(codes.includes("DEPENDENCY_CYCLE"));
+});
+
+test("rejects non-atomic XL task estimates and parent-child path collisions", () => {
+  const large = makeTask("XL", { estimate: "XL" });
+  assert.ok(errorCodes(validateTaskRegistry(makeRegistry([large]))).includes("INVALID_ESTIMATE"));
+
+  const parent = makeTask("P", {
+    task_type: "integration",
+    child_tasks: ["C"],
+    dependencies: ["C"],
+    file_ownership: ["apps/**"],
+  });
+  const child = makeTask("C", {
+    task_type: "subtask",
+    parent_task: "P",
+    file_ownership: ["apps/example/**"],
+  });
+  assert.ok(errorCodes(validateTaskRegistry(makeRegistry([parent, child]))).includes("PARENT_CHILD_PATH_COLLISION"));
+});
+
 test("validates the repository's canonical task registry", async () => {
   const registry = JSON.parse(await readFile(new URL("../../tasks.json", import.meta.url), "utf8"));
   const result = validateTaskRegistry(registry);
@@ -212,5 +287,7 @@ test("schema document is valid JSON and declares forward-compatible task fields"
   const schema = JSON.parse(await readFile(new URL("./task-registry.schema.json", import.meta.url), "utf8"));
   assert.equal(schema.$schema, "https://json-schema.org/draft/2020-12/schema");
   assert.equal(schema.$defs.task.properties.approval.$ref, "#/$defs/approval");
+  assert.equal(schema.$defs.task.properties.task_type.enum.join(","), "task,subtask,integration");
+  assert.deepEqual(schema.$defs.task.properties.estimate.enum, ["XS", "S", "M", "L"]);
   assert.equal(schema.$defs.task.additionalProperties, true);
 });
