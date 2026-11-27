@@ -85,7 +85,7 @@ export function validateRootContracts({ packageJson, editorConfig, agents, ci })
     if (!agents.includes(rule)) errors.push("AGENTS.md is missing rule: " + rule);
   }
   if (!ci.includes("pnpm install --frozen-lockfile")) errors.push("CI must use a frozen lockfile install.");
-  for (const action of ["actions/checkout@v7", "pnpm/action-setup@v6", "actions/setup-node@v7"]) {
+  for (const action of ["actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1", "pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413", "actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1"]) {
     if (!ci.includes(action)) errors.push("CI must use the Node 26-compatible action baseline: " + action);
   }
   if (!/run:\s*pnpm check\b/.test(ci)) errors.push("CI must run the canonical pnpm check command.");
