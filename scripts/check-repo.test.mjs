@@ -21,6 +21,22 @@ test("task registry is valid JSON with unique task IDs", async () => {
   assert.equal(new Set(ids).size, ids.length);
 });
 
+test("add-on standard and task sequence are part of the repository baseline", async () => {
+  const pkg = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
+  assert.equal(pkg.scripts["lint:addons"], "node scripts/architecture/addon-lint.mjs");
+  assert.ok(pkg.scripts.check.includes("pnpm lint:addons"));
+
+  const registry = JSON.parse(await readFile(new URL("../tasks.json", import.meta.url), "utf8"));
+  assert.equal(registry.project.task_count, registry.tasks.length);
+  const tasks = new Map(registry.tasks.map((task) => [task.id, task]));
+  assert.ok(tasks.get("ADD-001").dependencies.includes("ADD-012"));
+  assert.ok(tasks.get("ADD-002").dependencies.includes("GOV-010"));
+
+  const adr = await readFile(new URL("../docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md", import.meta.url), "utf8");
+  assert.match(adr, /Status:\*\* Proposed/);
+  assert.match(adr, /Third-party add-ons remain disabled/);
+});
+
 test("agent contract and focused skills are present", async () => {
   const agent = await readFile(new URL("../AGENTS.md", import.meta.url), "utf8");
   assert.match(agent, /Token and context budget/);
