@@ -65,7 +65,7 @@ export function validateTypeScriptGate({ files, packageJson, hasRootTsconfig }) 
 export function validateRootContracts({ packageJson, editorConfig, agents, ci }) {
   const errors = [];
   if (packageJson.packageManager !== "pnpm@12.24.0") errors.push("packageManager must remain pnpm@12.24.0.");
-  if (packageJson.engines?.node !== ">=26.13.0 <27") errors.push("Node engine range must remain >=26.13.0 <27.");
+  if (packageJson.engines?.node !== ">=26.13.1 <27") errors.push("Node engine range must remain >=26.13.1 <27.");
   const checkScript = String(packageJson.scripts?.check ?? "");
   if (!checkScript.includes("pnpm lint") || !checkScript.includes("pnpm lint:addons") || !checkScript.includes("pnpm lint:workflows") || !checkScript.includes("pnpm test")) {
     errors.push("The canonical check script must include repository lint, add-on lint and tests.");
