@@ -29,7 +29,8 @@ Do not add Changesets, semantic-release, Release Drafter, Changelogithub or anot
 - CI actions: checkout v7, setup-node v7, pnpm/action-setup v6.
 - CodeQL Action v4, Dependency Review Action v5, Release Please Action v5.
 - Gitleaks Action v3 (Node 24-compatible action runtime; the project build/runtime remains Node 26).
-- Zizmor 1.32.0, installed with pinned setup-uv action v10.3.3 and run in GitHub annotation mode.
+- Zizmor 1.32.0, installed with setup-uv v10.3.3 pinned to an immutable SHA and run in GitHub annotation mode.
+- The root `pnpm lint:workflows` gate rejects mutable Action tags/branches, missing explicit permissions/concurrency, `pull_request_target`, unexpected repository secret references and unreviewed PR write permissions. Zizmor runs in addition to this deterministic gate.
 - Dependabot updates GitHub Actions and the pnpm/npm workspace manifest/lockfile.
 
 The Node.js version used by GitHub Actions themselves is separate from the Node.js project runtime selected by `.nvmrc`. The root CI installs Node 26.13.0 and runs the project there; third-party Actions may have their own supported runtime. Do not add Actions that depend on removed Node 20 runtimes.
