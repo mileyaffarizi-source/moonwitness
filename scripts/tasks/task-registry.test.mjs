@@ -188,11 +188,11 @@ test("path overlap is conservative for parent, child and wildcard scopes", () =>
   assert.equal(pathsOverlap("docs/architecture/**", "docs/security/**"), false);
 });
 
-test("validates the repository's canonical 237-task registry", async () => {
+test("validates the repository's canonical 238-task registry", async () => {
   const registry = JSON.parse(await readFile(new URL("../../tasks.json", import.meta.url), "utf8"));
   const result = validateTaskRegistry(registry);
   assert.equal(result.valid, true, result.errors.map((error) => `${error.code} ${error.path}: ${error.message}`).join("\n"));
-  assert.equal(result.summary.task_count, 237);
+  assert.equal(result.summary.task_count, 238);
 });
 
 test("CLI validates the canonical registry from the repository root", () => {
@@ -203,7 +203,7 @@ test("CLI validates the canonical registry from the repository root", () => {
   });
 
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /Valid task registry: 237 tasks/);
+  assert.match(result.stdout, /Valid task registry: 238 tasks/);
 });
 
 test("schema document is valid JSON and declares forward-compatible task fields", async () => {
