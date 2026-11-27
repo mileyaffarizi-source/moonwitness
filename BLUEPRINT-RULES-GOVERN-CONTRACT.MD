@@ -205,3 +205,37 @@ User-generated community content is not editorial canon. Define moderation, repo
 ### 16.9 RIOT safety and authorization
 
 War-equipment archive work is limited to historical, journalistic, fictional or non-operational metadata/media. Do not create instructions for weapon construction, acquisition, modification, targeting or operational deployment. Red-team work defaults to isolated synthetic labs with written authorization, fixed scope, expiry, egress controls, kill switch and audit.
+
+
+## 17. Atomic task decomposition and parent-child contract
+
+The canonical `tasks.json` supports task records of type `task`, `subtask` and `integration`:
+
+- A **task** is a bounded discovery, implementation, documentation, review or verification unit.
+- A **subtask** has one `parent_task`, a narrow deliverable, disjoint `file_ownership`, explicit acceptance criteria and a smaller estimate. It never depends on its parent.
+- An **integration** parent lists `child_tasks`, depends on every child, owns only integration/report paths, and verifies that the children compose into the parent capability. Existing task IDs remain stable so downstream dependencies do not break.
+
+Rules:
+1. Do not claim a parent/integration task until all children are `done` with evidence.
+2. Child tasks may run in parallel only when all dependency tasks are done and their paths do not overlap.
+3. A task with estimate `XL` is not claimable implementation work. Decompose it into small tasks; use `XL` only as a planning indicator during drafting and remove it before activation.
+4. Every task has one owner, an exact output, path ownership, preconditions, explicit non-goals, at least two observable acceptance criteria and test/verification evidence.
+5. Parent paths never overlap child paths. A parent must not claim a whole application tree while children own subfolders.
+6. Workstream membership, project task count, child/parent references and global-gate references must be validated against the same task IDs.
+7. Splitting never marks parent or child done. No existing status is inferred from task decomposition.
+
+### Task size guideline
+
+| Estimate | Expected scope |
+|---|---|
+| XS | One mechanical change or test fixture; no independent design decision |
+| S | One focused capability or contract, normally a small set of files |
+| M | One cohesive vertical slice within one bounded ownership area |
+| L | A cross-module capability that must remain under one owner and one review boundary; prefer splitting if multiple independent outcomes exist |
+| XL | Not executable as a single claim; must be decomposed into child tasks before implementation |
+
+A task is not atomic merely because it has one title. If it has independently testable outputs, multiple privilege boundaries or separable deliverables, split it.
+
+## 18. Machine-readable registry invariants
+
+The task validator must fail closed when: project task count differs from the array length; application count differs from the app inventory; a workstream omits/adds/duplicates a task ID; a task points to an unknown workstream; parent-child links are not symmetric; a child does not depend on its parent's upstream preconditions; an integration parent does not depend on every child; task IDs are duplicated; dependency graph contains a cycle; or active claims collide. Unknown future fields may be preserved, but canonical fields cannot contradict one another.
