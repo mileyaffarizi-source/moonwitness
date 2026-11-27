@@ -2,7 +2,7 @@
 
 **Owner:** Platform Engineering  
 **Runtime baseline:** Node.js 26.13.1 Active LTS · pnpm 12.24.0  
-**Scope:** repository CI, source security, workflow security, dependency risk, dependency update proposals and release metadata.
+**Scope:** repository CI, source-branch pull-request creation, source security, workflow security, dependency risk, dependency update proposals and release metadata.
 
 ## Automation ownership — one owner per responsibility
 
@@ -14,9 +14,10 @@
 | Workflow supply-chain/security lint | Zizmor `.github/workflows/workflow-security.yml` | PRs touching workflow/action files, main, weekly | Unsafe GitHub Actions patterns, token permissions, expression injection and workflow hardening | General source-code SAST or dependency vulnerability review |
 | Changed dependency risk | Dependency Review `.github/workflows/dependency-review.yml` | PR only | New/changed vulnerable dependency risk; fails at high severity | Routine dependency update proposals |
 | Dependency update proposals | Dependabot `.github/dependabot.yml` | Weekly | GitHub Actions and npm/pnpm update PRs | Release notes or automatic merge |
+| Automatic source-branch PR creation | Auto PR `.github/workflows/auto-pr.yml` | Non-`main` branch push / manual dispatch | Open one PR per branch into `main`, reuse an existing PR and apply the repository PR template | CI results, dependency updates, changelog/release metadata, approval or merge |
 | Changelog, version PR and GitHub Release | Release Please `.github/workflows/release-please.yml` | Main push/manual | One root release stream, `CHANGELOG.md`, version PR, tag and GitHub Release | Package publishing, deployment or app-specific release streams |
 
-These workflows intentionally do not duplicate one another. CodeQL analyzes source, Gitleaks detects secrets, Zizmor audits GitHub workflow construction, Dependency Review checks the dependency delta, Dependabot proposes updates, and Release Please owns release metadata.
+These workflows intentionally do not duplicate one another. CodeQL analyzes source, Gitleaks detects secrets, Zizmor audits GitHub workflow construction, Dependency Review checks the dependency delta, Dependabot proposes updates, and Release Please owns release metadata. Auto PR only opens/reuses a source-branch PR; it does not replace or rewrite bot-owned dependency/release PRs and never merges.
 
 Do not add Changesets, semantic-release, Release Drafter, Changelogithub or another changelog writer alongside Release Please. Do not add a second secret scanner or workflow linter without an ADR explaining the distinct coverage. Reconsider multi-package release orchestration only when independently versioned packages actually exist.
 
@@ -49,6 +50,16 @@ Use Conventional Commit titles and squash commit messages:
 - Append `!` for a breaking change and include a `BREAKING CHANGE:` footer.
 
 Do not create manual CHANGELOG entries for changes already captured by Release Please. Human-written operational migration guides remain separate documentation. Release Please PRs require the same CI and human merge as every other PR.
+
+## Automatic pull-request lifecycle
+
+- `.github/workflows/auto-pr.yml` reacts to pushes on non-`main` branches and supports manual dispatch from a selected branch.
+- The workflow creates at most one open PR for the same head branch and `main` base. Later pushes are attached to the same PR by GitHub; the workflow does not create duplicate PRs or rewrite a maintainer-edited title/body.
+- Dependabot, Renovate, Release Please and release branches are excluded because their existing automation already owns those proposals.
+- A deliberately closed PR is not reopened automatically. Reopen it intentionally in GitHub or use a new branch when a new review is warranted.
+- The PR title reuses the latest Conventional Commit subject when valid; otherwise it uses a `chore(auto-pr)` fallback. The body is seeded from `.github/pull_request_template.md`.
+- The workflow uses only `contents: read` and `pull-requests: write` on a branch-push/manual-dispatch event. It does not run on `pull_request`, execute fork-controlled PR code with write access, approve reviews, enable auto-merge, bypass checks or deploy.
+- Every opened PR is still subject to the repository's configured CI/security checks and human review. Auto PR is not an auto-merge mechanism.
 
 ## Permissions and safe defaults
 
