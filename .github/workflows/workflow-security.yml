@@ -6,6 +6,7 @@ on:
     paths:
       - ".github/workflows/**"
       - ".github/actions/**"
+      - ".github/dependabot.yml"
   pull_request:
     branches: [main]
     paths:
