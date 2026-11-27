@@ -20,7 +20,7 @@ export function inspectFormat(path, content) {
     issues.push({ code: "FINAL_NEWLINE", line: content.split("\n").length });
   }
   if (!MD_EXTENSIONS.has(ext)) {
-    content.split("\n").forEach((line, index) => {
+    content.replaceAll("\r\n", "\n").replaceAll("\r", "\n").split("\n").forEach((line, index) => {
       if (/[ \t]+$/.test(line)) issues.push({ code: "TRAILING_WHITESPACE", line: index + 1 });
       if (/^\t+/.test(line)) issues.push({ code: "TAB_INDENT", line: index + 1 });
     });
