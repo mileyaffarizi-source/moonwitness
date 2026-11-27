@@ -133,3 +133,10 @@ Tasks DX-* in tasks.json. DX is the first implementation workstream; do not wait
 ## 13. Definition of done
 
 DX can safely read and validate the central registry, claim one ready task atomically, create a protected worktree, run one approved local agent in a bounded environment, collect real command/test evidence, show a reviewable diff and update only that task without losing other updates. This is the minimum useful DX vertical slice.
+
+
+## 14. Boundary with Astronauts and Cloud
+
+DX owns the developer's repository/worktree, coding-agent process, build/test commands and review evidence in an explicitly bounded development workspace. It is not the fleet registry, machine enrollment authority or general-purpose remote host shell. When a dedicated remote execution host is required, DX requests a scoped API capability and Astronauts dispatches the approved typed job to its enrolled Edge Agent.
+
+Cloud owns compute/network/storage resource creation, IaC state and provider lifecycle. Astronauts may bootstrap and operate a host only after Cloud or an operator has created/enrolled that resource. DX must not invoke Cloud apply or Astronauts host execution through ambient credentials.
