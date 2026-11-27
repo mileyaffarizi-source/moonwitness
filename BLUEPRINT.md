@@ -4,8 +4,8 @@
 **Version:** 4.0  
 **Status:** Architecture baseline; implementation not yet verified  
 **Target repository:** `mileyaffarizi-source/moonwitness`  
-**Runtime:** Node.js LTS · pnpm Workspaces · Turborepo  
-**Applications:** Mastra Agent · Fastify API · Next.js Web  
+**Runtime:** Node.js 24.22.3 · pnpm 12.24.0 Workspaces · Turborepo  
+**Applications:** Fourteen named app surfaces (see BLUEPRINT-APPLICATIONS.MD); deployment boundaries are justified independently by trust, scale and lifecycle.  
 **Persistence:** Odoo-inspired Platform ORM backed by MikroORM  
 **Operating principle:** Preserve existing data; no big-bang migration.
 
@@ -26,6 +26,15 @@ Before implementation:
 5. Update this blueprint only when an architectural or creative decision is explicitly accepted and recorded.
 6. Mark checklist items complete only when their acceptance criteria have evidence.
 7. Do not create empty packages just to match a proposed directory tree.
+
+## Foundation build order and decision gates
+
+Use [BLUEPRINT-FOUNDATIONS.MD](./BLUEPRINT-FOUNDATIONS.MD) for the dependency-aware foundation sequence, domain ownership layers, entry/exit evidence and owner-only decisions. It complements this master blueprint; it does not replace the specialist blueprints or the canonical `tasks.json` ledger.
+
+Use [BLUEPRINT-PACKAGE.MD](./BLUEPRINT-PACKAGE.MD) for package dependency direction and [BLUEPRINT-PACKAGE-ADDON.MD](./BLUEPRINT-PACKAGE-ADDON.MD) for the strict add-on manifest, model/field ownership, capability, package and lifecycle contract.
+
+The add-on trust and execution decision is recorded in [ADR-0003](./docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md) and remains **Proposed**. Proposed text does not authorize third-party code execution, signing trust, privileged capabilities or destructive migrations.
+
 
 ## Initial repository baseline
 
