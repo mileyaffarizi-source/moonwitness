@@ -32,7 +32,7 @@ An application directory is a product/runtime boundary, not automatically a sepa
 
 Use exact requested directory names where practical. npm package names, import aliases, service IDs and URLs should use lowercase stable identifiers (for example, app.oss, app.a-l-l-a-h) to avoid case-sensitivity issues across operating systems.
 
-## 3. The three architectural planes
+## 3. The four architectural planes
 
 **INTELLIGENCE PLANE**
 - apps/agent owns model reasoning, agents and durable AI workflows.
