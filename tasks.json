@@ -8849,7 +8849,7 @@
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-00",
       "priority": "P0",
-      "status": "pending",
+      "status": "done",
       "owner_role": "platform_governance_lead",
       "assigned_agent": null,
       "claim": {
@@ -8905,12 +8905,20 @@
       "estimate": "M",
       "parallel_group": "GOV-PHASE-00",
       "human_approval_required": true,
-      "evidence": [],
+      "evidence": [
+        "docs/governance/baseline-report.md — audited main ref, 77-entry recursive tree, existing app/package state, verification limits",
+        "docs/governance/change-inventory.md — attributed commit history and merged PR #1/#2",
+        "GitHub commit history API — 12 commits inspected from 2026-11-27",
+        "GitHub recursive tree API — 77 entries; response not truncated",
+        "GitHub main CI run 46016534152 — completed successfully after PR #2"
+      ],
       "blocker": null,
-      "notes": [],
+      "notes": [
+        "Local workstation working tree and external/private systems are outside the GitHub repository audit boundary; no claims are made about them."
+      ],
       "created_at": null,
-      "updated_at": null,
-      "completed_at": null
+      "updated_at": "2026-11-27T14:32:10.005Z",
+      "completed_at": "2026-11-27T14:32:10.005Z"
     },
     {
       "id": "GOV-002",
