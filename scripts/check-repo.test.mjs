@@ -9,8 +9,8 @@ test("workspace package manager is pinned", async () => {
 
 test("workspace patterns include apps and packages", async () => {
   const workspace = await readFile(new URL("../pnpm-workspace.yaml", import.meta.url), "utf8");
-  assert.match(workspace, /apps\\/\\*/);
-  assert.match(workspace, /packages\\/\\*/);
+  assert.ok(workspace.includes("apps/*"));
+  assert.ok(workspace.includes("packages/*"));
 });
 
 test("task registry is valid JSON with unique task IDs", async () => {
@@ -32,7 +32,10 @@ test("agent contract and focused skills are present", async () => {
   assert.ok(skills.length >= 8);
   for (const skill of skills) {
     const content = await readFile(new URL(`../.agents/skills/${skill.name}/SKILL.md`, import.meta.url), "utf8");
-    assert.match(content, /^---\\r?\\nname:\\s*\\S+/);
-    assert.match(content, /^description:\\s*.+\\r?\\n---/m);
+    const lines = content.split(/\r?\n/);
+    assert.equal(lines[0], "---");
+    assert.ok(lines.includes("---", 1));
+    assert.ok(lines.some((line) => /^name:\s*\S+/.test(line)));
+    assert.ok(lines.some((line) => /^description:\s*\S+/.test(line)));
   }
 });

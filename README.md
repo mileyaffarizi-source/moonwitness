@@ -44,6 +44,10 @@ Use Node.js and pnpm. Do not introduce Bun as the package manager. Keep secrets 
 | `pnpm test` | Run Node.js built-in test runner |
 | `pnpm check` | Run repository validation and tests |
 
+## AI contributor contract
+
+Read [AGENTS.md](./AGENTS.md) before making changes. The focused [skill pack](./.agents/skills/README.md) provides task-specific guidance; load only the skill needed for the current task.
+
 ## Implementation truth
 
 A blueprint is a target-state design, not proof of implementation. A task is complete only when its acceptance criteria are met and its verification evidence is recorded. See [the repository rules](./BLUEPRINT-RULES-GOVERN-CONTRACT.MD).
