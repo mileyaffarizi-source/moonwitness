@@ -83,3 +83,38 @@ Brand/landing experience, corpus taxonomy, source schema, versioned text storage
 ## 11. Task ownership and definition of done
 
 Tasks ALLAH-* in tasks.json. Done means users can discover the flagship experience, retrieve source-grounded corpus/legal/government content with precise citations and version/jurisdiction context, inspect ontology provenance and distinguish original sources from translations/commentary/generated analysis.
+
+
+## 12. Claim, citation and epistemic status contract
+
+A knowledge claim is a separate record from its source. Each claim includes immutable ID, exact proposition, claim class, subject/predicate/object where applicable, source references and exact locators, language/edition/jurisdiction/time, author/annotator, extraction method, counter-evidence, review state, confidence rationale and revision history.
+
+Required classes include direct quotation, source-derived paraphrase, scholarly/editorial interpretation, legal statement, historical assertion, hypothesis, inference, disputed statement, AI-generated summary and unknown. A source citation does not automatically verify the claim; reviewers assess whether the source actually supports that proposition and in which context.
+
+Citation resolution must identify source version/checksum, section/page/verse/article locator, translation lineage and retrieval date. If the source has changed or the locator no longer resolves, mark the citation stale and prevent the answer from claiming current verification.
+
+## 13. Legal currency and jurisdiction resolver
+
+Legal records need jurisdiction hierarchy, issuing authority, instrument number/type, official publication, publication date, commencement/effective range, amendments, repeals/supersession, transitional provisions, authoritative source link and retrieval/verification time. Legal currentness is a computed answer for a specific jurisdiction/date, never a single boolean stored without context.
+
+Where instruments conflict or status cannot be established, surface the conflict and source set. Do not infer that a bill, guidance note, court summary or unofficial translation has the same force as enacted primary law. AI retrieval must not suppress amendments/repeals or present a summary as binding text.
+
+## 14. Ingestion, extraction and review pipeline
+
+Source onboarding: **candidate → rights/classification review → source identity check → immutable capture/locator → parse/OCR where necessary → checksum/quality validation → human review → publishable / restricted / rejected**.
+
+Parsing preserves the original bytes or permitted source snapshot separately from normalized extracted text. Each extracted passage stores parser/version, page/section locator, extraction confidence, correction history and source checksum. OCR/transcription errors remain correctable annotations; they must not overwrite source material.
+
+AI may suggest metadata, translations, entities, relations and summaries. Each suggestion enters a proposal queue and cannot become an approved claim, canonical relation or published answer until its required human review passes.
+
+## 15. Ontology governance and retrieval policy
+
+Ontology terms have stable concept ID, preferred label, aliases, definition, type, source lineage, authority class, language, scope, status and curator. Edges have relation type, direction, evidence, time/jurisdiction context, reviewer and status. Similar names or semantic similarity may suggest candidates but cannot merge entities or establish historical/religious/legal identity.
+
+Retrieval filters by source class, language, edition/version, jurisdiction, effective date, access classification and review state. Ranking metadata must not cause a low-authority commentary to silently outrank an authoritative primary source where the user asks for primary law/text. Answers include evidence coverage and explicit limitations.
+
+## 16. Evaluation and acceptance
+
+Create versioned evaluation cases for source/edition disambiguation, translation lineage, exact quotation, citation locator resolution, contradictory commentary, amended/repealed law, jurisdiction/date filtering, restricted-source leakage and adversarial prompt injection in source documents. Measure citation precision, claim support, abstention accuracy, stale-source detection and access-control leakage.
+
+**Acceptance:** a user can follow each important statement to a versioned source locator, distinguish primary/derivative/interpretive material, inspect unresolved disagreement and understand why a result is current, historical, disputed or unverified.
