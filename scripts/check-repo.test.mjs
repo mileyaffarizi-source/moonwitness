@@ -79,9 +79,9 @@ test("Node runtime pins are aligned to Node.js 26 Active LTS", async () => {
     readFile(new URL("../.node-version", import.meta.url), "utf8"),
   ]);
   const manifest = JSON.parse(pkg);
-  assert.equal(nvm.trim(), "26.13.0");
-  assert.equal(nodeVersion.trim(), "26.13.0");
-  assert.equal(manifest.engines.node, ">=26.13.0 <27");
+  assert.equal(nvm.trim(), "26.13.1");
+  assert.equal(nodeVersion.trim(), "26.13.1");
+  assert.equal(manifest.engines.node, ">=26.13.1 <27");
 });
 
 test("GitHub security and release automation have non-overlapping active owners", async () => {
