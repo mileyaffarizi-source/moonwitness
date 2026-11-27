@@ -115,7 +115,7 @@
       "legacy_policy": "Existing Odoo-owned data remains Odoo-owned; supported version-aware APIs only; no big-bang migration."
     },
     "generated_at": "2026-11-27",
-    "task_count": 234,
+    "task_count": 235,
     "status": "planning",
     "application_count": 14,
     "priority_workstream": "DX",
@@ -8050,16 +8050,20 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Specify identity, compatibility, dependencies, models, policies, capabilities and lifecycle.",
+      "objective": "Define the typed Base Add-on SDK and versioned manifest contract after the static v1 standard and model/field authority prerequisites are accepted.",
       "scope_in": [
-        "Specify identity, compatibility, dependencies, models, policies, capabilities and lifecycle.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Implement typed manifest/SDK contracts from BLUEPRINT-PACKAGE-ADDON.MD and the ADD-012 standard.",
+        "Define stable add-on identity, SemVer, compatibility ranges, dependencies, models/extensions, capabilities, permissions, storage ownership, realm entrypoints, events and lifecycle descriptors.",
+        "Define public package exports and version compatibility rules."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not implement API discovery, trust-signature validation or runtime loading; these belong to ADD-002.",
+        "Do not grant capabilities or bypass API authorization.",
+        "Do not implement runtime package installation, hot-loading or third-party execution.",
+        "Do not change unrelated packages, direct Odoo data ownership, or unapproved architecture decisions."
       ],
       "dependencies": [
+        "ADD-012",
         "PKG-004",
         "API-004"
       ],
@@ -8082,8 +8086,10 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "manifest schema",
-        "SDK types"
+        "Versioned strict manifest JSON Schema/TypeScript type parity",
+        "Base Add-on SDK public types and descriptors",
+        "Compatibility and contribution type tests",
+        "README with stable-ID and package-export conventions"
       ],
       "acceptance_criteria": [
         "Manifest strict/versioned.",
@@ -8104,7 +8110,31 @@
       "notes": [],
       "created_at": null,
       "updated_at": null,
-      "completed_at": null
+      "completed_at": null,
+      "steps": [
+        "Inspect PKG-004, API-004 and ADD-012 evidence; stop if any dependency is not done.",
+        "Read the exact manifest v1 schema, addon blueprint, model/field contracts and accepted ADRs.",
+        "Define strict TypeScript types matching the canonical JSON Schema without widening unknown fields.",
+        "Define stable IDs, compatibility, required/optional dependency, contribution, permission, model, extension, storage, provenance and lifecycle types.",
+        "Expose types only through the Base Add-on SDK public export map; do not import domain add-ons into Base.",
+        "Add compile-time fixtures for valid/invalid manifests and compatibility boundaries.",
+        "Add runtime schema/type conformance tests and unknown-field rejection tests.",
+        "Run package build, lint, typecheck, unit tests and root pnpm check.",
+        "Record exact exports, compatibility policy, tests and any unresolved trust questions."
+      ],
+      "accept": [
+        "Typed manifest fields exactly match the accepted schema version; unknown fields fail.",
+        "Every add-on has stable ID, owner, SemVer version and bounded Node/platform/SDK compatibility.",
+        "Required/optional dependencies and capability/permission declarations are distinct.",
+        "Base package imports no add-on/private application implementation.",
+        "No type gives an add-on direct EntityManager, DB connection or unrestricted API authority."
+      ],
+      "verify": [
+        "Schema/type conformance fixtures",
+        "TypeScript compiler",
+        "Public export boundary tests",
+        "pnpm check"
+      ]
     },
     {
       "id": "ADD-002",
@@ -8124,18 +8154,22 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Discover approved artifacts and verify manifest/source integrity.",
+      "objective": "Discover reviewed add-on artifacts and validate source provenance, integrity and compatibility before any contribution is loaded.",
       "scope_in": [
-        "Discover approved artifacts and verify manifest/source integrity.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Implement deterministic discovery from reviewed workspace/build artifact metadata.",
+        "Validate strict manifest, artifact hash/provenance, trust state, compatibility and dependency availability.",
+        "Reject unsigned/unapproved or revoked third-party artifacts until the runtime trust ADR is accepted."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not run npm/pnpm install at runtime or fetch arbitrary executable URLs.",
+        "Do not load code before trust, compatibility, permission and dependency checks complete.",
+        "Do not implement sandbox or signing-root behavior until GOV-010 and ADR-0003 are accepted.",
+        "Do not inspect production hosts, credentials or external registries without explicit approval."
       ],
       "dependencies": [
         "ADD-001",
-        "PKG-008"
+        "PKG-008",
+        "GOV-010"
       ],
       "inputs": [
         "BLUEPRINT.md",
@@ -8156,8 +8190,10 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "manifest loader",
-        "trust validator"
+        "Read-only manifest/artifact discovery",
+        "Trust/provenance validator",
+        "Compatibility rejection report",
+        "Adversarial trust test suite"
       ],
       "acceptance_criteria": [
         "No untrusted runtime install.",
@@ -8177,7 +8213,31 @@
       "notes": [],
       "created_at": null,
       "updated_at": null,
-      "completed_at": null
+      "completed_at": null,
+      "steps": [
+        "Verify ADD-001, PKG-008 and GOV-010 are completed with approved evidence.",
+        "Read ADR-0003 and confirm its runtime trust decision has been accepted before implementing an executable loader.",
+        "Separate discovery from code loading; parse manifests as untrusted data.",
+        "Resolve immutable package artifact locators and verify hash/source revision/signature against the accepted trust policy.",
+        "Reject path traversal, duplicate IDs, invalid manifests, revoked keys, incompatible runtime/API and undeclared artifact files.",
+        "Return a deterministic discovery report without executing package code.",
+        "Add adversarial fixtures for spoofed manifests, altered artifacts, revoked/untrusted source and dependency confusion.",
+        "Prove failed trust/compatibility checks register zero API routes, tools, jobs or Web contributions.",
+        "Run security tests and pnpm check; record exact trust-policy assumptions and blockers."
+      ],
+      "accept": [
+        "No code executes before manifest, source integrity, signer/trust and compatibility checks pass.",
+        "Untrusted/unsigned/revoked artifacts fail closed.",
+        "No runtime package install, remote code fetch or arbitrary URL execution exists.",
+        "Failed discovery produces no registered contribution."
+      ],
+      "verify": [
+        "Hash/signature fixtures",
+        "Untrusted package tests",
+        "Dependency confusion tests",
+        "No-side-effect failure tests",
+        "pnpm check"
+      ]
     },
     {
       "id": "ADD-003",
@@ -8197,14 +8257,16 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Resolve required/optional dependencies, version ranges and cycles.",
+      "objective": "Resolve required and optional add-on dependencies using bounded SemVer ranges and deterministic graph order.",
       "scope_in": [
-        "Resolve required/optional dependencies, version ranges and cycles.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Build dependency resolution from the verified manifest set.",
+        "Detect missing/incompatible required dependencies, optional absence, duplicate IDs, self-dependencies and required dependency cycles.",
+        "Return a stable topological initialization order and explicit optional capability degradation."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not silently install missing packages or edit lockfiles during application startup.",
+        "Do not resolve a dependency from an untrusted source.",
+        "Do not drop dependency edges to manufacture readiness."
       ],
       "dependencies": [
         "ADD-001",
@@ -8229,8 +8291,10 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "dependency resolver",
-        "compatibility report"
+        "Dependency resolver",
+        "Compatibility result contract",
+        "Deterministic topological order",
+        "Graph regression tests"
       ],
       "acceptance_criteria": [
         "Missing required/incompatible packages block enablement.",
@@ -8251,7 +8315,30 @@
       "notes": [],
       "created_at": null,
       "updated_at": null,
-      "completed_at": null
+      "completed_at": null,
+      "steps": [
+        "Verify ADD-001 and ADD-002 are done.",
+        "Define the exact compatibility input and deterministic ordering rule.",
+        "Parse bounded compatibility ranges and compare all declared add-on versions.",
+        "Validate required and optional dependencies separately.",
+        "Detect missing/self/duplicate edges and cycles with diagnostic paths.",
+        "Return dependency order plus reasons for disabled/degraded contributions.",
+        "Add tests for DAG, multiple versions, optional absence, incompatible range, cycle and deterministic repeatability.",
+        "Run typecheck/tests and pnpm check."
+      ],
+      "accept": [
+        "Missing/incompatible required dependencies block readiness.",
+        "Missing optional dependencies do not block unrelated capabilities but mark dependent contributions unavailable.",
+        "Required dependency cycles and self/duplicate edges are rejected.",
+        "Same manifest set yields the same resolution order and diagnostics."
+      ],
+      "verify": [
+        "DAG fixtures",
+        "SemVer boundary fixtures",
+        "Cycle/optional-dependency tests",
+        "Determinism test",
+        "pnpm check"
+      ]
     },
     {
       "id": "ADD-004",
@@ -8271,14 +8358,16 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Allow add-ons to declare owned models and safe extensions through ORM SDK.",
+      "objective": "Declare add-on-owned models and additive extensions through the platform ORM SDK without exposing persistence internals.",
       "scope_in": [
-        "Allow add-ons to declare owned models and safe extensions through ORM SDK.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Implement model/field/relation declarations using the approved ORM public descriptor API.",
+        "Validate model ownership, field types, relation targets, collisions and additive extension composition.",
+        "Preserve provenance for every model extension."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not access EntityManager, repositories, SQL connections or persistence adapters from add-ons.",
+        "Do not claim existing Odoo/domain tables or change field types/destructive semantics.",
+        "Do not change API composition or registry internals outside declared ownership paths."
       ],
       "dependencies": [
         "ADD-001",
@@ -8303,8 +8392,10 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "extension SDK",
-        "model declaration API"
+        "Model/field/extension SDK",
+        "Deterministic composition validator",
+        "Ownership/conflict diagnostics",
+        "ORM contract tests"
       ],
       "acceptance_criteria": [
         "Ownership/collisions/type changes validated.",
@@ -8325,7 +8416,30 @@
       "notes": [],
       "created_at": null,
       "updated_at": null,
-      "completed_at": null
+      "completed_at": null,
+      "steps": [
+        "Verify ADD-001 and API-006 are done and their accepted contracts are available.",
+        "Define owner add-on ID, model ID namespace, field metadata and extension target contract.",
+        "Implement owned-model declarations and additive extension declarations.",
+        "Validate relation targets against dependency/owner metadata.",
+        "Detect duplicate IDs, type/nullability conflicts and attempts to weaken required policies.",
+        "Compose metadata deterministically before API readiness; freeze it after composition.",
+        "Add unit/contract tests for valid composition and all ownership/collision failures.",
+        "Add static import tests proving no direct persistence adapter access.",
+        "Run ORM tests and pnpm check."
+      ],
+      "accept": [
+        "Every model/storage object has exactly one owner.",
+        "Extensions are additive and identify target model, add-on/version and dependencies.",
+        "Invalid relations, collisions and policy weakening fail before API readiness.",
+        "Add-on source has no direct EntityManager/SQL/adapter access."
+      ],
+      "verify": [
+        "Composition tests",
+        "Field/relation collision tests",
+        "Forbidden-import test",
+        "pnpm check"
+      ]
     },
     {
       "id": "ADD-005",
@@ -8345,14 +8459,17 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Register API permissions, model access, field policy and realm capabilities.",
+      "objective": "Register add-on capabilities and permission requests under API-enforced policy, bound to actor, tenant, resource and operation.",
       "scope_in": [
-        "Register API permissions, model access, field policy and realm capabilities.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Implement capability IDs, permission registry and risk/approval descriptors.",
+        "Bind every capability to add-on ID/version and explicit contribution scope.",
+        "Make the API the final authorization decision point."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not treat manifest capability declarations as grants.",
+        "Do not trust Web-hidden controls or Agent prompts as authorization.",
+        "Do not add wildcard/global permissions, ambient admin context or privileged capability shortcuts.",
+        "Do not bypass API-009 or GOV-010 approval requirements."
       ],
       "dependencies": [
         "ADD-003",
@@ -8378,8 +8495,10 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "capability registry",
-        "policy registry"
+        "Capability registry",
+        "API permission binding",
+        "Revocation contract",
+        "Authorization regression suite"
       ],
       "acceptance_criteria": [
         "Bound to add-on/version and fail closed.",
@@ -8400,7 +8519,31 @@
       "notes": [],
       "created_at": null,
       "updated_at": null,
-      "completed_at": null
+      "completed_at": null,
+      "steps": [
+        "Verify ADD-003, ADD-004, API-009 and GOV-010 are done.",
+        "Import only the accepted capability and approval contract from the API/identity governance decisions.",
+        "Define registry keys and collision handling bound to add-on ID/version.",
+        "Validate requested permissions against the known capability catalogue and minimum risk/approval.",
+        "Evaluate trusted actor, tenant, resource, operation and policy at API request time.",
+        "Revoke registrations on disable, failure, version change or policy revocation.",
+        "Add allowed/denied/cross-tenant/expired actor/approval tests.",
+        "Verify Agent/Web cannot bypass authorization by calling alternate routes or private modules.",
+        "Run security/contract tests and pnpm check."
+      ],
+      "accept": [
+        "Unknown capabilities and permissions fail closed.",
+        "Manifest declarations cannot grant their own permission.",
+        "Authorization is evaluated at API for every operation using trusted actor and tenant context.",
+        "Effective permissions are scoped to add-on ID/version/resource/operation.",
+        "Revocation removes active contributions and denies new calls."
+      ],
+      "verify": [
+        "Authorization allow/deny matrix",
+        "Tenant-isolation tests",
+        "Revocation tests",
+        "pnpm check"
+      ]
     },
     {
       "id": "ADD-006",
@@ -8420,19 +8563,23 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Implement install/enable/ready/degraded/failed/disable/upgrade/decommission.",
+      "objective": "Implement an auditable add-on lifecycle with safe enable, disable, upgrade, degraded, failure and decommission transitions.",
       "scope_in": [
-        "Implement install/enable/ready/degraded/failed/disable/upgrade/decommission.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Implement the approved lifecycle state machine and transition guards.",
+        "Order validation, dependency resolution, composition, contribution registration and health checks.",
+        "Preserve data and stop new work on disable/failure."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not delete data on disable.",
+        "Do not hot-load arbitrary code or mark ready before health checks pass.",
+        "Do not execute destructive migration/decommission without separate owner approval.",
+        "Do not bypass ADR-0003/GOV-010 runtime trust requirements."
       ],
       "dependencies": [
         "ADD-002",
         "ADD-003",
-        "ADD-005"
+        "ADD-005",
+        "GOV-010"
       ],
       "inputs": [
         "BLUEPRINT.md",
@@ -8453,8 +8600,10 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "lifecycle manager",
-        "state tests"
+        "Lifecycle state machine",
+        "Transition/audit events",
+        "Disable/recovery manager",
+        "Failure injection tests"
       ],
       "acceptance_criteria": [
         "Invalid transitions fail.",
@@ -8475,7 +8624,31 @@
       "notes": [],
       "created_at": null,
       "updated_at": null,
-      "completed_at": null
+      "completed_at": null,
+      "steps": [
+        "Verify ADD-002, ADD-003, ADD-005 and GOV-010 are done.",
+        "Define persisted lifecycle state, transition authority, idempotency and audit event shape.",
+        "Implement discover/validate/trusted/compatible/resolved/composed/initializing/health-check/ready transitions.",
+        "Implement degraded/failed handling that never exposes partial contribution registrations.",
+        "Implement disable with job drain/cancel, event/route/tool unregister and data preservation.",
+        "Define upgrade rollback/degraded recovery using the approved migration contract.",
+        "Add failure injection at each lifecycle stage and restart/reconciliation tests.",
+        "Verify repeated requests are idempotent and audit state is complete.",
+        "Run integration/security tests and pnpm check."
+      ],
+      "accept": [
+        "Invalid transitions fail and every transition is auditable.",
+        "Ready is only reached after all required checks pass.",
+        "Failed/disabled add-ons expose zero active routes/tools/jobs/navigation.",
+        "Disable preserves data and migration history."
+      ],
+      "verify": [
+        "State transition matrix",
+        "Failure injection",
+        "Restart recovery tests",
+        "Data preservation tests",
+        "pnpm check"
+      ]
     },
     {
       "id": "ADD-007",
@@ -8495,14 +8668,17 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Tie addon storage to reviewed additive migrations and backup checks.",
+      "objective": "Own add-on storage and migration lifecycle without claiming legacy Odoo/domain-owned records.",
       "scope_in": [
-        "Tie addon storage to reviewed additive migrations and backup checks.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Implement reviewed versioned migrations for add-on-owned storage only.",
+        "Require explicit data-owner approval for shared/domain-owned/external storage.",
+        "Define backup, restore, expand/contract and decommission safety policy."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not write Odoo-owned tables or infer ownership from a model name.",
+        "Do not run global SchemaGenerator or production schema synchronization.",
+        "Do not run destructive DDL/DML at add-on startup.",
+        "Do not remove migration history when an add-on is disabled."
       ],
       "dependencies": [
         "ADD-004",
@@ -8528,8 +8704,10 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "migration registry",
-        "storage policy"
+        "Storage ownership policy",
+        "Versioned migration registry",
+        "Backup/restore runbook",
+        "Migration recovery tests"
       ],
       "acceptance_criteria": [
         "No Odoo-owned table claimed.",
@@ -8550,7 +8728,30 @@
       "notes": [],
       "created_at": null,
       "updated_at": null,
-      "completed_at": null
+      "completed_at": null,
+      "steps": [
+        "Verify ADD-004, API-012 and GOV-006 are done with data-ownership evidence.",
+        "Identify owner of every model/table/schema resource and record its authoritative system.",
+        "Define migration manifest, ordering, version ledger, checksum and transaction rules.",
+        "Implement additive migrations only for add-on-owned storage under the approved adapter.",
+        "Require backup/restore evidence and owner approval for destructive/decommission steps.",
+        "Test interrupted migration, duplicate invocation, rollback and restore scenarios.",
+        "Prove disabling an add-on never deletes its storage or legacy records.",
+        "Run integration/data recovery tests and pnpm check."
+      ],
+      "accept": [
+        "Every storage resource has one explicit authoritative owner.",
+        "No Odoo-owned table is claimed by an add-on.",
+        "Migrations are ordered, versioned, reviewed and recoverable.",
+        "Disable is non-destructive; decommission is a separate approved operation."
+      ],
+      "verify": [
+        "Ownership tests",
+        "Migration replay tests",
+        "Backup/restore test",
+        "Disable-preserves-data test",
+        "pnpm check"
+      ]
     },
     {
       "id": "ADD-008",
@@ -8570,14 +8771,16 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Load realm capabilities through safe public entrypoints.",
+      "objective": "Expose approved add-on capabilities into API, Agent and Web through typed adapters without duplicating business logic.",
       "scope_in": [
-        "Load realm capabilities through safe public entrypoints.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Implement realm-specific contribution adapters and public contracts.",
+        "Keep business rules in API/domain add-on services.",
+        "Make Web contributions browser-safe and Agent tools API-client-only."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not import Fastify/MikroORM/ORM internals into Agent or Web.",
+        "Do not treat a Web permission/route guard as API authorization.",
+        "Do not bundle provider credentials, Node-only modules or server implementation into browser code."
       ],
       "dependencies": [
         "ADD-005",
@@ -8604,7 +8807,10 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "realm addon adapters"
+        "API contribution adapter",
+        "Agent contribution adapter",
+        "Web contribution adapter",
+        "Cross-realm contract tests"
       ],
       "acceptance_criteria": [
         "Agent tools call API only.",
@@ -8627,7 +8833,28 @@
       "notes": [],
       "created_at": null,
       "updated_at": null,
-      "completed_at": null
+      "completed_at": null,
+      "steps": [
+        "Verify ADD-005, ADD-006, AGT-005 and WEB-005 are done.",
+        "Define typed contribution interfaces for API route/use case, Agent tool/workflow and Web navigation/component.",
+        "Implement adapters that resolve only registered and enabled add-on/version contributions.",
+        "Ensure Agent tool schemas include validation, idempotency, timeout, risk and approval metadata, then call API clients only.",
+        "Ensure Web adapters expose browser-safe components/contracts only and filter unavailable capabilities without becoming the authority.",
+        "Add contract/bundle tests for server-only imports, disabled state and authorization denial.",
+        "Run cross-realm integration tests and pnpm check."
+      ],
+      "accept": [
+        "One domain use case is reused rather than duplicated across API/Agent/Web.",
+        "Agent calls API only and cannot access persistence internals.",
+        "Web bundle contains no server code or secrets.",
+        "Disabled add-on contributions cannot be discovered or invoked."
+      ],
+      "verify": [
+        "Cross-realm integration",
+        "Browser bundle scan",
+        "Agent tool contract tests",
+        "pnpm check"
+      ]
     },
     {
       "id": "ADD-009",
@@ -8647,14 +8874,16 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Create one add-on with model, extension, policy, route, tool, Web contribution and event.",
+      "objective": "Prove the complete add-on workflow with one small, owner-controlled reference add-on.",
       "scope_in": [
-        "Create one add-on with model, extension, policy, route, tool, Web contribution and event.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Build one minimal reference package after model, capability, storage and realm adapters are available.",
+        "Exercise manifest validation, one owned model, one additive extension, one API use case, one Agent tool, one Web contribution and one event.",
+        "Record complete install/enable/disable and data preservation evidence."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not scaffold many example add-ons or introduce fictitious business domains.",
+        "Do not use production Odoo/customer data or privileged network operations.",
+        "Do not mark reference add-on as proof of third-party sandbox security."
       ],
       "dependencies": [
         "ADD-007",
@@ -8680,8 +8909,9 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "reference add-on",
-        "integration report"
+        "Reference add-on package",
+        "End-to-end integration report",
+        "Data preservation and authorization test evidence"
       ],
       "acceptance_criteria": [
         "All declared capabilities register.",
@@ -8701,7 +8931,29 @@
       "notes": [],
       "created_at": null,
       "updated_at": null,
-      "completed_at": null
+      "completed_at": null,
+      "steps": [
+        "Verify ADD-007, ADD-008 and API-011 are done.",
+        "Choose a small non-sensitive reference capability with an accountable owner and bounded data model.",
+        "Implement package manifest, README, explicit exports, source, tests and changelog.",
+        "Register one owned model, one additive extension, one read and one authorized write use case.",
+        "Add one Agent adapter that calls the API, one browser-safe Web contribution and one versioned event.",
+        "Prove invalid permission/disabled state blocks all contribution surfaces.",
+        "Prove enable/disable preserves data and leaves an audit trail.",
+        "Run frozen workspace install, build, typecheck, integration/security tests and pnpm check."
+      ],
+      "accept": [
+        "A real add-on contributes all declared capabilities using only the public SDK/API.",
+        "No direct persistence access, unapproved capability or fake live data is used.",
+        "Enable/disable is deterministic, audited and non-destructive.",
+        "The example is small and does not imply all future add-ons are implemented."
+      ],
+      "verify": [
+        "Vertical integration suite",
+        "API auth tests",
+        "Disabled-state tests",
+        "pnpm check"
+      ]
     },
     {
       "id": "ADD-010",
@@ -8721,14 +8973,16 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Define compatibility, staged upgrade, migration review and data-preserving uninstall.",
+      "objective": "Deliver controlled add-on upgrade, rollback and decommission workflows with data-owner recovery guarantees.",
       "scope_in": [
-        "Define compatibility, staged upgrade, migration review and data-preserving uninstall.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Implement compatibility checks, staged upgrades, backup verification and rollback/degraded behavior.",
+        "Separate disable from decommission and preserve audit/data history.",
+        "Require exact owner approval for destructive cleanup."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not assume code rollback reverses database migrations.",
+        "Do not automatically delete storage or remove legacy/Odoo data.",
+        "Do not enable automatic production upgrades."
       ],
       "dependencies": [
         "ADD-006",
@@ -8754,8 +9008,9 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "upgrade workflow",
-        "decommission runbook"
+        "Upgrade preview/apply workflow",
+        "Rollback/degraded recovery runbook",
+        "Decommission approval and archive workflow"
       ],
       "acceptance_criteria": [
         "Disable separate from uninstall.",
@@ -8777,7 +9032,31 @@
       "notes": [],
       "created_at": null,
       "updated_at": null,
-      "completed_at": null
+      "completed_at": null,
+      "steps": [
+        "Verify ADD-006, ADD-007 and ADD-009 are done.",
+        "Define upgrade plan/preview containing current/target versions, dependency impact, migrations and active capabilities.",
+        "Require backup verification and compatibility before staging an upgrade.",
+        "Run migrations only through the approved storage adapter and record version/checksum.",
+        "Run health and smoke tests before marking the new version ready.",
+        "On failure, restore prior code or mark unavailable with explicit migration recovery; never pretend irreversible data changes were rolled back.",
+        "Implement decommission preview, owner approval, archive/export and separate destructive cleanup.",
+        "Test upgrade interruption, rollback, retained data and repeated decommission requests.",
+        "Run recovery tests and pnpm check."
+      ],
+      "accept": [
+        "Disable is separate from uninstall/decommission.",
+        "Upgrade cannot proceed without compatible version and verified recovery point.",
+        "Data deletion requires exact owner approval and restore evidence.",
+        "Failed upgrade cannot expose partial capabilities."
+      ],
+      "verify": [
+        "Upgrade compatibility tests",
+        "Failure recovery tests",
+        "Owner approval contract tests",
+        "Data retention tests",
+        "pnpm check"
+      ]
     },
     {
       "id": "ADD-011",
@@ -8797,18 +9076,21 @@
         "branch": null,
         "owned_paths": []
       },
-      "objective": "Test privilege boundaries, disabled capabilities, health, audit and recovery.",
+      "objective": "Verify add-on security, auditability, diagnostics, failure behavior and safe operational recovery.",
       "scope_in": [
-        "Test privilege boundaries, disabled capabilities, health, audit and recovery.",
-        "Follow BLUEPRINT-PACKAGE-ADDON.MD and the parent/governance contracts."
+        "Test trust/capability boundaries, cross-tenant isolation, disabled state, diagnostics and lifecycle recovery.",
+        "Produce an evidence-backed threat/risk report and operator runbook.",
+        "Validate the implementation against GOV-010/GOV-011 accepted controls."
       ],
       "scope_out": [
-        "Do not change unrelated ownership areas.",
-        "Do not add a fourth primary app, Bun runtime, direct Odoo DB writes or unapproved canon."
+        "Do not declare third-party isolation safe without the accepted ADR and adversarial tests.",
+        "Do not use production secrets/customer data for negative tests.",
+        "Do not suppress unresolved high-risk findings."
       ],
       "dependencies": [
         "ADD-009",
         "ADD-010",
+        "GOV-010",
         "GOV-011"
       ],
       "inputs": [
@@ -8830,8 +9112,10 @@
         "Update only this task atomically and commit intended scope."
       ],
       "deliverables": [
-        "security report",
-        "operations guide"
+        "Add-on security/threat report",
+        "Diagnostics dashboard/query contract",
+        "Operations/recovery runbook",
+        "Adversarial regression tests"
       ],
       "acceptance_criteria": [
         "Disabled add-on exposes no routes/tools/jobs/navigation.",
@@ -8852,6 +9136,137 @@
       "evidence": [],
       "blocker": null,
       "notes": [],
+      "created_at": null,
+      "updated_at": null,
+      "completed_at": null,
+      "steps": [
+        "Verify ADD-009, ADD-010, GOV-010 and GOV-011 are accepted/completed.",
+        "Enumerate add-on assets, permissions, egress, data ownership, identities and lifecycle states.",
+        "Test malicious/invalid manifests, forbidden imports, revoked trust, dependency confusion and artifact tampering.",
+        "Test cross-tenant reads/writes, permission escalation, expired identity and unapproved side effects.",
+        "Test disabled add-ons expose no route/tool/job/event/navigation and retain data.",
+        "Inject process/job/API/migration/health failures and verify audit, recovery and kill-switch behavior.",
+        "Document severity, exploitability, residual risk, owner and remediation for every finding.",
+        "Run full security/integration suite and pnpm check; keep open findings explicit."
+      ],
+      "accept": [
+        "All critical/high findings are fixed or explicitly owner-accepted with expiry and compensating control.",
+        "Every capability is attributable to add-on ID/version and actor.",
+        "Disabled/revoked add-ons expose no active capability.",
+        "Lifecycle, permissions and failures are auditable."
+      ],
+      "verify": [
+        "Security test suite",
+        "Cross-tenant authorization",
+        "Failure injection",
+        "Audit completeness",
+        "pnpm check"
+      ]
+    },
+    {
+      "id": "ADD-012",
+      "title": "Define add-on engineering standard and manifest lint gate",
+      "workstream": "ADDON",
+      "blueprint": "BLUEPRINT-PACKAGE-ADDON.MD",
+      "phase": "PHASE-03",
+      "priority": "P0",
+      "status": "pending",
+      "owner_role": "platform_architect",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Establish the strict add-on package/manifest contract and an automated static gate before SDK/runtime implementation starts.",
+      "scope_in": [
+        "Create a detailed add-on blueprint and engineering standard based on the parent package/ORM/API/security blueprints.",
+        "Define a strict machine-readable manifest v1 schema, stable package/ID conventions, capability/permission allowlists, compatibility, ownership, migration, provenance and contribution rules.",
+        "Implement a dependency-free manifest/package/import linter with deterministic required-dependency and cycle checks.",
+        "Integrate the linter into pnpm check and local AI contributor rules."
+      ],
+      "scope_out": [
+        "Do not create packages/addons runtime packages or empty app scaffolds.",
+        "Do not implement add-on loading, API registry, ORM mutation, package installation or third-party execution.",
+        "Do not approve the trust/sandbox/signature/network/secret-injection decisions in ADR-0003.",
+        "Do not bypass PKG-004, API-004, GOV-010 or any existing task dependency."
+      ],
+      "dependencies": [
+        "PKG-002",
+        "GOV-002"
+      ],
+      "inputs": [
+        "BLUEPRINT.md",
+        "BLUEPRINT-PACKAGE.MD",
+        "BLUEPRINT-PACKAGE-ADDON.MD",
+        "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+        "docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Verify PKG-002 and GOV-002 are done and the current Node/pnpm baseline is in main.",
+        "Audit parent add-on, package, ORM, API, identity and governance boundaries before drafting rules.",
+        "Define add-on package folder, package name, stable ID, version, manifest schema and public contribution model.",
+        "Define capabilities, permissions, risk/approval minimums, model/data ownership, migrations and source provenance.",
+        "Define forbidden dependency/import patterns and source/package lifecycle restrictions.",
+        "Implement the read-only static manifest/package linter and deterministic dependency graph validator.",
+        "Add negative/positive fixtures for unknown fields, capabilities, permission downgrade, unsafe path, direct ORM/DB imports, ambient secrets, missing dependency and cycle.",
+        "Integrate pnpm lint:addons into the canonical pnpm check and GitHub Actions; add AGENTS/skill/PR instructions.",
+        "Record runtime trust/sandbox options as Proposed ADR decisions and require owner approval before ADD-002 executes untrusted code.",
+        "Run pnpm lint:addons, focused tests, frozen install and pnpm check; inspect the diff and record evidence."
+      ],
+      "deliverables": [
+        "BLUEPRINT-PACKAGE-ADDON.MD v2",
+        "docs/engineering/ADDON-ENGINEERING-STANDARD.md",
+        "docs/architecture/addons/addon.manifest.schema.json",
+        "scripts/architecture/addon-lint.mjs and regression tests",
+        "ADR-0003 proposed trust-boundary decision",
+        "Root quality gate and AI contributor policy integration"
+      ],
+      "acceptance_criteria": [
+        "A strict manifest schema and linter agree on required v1 fields and reject unknown/unsafe declarations.",
+        "Unknown capabilities/permissions, understated risk/approval, unsafe paths, storage ownership conflicts and missing required dependencies fail closed.",
+        "Required dependency cycles are detected deterministically; optional dependency absence is not treated as a required failure.",
+        "Add-on package/source rules reject direct ORM/DB/server internals, child-process/eval, ambient secret reads and automatic install hooks.",
+        "pnpm lint:addons is included in pnpm check and CI; no current add-on is fabricated.",
+        "ADR-0003 remains Proposed for trust/isolation until owner/security acceptance."
+      ],
+      "verification": [
+        "Manifest positive/negative fixtures",
+        "Forbidden import/package tests",
+        "Dependency DAG/cycle/version tests",
+        "pnpm lint:addons",
+        "pnpm install --frozen-lockfile",
+        "pnpm check"
+      ],
+      "file_ownership": [
+        "BLUEPRINT-PACKAGE-ADDON.MD",
+        "docs/engineering/ADDON-ENGINEERING-STANDARD.md",
+        "docs/architecture/addons/**",
+        "docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md",
+        "docs/adr/decision-register.md",
+        "scripts/architecture/addon-lint.mjs",
+        "scripts/architecture/addon-lint.test.mjs",
+        "package.json",
+        "scripts/check-repo.mjs",
+        "scripts/quality/quality-gate.mjs",
+        "scripts/quality/quality-gate.test.mjs",
+        "AGENTS.md",
+        "README.md",
+        "tasks.json"
+      ],
+      "estimate": "L",
+      "parallel_group": "ADDON-FOUNDATION",
+      "human_approval_required": false,
+      "evidence": [],
+      "blocker": null,
+      "notes": [
+        "The task covers static manifest/package engineering hygiene only. Runtime trust, third-party sandbox, signing root, secret injection and egress design remain Proposed in ADR-0003.",
+        "No add-on package directory is created by this foundation task."
+      ],
       "created_at": null,
       "updated_at": null,
       "completed_at": null
