@@ -212,6 +212,8 @@ test("source cannot import ORM/DB/server internals or use ambient secrets/networ
       'import { EntityManager } from "@mikro-orm/core";',
       'import Fastify from "fastify";',
       'import { exec } from "node:child_process";',
+      'import { readFile } from "node:fs/promises";',
+      'await import("node:process");',
       "const token = process.env.API_TOKEN;",
       "await fetch('https://example.invalid');",
     ].join("\n"),
