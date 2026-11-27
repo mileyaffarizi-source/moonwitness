@@ -86,8 +86,20 @@ if (automationWorkflows.length !== 1 || automationWorkflows[0] !== "release-plea
 }
 
 const lockfile = await readFile("pnpm-lock.yaml", "utf8");
-if (lockfile.split("\n")[0].trim() !== "lockfileVersion: '9.0'" || !lockfile.includes("importers:")) {
-  throw new Error("pnpm-lock.yaml must be a valid pnpm v9/v10-compatible workspace lockfile");
+const lockfileDocuments = lockfile.split(/^---\\s*$/m).map((document) => document.trim()).filter(Boolean);
+if (lockfileDocuments.length !== 2 ||
+    lockfileDocuments.some((document) => !document.startsWith("lockfileVersion: '9.0'"))) {
+  throw new Error("pnpm-lock.yaml must contain valid pnpm v9 two-document boot/project lockfile data");
+}
+const bootImporter = lockfileDocuments[0];
+if (!bootImporter.includes("packageManagerDependencies:") ||
+    !bootImporter.includes("specifier: 12.24.0") ||
+    !bootImporter.includes("version: 12.24.0")) {
+  throw new Error("pnpm-lock.yaml boot document must pin pnpm 12.24.0");
+}
+const projectLockfile = lockfileDocuments[1];
+if (!projectLockfile.includes("settings:") || !projectLockfile.includes("importers:")) {
+  throw new Error("pnpm-lock.yaml project document must preserve workspace settings and importers");
 }
 
 const rootEntries = new Set(await readdir("."));
