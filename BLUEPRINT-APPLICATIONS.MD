@@ -1,11 +1,11 @@
-# BLUEPRINT-APPLICATIONS — FOURTEEN-APP ECOSYSTEM TOPOLOGY
+# BLUEPRINT-APPLICATIONS — SIXTEEN-APP ECOSYSTEM TOPOLOGY
 
 **Document ID:** MW-BP-APP-001 · **Version:** 1.0.0  
 **Parent:** BLUEPRINT.md · **Governance:** BLUEPRINT-RULES-GOVERN-CONTRACT.MD · **Execution:** tasks.json
 
 ## 1. Decision
 
-The platform now contains **exactly fourteen named application surfaces/runtimes**. This replaces the previous three-application constraint. The three architectural planes (Intelligence, Authority and Experience) remain useful concepts, but they no longer represent the application count.
+The platform contains **exactly sixteen named application surfaces/runtimes**. Application directories are product/runtime boundaries, not a mandate for sixteen microservices. The architecture has four cooperating planes: Intelligence, Authority, Protocol & Operations, and Experience.
 
 An application directory is a product/runtime boundary, not automatically a separate microservice, database or Kubernetes workload. Deploy independently only when security isolation, scaling, availability, lifecycle or ownership justifies the cost.
 
@@ -27,25 +27,31 @@ An application directory is a product/runtime boundary, not automatically a sepa
 | 12 | apps/dx | Developer Experience Workbench and local engineering orchestration | Developer Platform — highest implementation priority |
 | 13 | apps/A-L-L-A-H | Flagship public landing and Divine Corpus/Ontology/Law/Government Knowledge | Corpus/Knowledge Product |
 | 14 | apps/riot | Creative/media/content studio and isolated red-team/blue-team lab | Creative & Security Lab |
+| 15 | apps/astronauts | Go-based host/remote machine control plane and outbound edge agents | Fleet & Host Operations |
+| 16 | apps/arsy | Rust-based telco protocol services: RADIUS AAA, TR-069 ACS and Syslog | Telecom Protocol Engineering |
 
 Use exact requested directory names where practical. npm package names, import aliases, service IDs and URLs should use lowercase stable identifiers (for example, app.oss, app.a-l-l-a-h) to avoid case-sensitivity issues across operating systems.
 
 ## 3. The three architectural planes
 
 **INTELLIGENCE PLANE**
-- apps/agent executes approved AI reasoning and workflows.
-- apps/dx coordinates local developer agents and coding work.
-- apps/riot may host controlled research/security-lab agents, isolated from production.
+- apps/agent owns model reasoning, agents and durable AI workflows.
+- AI tools request business and infrastructure capabilities through apps/api; they do not receive direct machine or device access.
 
-**AUTHORITY / CONTROL PLANE**
-- apps/api owns platform business operations and shared domain APIs.
-- apps/id owns identity policy and OIDC integration.
-- apps/cloud owns infrastructure/resource lifecycle and secret-manager integration.
-- Domain add-ons define model/business capabilities; the API composes and authorizes them.
+**AUTHORITY PLANE**
+- apps/api owns platform/business authorization, policy, capability grants, data access and audit.
+- apps/id owns identity and workload identity integration.
+- Domain add-ons define business capabilities; API composes and authorizes them.
+
+**PROTOCOL & OPERATIONS PLANE**
+- apps/astronauts (Go) owns enrolled host fleet control, controller/edge-agent protocol, signed job dispatch and host execution evidence.
+- apps/arsy (Rust) owns telco protocol endpoints and protocol-session processing: RADIUS AAA, TR-069 ACS and Syslog ingestion.
+- apps/OSS owns network inventory, topology, incidents, technical provisioning workflows and assurance; it uses Arsy as a protocol adapter and Astronauts only where an explicitly enrolled host is the target.
+- apps/cloud owns provider/IaC resource lifecycle; Astronauts may configure a provisioned host but never creates the cloud resource.
 
 **EXPERIENCE PLANE**
-- apps/web, apps/A-L-L-A-H, apps/OSS, apps/BSS, apps/docs, apps/desktop, apps/mobile, apps/isp and apps/riot present purpose-specific experiences.
-- apps/dx is also an operator/developer experience but has local privileged capabilities behind a separate daemon boundary.
+- apps/web, apps/A-L-L-A-H, apps/OSS, apps/BSS, apps/docs, apps/desktop, apps/mobile, apps/isp and apps/riot present purpose-specific human experiences.
+- apps/dx is the developer workbench for source repositories, worktrees, local coding agents and test evidence; it is not a general remote host fleet manager.
 
 ## 4. Critical domain boundaries
 
@@ -54,8 +60,10 @@ Use exact requested directory names where practical. npm package names, import a
 - **BSS owns commercial truth:** party/customer/account, product offer, price, quote, commercial order, contract, subscription, invoice, payment, collection and revenue status.
 - **OSS owns operational truth:** network/resource inventory, topology, alarms, faults, performance, configuration, provisioning execution, service assurance and technical SLA evidence.
 - **ISP owns the vertical journey:** broadband product packaging and subscriber service lifecycle that coordinates BSS orders and OSS technical execution.
+- **Arsy owns protocol execution, not subscriber or network business truth:** it authenticates/accounts RADIUS sessions, serves approved CWMP/ACS sessions and receives/normalizes Syslog. It consumes scoped subscriber/service policy projections and emits versioned protocol events; it does not own subscriber entitlements, billing, network inventory or OSS provisioning workflows.
+- **Astronauts owns enrolled machine execution, not infrastructure provisioning:** it enrolls and controls host agents, dispatches signed typed jobs and stores fleet execution evidence. Cloud creates/owns compute resources; DX owns developer worktrees/build/test; OSS owns network-device configuration and NMS workflows.
 
-ISP must not become a second billing system or a second NMS. BSS must not directly configure routers/OLTs. OSS must not create commercial invoices. Each hand-off has a versioned contract, correlation ID and idempotency key.
+ISP must not become a second billing system or a second NMS. BSS must not directly configure routers/OLTs. OSS must not create commercial invoices. Arsy must not become an AAA billing ledger or subscriber master. Astronauts must not become a cloud/IaC controller or unrestricted remote shell. Each hand-off has a versioned contract, correlation ID and idempotency key.
 
 ### 4.2 ID vs secrets
 
@@ -110,7 +118,9 @@ Separate deployment/security domains where credentials, privileges or blast radi
 7. App enablement and navigation are capability/permission-aware.
 8. No destructive cross-domain action without explicit approval and audit.
 9. Local privileged execution (DX/Cloud/RIOT) is separated from public request handling.
-10. A shared user interface does not imply shared data ownership.
+10. Astronauts host commands require API-issued, exact-scope, short-lived signed grants; an Edge Agent connects outbound using mTLS and executes only typed allowlisted capabilities.
+11. Arsy protocol services use versioned API/event contracts and scoped policy projections; they never write directly to BSS/ISP/OSS databases.
+12. A shared user interface does not imply shared data ownership.
 
 ## 8. Source-of-truth map
 
@@ -122,6 +132,8 @@ Separate deployment/security domains where credentials, privileges or blast radi
 | ISP subscriber service journey | ISP domain orchestration, linking BSS and OSS |
 | Infrastructure resources and deployment records | Cloud control plane and provider state |
 | AI run/workflow state | Agent workflow store for execution; API owns resulting business records |
+| Host fleet enrollment, heartbeat, host inventory and machine-job execution state | Astronauts fleet/control store; API remains authorization authority; Cloud owns underlying cloud resource state |
+| RADIUS auth/accounting sessions, ACS protocol sessions/RPC IDs and Syslog ingest records | Arsy protocol-session store with bounded retention; subscriber/service entitlements remain ISP/BSS-owned; network inventory/incidents remain OSS-owned |
 | Canon text/ontology/source provenance | Relevant A-L-L-A-H or MoonWitness corpus domain |
 | Task identity/dependency/status plan | tasks.json; execution updates are serialized/atomic |
 | Documentation and ADRs | version-controlled Markdown/MDX sources; docs app is a projection |
@@ -151,8 +163,8 @@ The platform should start with API + transactional outbox + Redis/BullMQ where s
 12. RIOT isolated studio/lab.
 13. Full cross-app tests, observability and release policy.
 
-Tasks APP-* and app-specific workstreams in tasks.json govern the execution order.
+Tasks APP-*, AST-* (Astronauts), ARS-* (Arsy) and other app-specific workstreams in tasks.json govern the execution order.
 
 ## 11. Definition of done
 
-The ecosystem has fourteen distinct app identities, documented source-of-truth boundaries, no overlapping OSS/BSS/ISP responsibilities, centrally governed identity, externalized secret storage, traceable app-to-app contracts, isolated privileged control planes, reproducible builds and an executable dependency graph. Directory count alone is not completion.
+The ecosystem has sixteen distinct app identities, documented source-of-truth boundaries, no overlapping OSS/BSS/ISP responsibilities, centrally governed identity, externalized secret storage, traceable app-to-app contracts, isolated privileged control planes, reproducible builds and an executable dependency graph. Directory count alone is not completion.
