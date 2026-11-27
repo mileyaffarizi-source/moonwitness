@@ -1,8 +1,10 @@
 name: Temporary pnpm lockfile migration probe
 
 on:
-  push:
-    branches: [task/pkg-002]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
 
 permissions:
   contents: read
