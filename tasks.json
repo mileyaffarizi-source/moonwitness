@@ -20807,13 +20807,16 @@
         "CodeQL run 46040342407 completed successfully; Zizmor Workflow Security run 46040342368 completed successfully; Gitleaks Secret Scanning run 46040342558 completed successfully with 'No leaks detected'.",
         "Dependency Review run 46040342338 failed before analysis with the explicit platform message: Dependency review is not supported on this repository; enable Dependency Graph in repository Settings → Security and analysis. This is tracked by blocked owner task GOV-013 and is not reported as a pass.",
         "The automation implementation remains in PR #16 until the Dependency Graph owner prerequisite is met.",
-        "Added .github/workflows/auto-pr.yml using a SHA-pinned checkout action, contents:read and pull-requests:write; it runs only on branch push/manual dispatch, does not trigger on pull_request, and leaves merge/review gates unchanged. Final workflow execution evidence is pending."
+        "Added .github/workflows/auto-pr.yml using a SHA-pinned checkout action, contents:read and pull-requests:write; it runs only on branch push/manual dispatch, does not trigger on pull_request, and leaves merge/review gates unchanged. Final workflow execution evidence is pending.",
+        "Auto Pull Request run 46081048744 succeeded on head fab45624b95d954f21f600e5aeacfab6c3aaba00; it validated the existing-PR reuse/idempotency path for PR #16 and did not create a duplicate. The first-time create path still awaits a branch without an existing PR; repository Actions permission to create PRs must be enabled by the owner.",
+        "Repository CI push run 46081048765 and PR run 46081054284 both passed on head fab45624b95d954f21f600e5aeacfab6c3aaba00. Workflow Security run 46081054354 and Secret Scanning run 46081054343 passed on the same head. CodeQL run 46081054310 was still in progress at the time of this evidence update; Dependency Review run 46081054263 remained blocked by the disabled Dependency Graph feature."
       ],
       "blocker": null,
       "notes": [
         "GOV-013 separately owns GitHub repository settings such as Dependency Graph, Code Scanning plan availability, Secret Scanning/Push Protection and main branch ruleset.",
         "Gitleaks Action v3 is supported for the current personal repository owner account; moving the repository to a GitHub Organization requires confirming its licensing requirement.",
-        "Dependency Review is available on public repositories and supported private repositories with GitHub Advanced Security; a run failure due repository visibility/plan must be recorded as an owner setting limitation, not silently bypassed."
+        "Dependency Review is available on public repositories and supported private repositories with GitHub Advanced Security; a run failure due repository visibility/plan must be recorded as an owner setting limitation, not silently bypassed.",
+        "Repository observation 2026-11-28: main has no enabled branch protection and the repository has no rulesets. The workflow intentionally does not auto-merge; owner GOV-013 must configure main review/check enforcement. The Actions setting allowing GITHUB_TOKEN to create PRs is an owner prerequisite and could not be read through the connected GitHub interface."
       ],
       "created_at": "2026-11-27T16:55:00.000Z",
       "updated_at": "2026-11-28T12:00:00.000Z",
