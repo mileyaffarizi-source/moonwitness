@@ -7,6 +7,20 @@ test("workspace package manager is pinned", async () => {
   assert.equal(pkg.packageManager, "pnpm@12.24.0");
 });
 
+test("pnpm 12 project settings live in pnpm-workspace.yaml", async () => {
+  const workspace = await readFile(new URL("../pnpm-workspace.yaml", import.meta.url), "utf8");
+  for (const setting of [
+    "engineStrict: true",
+    "saveExact: true",
+    "minimumReleaseAge: 1440",
+    "blockExoticSubdeps: true",
+    "strictDepBuilds: true",
+  ]) {
+    assert.ok(workspace.includes(setting), "missing pnpm workspace setting: " + setting);
+  }
+  await assert.rejects(access(new URL("../.npmrc", import.meta.url)));
+});
+
 test("workspace patterns include apps and packages", async () => {
   const workspace = await readFile(new URL("../pnpm-workspace.yaml", import.meta.url), "utf8");
   assert.ok(workspace.includes("apps/*"));
@@ -19,6 +33,22 @@ test("task registry is valid JSON with unique task IDs", async () => {
   const ids = registry.tasks.map((task) => task.id);
   assert.ok(ids.every((id) => typeof id === "string" && id.length > 0));
   assert.equal(new Set(ids).size, ids.length);
+});
+
+test("add-on standard and task sequence are part of the repository baseline", async () => {
+  const pkg = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
+  assert.equal(pkg.scripts["lint:addons"], "node scripts/architecture/addon-lint.mjs");
+  assert.ok(pkg.scripts.check.includes("pnpm lint:addons"));
+
+  const registry = JSON.parse(await readFile(new URL("../tasks.json", import.meta.url), "utf8"));
+  assert.equal(registry.project.task_count, registry.tasks.length);
+  const tasks = new Map(registry.tasks.map((task) => [task.id, task]));
+  assert.ok(tasks.get("ADD-001").dependencies.includes("ADD-012"));
+  assert.ok(tasks.get("ADD-002").dependencies.includes("GOV-010"));
+
+  const adr = await readFile(new URL("../docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md", import.meta.url), "utf8");
+  assert.match(adr, /Status:\*\* Proposed/);
+  assert.match(adr, /Third-party add-ons remain disabled/);
 });
 
 test("agent contract and focused skills are present", async () => {
@@ -38,18 +68,4 @@ test("agent contract and focused skills are present", async () => {
     assert.ok(lines.some((line) => /^name:\s*\S+/.test(line)));
     assert.ok(lines.some((line) => /^description:\s*\S+/.test(line)));
   }
-});
-
-test("pnpm 12 project settings live in pnpm-workspace.yaml", async () => {
-  const workspace = await readFile(new URL("../pnpm-workspace.yaml", import.meta.url), "utf8");
-  for (const setting of [
-    "engineStrict: true",
-    "saveExact: true",
-    "minimumReleaseAge: 1440",
-    "blockExoticSubdeps: true",
-    "strictDepBuilds: true",
-  ]) {
-    assert.ok(workspace.includes(setting), "missing workspace setting: " + setting);
-  }
-  await assert.rejects(access(new URL("../.npmrc", import.meta.url)));
 });
