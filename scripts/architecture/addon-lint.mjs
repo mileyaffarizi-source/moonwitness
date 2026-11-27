@@ -61,6 +61,130 @@ function isRecord(value) {
 function addError(errors, code, path, message) {
   errors.push({ code, path, message });
 }
+
+function resolveSchemaReference(rootSchema, reference) {
+  if (typeof reference !== "string" || !reference.startsWith("#/")) return null;
+  const segments = reference.slice(2).split("/").map((part) => part.replaceAll("~1", "/").replaceAll("~0", "~"));
+  let current = rootSchema;
+  for (const segment of segments) {
+    if (!isRecord(current) || !(segment in current)) return null;
+    current = current[segment];
+  }
+  return current;
+}
+
+function jsonValuesEqual(left, right) {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
+export function validateJsonSchema(schema, value, rootSchema = schema, path = "$") {
+  const errors = [];
+  if (!isRecord(schema)) {
+    addError(errors, "INVALID_SCHEMA", path, "schema node must be an object");
+    return errors;
+  }
+
+  if (schema.$ref !== undefined) {
+    const referenced = resolveSchemaReference(rootSchema, schema.$ref);
+    if (!referenced) {
+      addError(errors, "UNRESOLVED_SCHEMA_REF", path, "cannot resolve schema reference " + String(schema.$ref));
+      return errors;
+    }
+    return validateJsonSchema(referenced, value, rootSchema, path);
+  }
+
+  if (schema.oneOf !== undefined) {
+    if (!Array.isArray(schema.oneOf)) {
+      addError(errors, "INVALID_SCHEMA_ONE_OF", path, "oneOf must be an array");
+      return errors;
+    }
+    const matches = schema.oneOf.filter((candidate) =>
+      validateJsonSchema(candidate, value, rootSchema, path).length === 0,
+    ).length;
+    if (matches !== 1) {
+      addError(errors, "SCHEMA_ONE_OF", path, "value must match exactly one schema branch");
+      return errors;
+    }
+    return errors;
+  }
+
+  if (schema.const !== undefined && !jsonValuesEqual(value, schema.const)) {
+    addError(errors, "SCHEMA_CONST", path, "value must equal " + JSON.stringify(schema.const));
+    return errors;
+  }
+  if (Array.isArray(schema.enum) && !schema.enum.some((item) => jsonValuesEqual(item, value))) {
+    addError(errors, "SCHEMA_ENUM", path, "value is not in the allowed enum");
+    return errors;
+  }
+
+  const typeMatches = {
+    object: isRecord(value),
+    array: Array.isArray(value),
+    string: typeof value === "string",
+    number: typeof value === "number" && Number.isFinite(value),
+    integer: Number.isInteger(value),
+    boolean: typeof value === "boolean",
+    null: value === null,
+  };
+  if (schema.type !== undefined) {
+    const allowedTypes = Array.isArray(schema.type) ? schema.type : [schema.type];
+    if (!allowedTypes.some((type) => typeMatches[type] === true)) {
+      addError(errors, "SCHEMA_TYPE", path, "expected " + allowedTypes.join(" or "));
+      return errors;
+    }
+  }
+
+  if (typeof value === "string") {
+    if (schema.minLength !== undefined && value.length < schema.minLength) {
+      addError(errors, "SCHEMA_MIN_LENGTH", path, "string is shorter than minLength " + schema.minLength);
+    }
+    if (schema.maxLength !== undefined && value.length > schema.maxLength) {
+      addError(errors, "SCHEMA_MAX_LENGTH", path, "string exceeds maxLength " + schema.maxLength);
+    }
+    if (schema.pattern !== undefined) {
+      let patternMatches = false;
+      try { patternMatches = new RegExp(schema.pattern).test(value); } catch {}
+      if (!patternMatches) addError(errors, "SCHEMA_PATTERN", path, "string does not match required pattern");
+    }
+  }
+
+  if (isRecord(value)) {
+    for (const required of schema.required ?? []) {
+      if (!Object.prototype.hasOwnProperty.call(value, required)) {
+        addError(errors, "SCHEMA_REQUIRED", path + "." + required, "required property is missing");
+      }
+    }
+    const properties = isRecord(schema.properties) ? schema.properties : {};
+    if (schema.additionalProperties === false) {
+      for (const key of Object.keys(value)) {
+        if (!(key in properties)) addError(errors, "SCHEMA_ADDITIONAL_PROPERTY", path + "." + key, "unknown property is not allowed");
+      }
+    }
+    for (const [key, propertySchema] of Object.entries(properties)) {
+      if (Object.prototype.hasOwnProperty.call(value, key)) {
+        errors.push(...validateJsonSchema(propertySchema, value[key], rootSchema, path + "." + key));
+      }
+    }
+  }
+
+  if (Array.isArray(value)) {
+    if (schema.uniqueItems === true) {
+      const seen = new Set();
+      value.forEach((item, index) => {
+        const key = JSON.stringify(item);
+        if (seen.has(key)) addError(errors, "SCHEMA_UNIQUE_ITEMS", path + "[" + index + "]", "array items must be unique");
+        seen.add(key);
+      });
+    }
+    if (schema.items !== undefined) {
+      value.forEach((item, index) => {
+        errors.push(...validateJsonSchema(schema.items, item, rootSchema, path + "[" + index + "]"));
+      });
+    }
+  }
+
+  return errors;
+}
 function parseSemver(value) {
   if (typeof value !== "string" || !SEMVER_RE.test(value)) return null;
   const core = value.split(/[+-]/, 1)[0];
@@ -528,6 +652,9 @@ export async function lintAddons(repositoryRoot = process.cwd()) {
     catch (error) { addError(errors, "MANIFEST_PARSE_ERROR", manifestPath, error.message); continue; }
     try { packageJson = JSON.parse(await readFile(packagePath, "utf8")); }
     catch (error) { addError(errors, "PACKAGE_PARSE_ERROR", packagePath, error.message); continue; }
+    for (const error of validateJsonSchema(schema, manifest)) {
+      errors.push({ code: "MANIFEST_" + error.code, path: slug + "/" + error.path, message: error.message });
+    }
     for (const error of validateAddonManifest(manifest, slug)) errors.push({ ...error, path: slug + "/" + error.path });
     for (const error of validateAddonPackage(packageJson, slug)) errors.push({ ...error, path: slug + "/" + error.path });
     const sourceFiles = await collectSources(join(addonPath, "src"));
