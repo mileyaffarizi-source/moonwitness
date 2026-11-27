@@ -1,59 +1,69 @@
 # MoonWitness application inventory
 
-**Audit date:** 2026-11-27  
-**Audited commit:** `c1c604801e4bbde982a44689aac7b6c48b1978ee`  
-**Authority:** `BLUEPRINT-APPLICATIONS.MD` and `tasks.json`  
-**Task:** APP-001
+**Audit date:** 2026-11-28  
+**Base branch:** `main` · **Architecture change branch:** `foundation/node26-lts-automation`  
+**Authority:** `BLUEPRINT-APPLICATIONS.MD`, accepted ADRs and `tasks.json`
 
 ## Finding
 
-The target architecture contains exactly fourteen application surfaces. The current Git tree contains only `apps/README.md`; none of the fourteen application directories or application source packages has been materialized. This is a planning-to-implementation baseline, not a runnable application inventory.
+The target architecture now contains exactly sixteen application surfaces. The current repository is still a planning/foundation repository: only the shared `apps/README.md` and the two specification-only anchors for Astronauts and Arsy are present. Those anchors do not contain executable services. No application should be called implemented until its source, tests, build and runtime evidence exist.
 
 An app directory is a product/runtime boundary, not an automatic microservice, database or separate deployment.
 
 ## Canonical inventory
 
-| # | Path | Purpose / owner | Repository state | Boundary / open point |
+| # | Path | Technology | Purpose / authority | Implementation truth |
 |---:|---|---|---|---|
-| 1 | `apps/agent` | Mastra AI orchestration, agents and workflows / Agent Engineering | Not materialized | Executes approved tools; no direct business DB writes |
-| 2 | `apps/api` | Fastify platform authority and business APIs / Platform/API Engineering | Not materialized | Business use cases, authorization, transactions and records |
-| 3 | `apps/web` | MoonWitness public landing and Community / MoonWitness Product | Not materialized | CSS expansion is explicitly unconfirmed; preserve as an open question |
-| 4 | `apps/OSS` | Network/service operational support / Network Operations | Not materialized | Technical inventory, alarms, provisioning and assurance |
-| 5 | `apps/BSS` | Commercial/customer lifecycle / Business Operations | Not materialized | Customer, offer, order, contract, subscription and billing authority |
-| 6 | `apps/id` | Central identity, login, OIDC/SSO and federation / Security & Identity | Not materialized | Authentication/identity; resource owners still authorize |
-| 7 | `apps/docs` | Documentation, wiki, DX knowledge and progress portal / Documentation & DX | Not materialized | Projects canonical docs/task state; does not own a second task ledger |
-| 8 | `apps/desktop` | General end-user/operator desktop experience / Client Experience | Not materialized | Not a developer IDE or DX replacement |
-| 9 | `apps/mobile` | Native mobile experience / Mobile Product | Not materialized | Uses approved identity/API contracts |
-| 10 | `apps/cloud` | Cloud/infrastructure business control plane / Cloud Platform | Not materialized | Desired state and policy; privileged apply runs in isolated execution plane |
-| 11 | `apps/isp` | ISP/telco vertical service lifecycle / ISP Product | Not materialized | Owns subscriber-service orchestration between BSS and OSS |
-| 12 | `apps/dx` | Developer Experience workbench and local engineering orchestration / Developer Platform | Not materialized | Developer workstation/control tower; privileged daemon separate from UI |
-| 13 | `apps/A-L-L-A-H` | Flagship landing and Divine Corpus/Ontology/Law/Government Knowledge / Corpus & Knowledge Product | Not materialized | Separate editorial/corpus authority from MoonWitness Web |
-| 14 | `apps/riot` | Creative/media/content studio and isolated red-team/blue-team lab / Creative & Security Lab | Not materialized | Public studio and privileged lab execution must remain isolated |
+| 1 | `apps/agent` | Node.js 26 / Mastra | AI reasoning, agents, tool/workflow runtime; no direct business DB or host access | Planned |
+| 2 | `apps/api` | Node.js 26 / Fastify | Shared platform authority, domain use cases, authorization, transactions, API contracts and audit | Planned |
+| 3 | `apps/web` | Node.js 26 / Next.js | MoonWitness public landing, research/story discovery and Community | Planned |
+| 4 | `apps/OSS` | API-backed operational client | Network inventory, topology, alarms, incidents, provisioning workflow and assurance | Planned |
+| 5 | `apps/BSS` | API-backed business client | Customer, offer, commercial order, contract, subscription, invoice and payment authority | Planned |
+| 6 | `apps/id` | OIDC/SSO integration | Central identity, login, federation and workload identity; not a plaintext secret vault | Planned |
+| 7 | `apps/docs` | Documentation application | Wiki, ADRs, DX knowledge and progress projection; no separate task ledger | Planned |
+| 8 | `apps/desktop` | Desktop client | General user/operator client; not a coding IDE | Planned |
+| 9 | `apps/mobile` | Native mobile client | Mobile experience through approved identity/API contracts | Planned |
+| 10 | `apps/cloud` | Cloud control plane + isolated runners | Cloud/provider accounts, resources, IaC plan/apply, deployment, usage/cost and recovery | Planned |
+| 11 | `apps/isp` | ISP vertical application/domain | Subscriber service lifecycle and orchestration between BSS and OSS | Planned |
+| 12 | `apps/dx` | Developer workbench + local daemon | Repository/worktree, coding-agent adapters, local build/test, diff review and evidence | Planned |
+| 13 | `apps/A-L-L-A-H` | Knowledge experience | Flagship landing, corpus, ontology, law and government knowledge | Planned |
+| 14 | `apps/riot` | Creative/media + isolated lab client | Creative studio and separately authorized red/blue-team lab workflows | Planned |
+| 15 | `apps/astronauts` | Go Controller + Go Edge Agent | Enrolled host fleet, machine identity, heartbeat/inventory, desired host state, signed typed job dispatch and execution evidence | Planning anchor only |
+| 16 | `apps/arsy` | Rust async protocol services | RADIUS AAA for PPPoE NAS/BRAS/BNG, TR-069/CWMP ACS and Syslog ingest/normalization | Planning anchor only |
 
-## Ownership overlap review
+## Ownership and overlap review
 
-The blueprints define the following distinctions; they are not duplicate ownership:
+- **Agent vs DX vs Astronauts:** Agent reasons and calls approved capabilities; DX manages developer workspaces and coding workflows; Astronauts controls only explicitly enrolled host fleets and executes signed typed capabilities. None receives ambient production access.
+- **Cloud vs Astronauts:** Cloud creates/owns provider resources and IaC state; Astronauts enrolls and operates the host after it exists. Cloud can request scoped bootstrap/host actions, never a general shell.
+- **Arsy vs ISP/BSS/OSS:** Arsy implements wire protocols and protocol-session state. ISP owns subscriber service lifecycle and entitlements; BSS owns commercial/billing truth; OSS owns network inventory, NMS alarms/incidents, provisioning workflows and technical assurance.
+- **ID vs API vs Vault:** ID authenticates; API/resource owners authorize; a dedicated vault/KMS owns secret values.
+- **Docs vs tasks.json:** documentation projects the canonical plan; tasks.json remains the only execution/status ledger.
 
-- **Agent vs DX:** Agent owns model/agent/workflow runtime; DX owns engineering task coordination, worktrees and local coding-agent execution.
-- **Desktop vs DX:** Desktop serves general users/operators; DX serves developers and the implementation factory.
-- **Web vs A-L-L-A-H:** Web owns MoonWitness landing/community; A-L-L-A-H owns its separate flagship knowledge experience.
-- **BSS vs ISP vs OSS:** BSS owns commercial truth; ISP owns subscriber-service journey/orchestration; OSS owns network and technical operational truth.
-- **ID vs API vs vault:** ID authenticates; API/domain owners authorize resources; a dedicated vault/KMS owns secret values.
-- **Cloud vs OSS vs RIOT:** each owns a different resource/security domain; privileged runners must not be shared as ambient host access.
-- **Docs vs tasks.json:** docs renders/presents status; tasks.json remains the sole canonical execution ledger.
+## Source-of-truth boundaries
 
-## Open questions / unknowns
+| Data | Authority |
+|---|---|
+| Identity and workload identity | ID/IdP |
+| Commercial customer/order/subscription/invoice/payment | BSS domain; legacy Odoo remains authoritative until explicit cutover |
+| Subscriber-service state and entitlements | ISP domain; references BSS and OSS records |
+| Network inventory/topology/alarms/provisioning/technical SLA | OSS and authoritative equipment adapters |
+| Cloud resource/provider/IaC state | Cloud control plane/provider |
+| Enrolled host identity, heartbeat, host inventory and machine execution state | Astronauts operational store; API remains authorization authority |
+| RADIUS auth/accounting, ACS protocol sessions/RPC results and Syslog ingest | Arsy protocol store with bounded retention; subscriber/device masters remain ISP/OSS-owned |
+| AI execution state | Agent workflow store; API owns resulting business records |
+| Task ID/dependency/status | tasks.json |
+| Documentation and ADRs | version-controlled Markdown sources |
 
-1. The meaning of **CSS** in the Web/Community description remains unconfirmed. Do not expand the acronym or implement a feature based on a guess.
-2. No application source, runtime manifest, route, API contract or deployment definition exists in this audited tree; runtime maturity and operational ownership beyond the blueprints remain unverified.
-3. No separate deployment or database boundary has been proven necessary for any app. Start modular and split only with evidence.
-4. Detailed owners are role/team labels from the blueprint; named individual maintainers are not specified.
+## Open technical decisions
 
-## Evidence and verification
+1. Astronauts must benchmark the control transport and protocol implementation (gRPC streaming is the starting candidate), certificate issuer/rotation and controller HA before selecting final dependencies.
+2. Arsy must validate RADIUS password-authentication compatibility and credential handling per method (PAP, CHAP, MS-CHAP/EAP) before production. No plaintext subscriber password storage.
+3. TR-069/CWMP is the initial ACS compatibility track. TR-369/USP is a future interoperability evaluation, not a first-release requirement.
+4. Exact NAS/OLT/ONT/CPE vendors, traffic rates, retention and failover targets require the read-only system inventory tasks.
+5. CSS in the Web/Community description remains unconfirmed; do not expand the acronym from guesswork.
 
-- Recursive Git tree at the audited commit: 72 entries; response was not truncated.
-- Under `apps/`, the only tracked entry is `apps/README.md`.
-- The fourteen target paths and roles match `BLUEPRINT-APPLICATIONS.MD`.
-- No source code was created and no application is marked implemented by this audit.
+## Evidence rules
 
-**Review state:** ready for product-owner review. The CSS ambiguity and named maintainer assignments remain open.
+- Directory/README presence is not an implementation result.
+- A new app is complete only after its bounded acceptance criteria, security/contract tests, build and deployment evidence pass.
+- No task status is changed to done in this inventory update.
