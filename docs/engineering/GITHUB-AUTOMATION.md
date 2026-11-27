@@ -98,3 +98,10 @@ If Dependency Review or CodeQL is unavailable under the repository's current vis
 - Dependabot creates proposals; it never merges them automatically.
 - Release Please creates a reviewed release PR; it never bypasses CI or deploys production.
 - Any feature unavailable under the repository plan/settings is an explicit owner action, not a falsely reported pass.
+
+
+## Dependency Review prerequisite — repository owner action
+
+The Dependency Review workflow requires GitHub's **Dependency graph** feature to be enabled for this repository. The PR check is intentionally fail-closed; it must not be converted to `continue-on-error`, a conditional skip or a fake success when the graph is unavailable.
+
+Owner action: open [Repository Settings → Code security and analysis](https://github.com/mileyaffarizi-source/moonwitness/settings/security_analysis), enable **Dependency graph** (and its required repository visibility/plan prerequisites), then rerun the PR checks. The recorded CI error was: `Dependency review is not supported on this repository. Please ensure that Dependency graph is enabled`. This is a repository setting, not a code or dependency vulnerability finding. Until enabled and the check succeeds, Dependency Review remains **blocked**, not passed.
