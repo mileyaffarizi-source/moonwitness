@@ -12,6 +12,7 @@ Run from the repository root with Node.js 24.22.3 and pnpm 12.24.0:
 
 ~~~sh
 pnpm lint
+pnpm lint:addons
 pnpm format:check
 pnpm typecheck
 pnpm check:repo
@@ -27,6 +28,7 @@ pnpm check is the canonical pre-commit/pre-PR gate. CI runs the same command aft
 | Gate | Checks |
 |---|---|
 | lint | Syntax-check all tracked/unignored .js, .cjs and .mjs files using the pinned Node runtime; parse every JSON file; check Markdown code-fence balance; validate runtime/package-manager contract, .editorconfig, CI workflow and mandatory AGENTS.md rules. |
+| lint:addons | Strict add-on manifest/package validation, compatibility and dependency DAG checks, capability/permission allowlists, storage ownership and forbidden imports. Reports no add-ons explicitly if the workspace contains none. |
 | format:check | UTF-8 without BOM, LF line endings, final newline, no trailing whitespace or tab indentation in source/config files. Markdown hard-break spaces are preserved. |
 | typecheck | Explicitly reports SKIPPED while no .ts/.tsx implementation exists. Once TypeScript implementation appears, fails closed until TypeScript is pinned and root tsconfig.json exists, then runs tsc --noEmit. |
 | check:repo | Existing repository baseline and skill-pack structural validation. |
