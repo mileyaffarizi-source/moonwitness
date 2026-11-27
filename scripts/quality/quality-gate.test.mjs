@@ -71,8 +71,8 @@ test("root contract rejects package-manager drift and missing CI gate", () => {
 test("root contract accepts canonical repository rules", () => {
   const errors = validateRootContracts({
     packageJson: {
-      packageManager: "pnpm@10.8.1",
-      engines: { node: ">=22.14.0 <23" },
+      packageManager: "pnpm@12.24.0",
+      engines: { node: ">=24.22.3 <25" },
       scripts: { check: "pnpm lint && pnpm test" },
     },
     editorConfig: "root = true\ncharset = utf-8\nend_of_line = lf\ninsert_final_newline = true\n",
