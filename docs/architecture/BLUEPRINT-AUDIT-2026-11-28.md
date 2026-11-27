@@ -142,3 +142,12 @@ Every task must have one workstream, one owner role, exact paths, explicit depen
 6. **Production readiness:** measured capacity/SLO, operator runbooks, backup/restore, access review and explicit human approval.
 
 No app is implemented by directory existence. No task is done by a commit, a plan or an unverified self-report.
+
+
+## 8. Decomposition implementation update
+
+The first deep decomposition pass is now represented in the canonical registry: **422 tasks total**, including **52 stable integration parents** and **156 child subtasks** (three children per oversized parent). Parent IDs remain unchanged for existing dependency references. Each split parent owns only `artifacts/task-evidence/<PARENT-ID>/**`; each child has a distinct contract, implementation or verification path. The 52 former XL tasks were reduced to M integration parents and child estimates S/M. No XL task remains.
+
+The 11 legacy add-on fields (`steps`, `accept`, `verify`) were merged into canonical `implementation_steps`, `acceptance_criteria` and `verification`; the legacy keys were removed without discarding their content. Membership for previously omitted ADD-012, PKG-010, GOV-013 and GOV-014 was regenerated from the task records.
+
+The new validator/schema work adds hierarchy, count and workstream membership invariants with negative/positive tests. The canonical task file is now larger than 1 MB; maintainers should use the Git tree/blob update flow or a purpose-built transactional writer rather than assuming the contents API can edit it safely. This is an operational note, not an excuse to create another task ledger.
