@@ -8,6 +8,8 @@ const requiredFiles = [
   ".github/dependabot.yml",
   ".github/workflows/codeql.yml",
   ".github/workflows/dependency-review.yml",
+  ".github/workflows/secrets.yml",
+  ".github/workflows/workflow-security.yml",
   ".github/workflows/release-please.yml",
   "release-please-config.json",
   ".release-please-manifest.json",
@@ -16,6 +18,7 @@ const requiredFiles = [
   "docs/architecture/addons/addon.manifest.schema.json",
   "docs/architecture/addons/addon.manifest.example.json",
   "docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md",
+  "docs/adr/ADR-0004-node26-lts-and-github-automation.md",
   "scripts/architecture/addon-lint.mjs",
   "scripts/architecture/addon-lint.test.mjs",
 ];
@@ -81,9 +84,11 @@ for (const action of ["actions/checkout@v7", "pnpm/action-setup@v6", "actions/se
   if (!ciWorkflow.includes(action)) throw new Error("CI must use the current Node 26-compatible action baseline: " + action);
 }
 
-const [codeqlWorkflow, dependencyReviewWorkflow, releaseWorkflow, dependabotConfig, releaseConfigText, releaseManifestText] = await Promise.all([
+const [codeqlWorkflow, dependencyReviewWorkflow, secretWorkflow, workflowSecurity, releaseWorkflow, dependabotConfig, releaseConfigText, releaseManifestText] = await Promise.all([
   readFile(".github/workflows/codeql.yml", "utf8"),
   readFile(".github/workflows/dependency-review.yml", "utf8"),
+  readFile(".github/workflows/secrets.yml", "utf8"),
+  readFile(".github/workflows/workflow-security.yml", "utf8"),
   readFile(".github/workflows/release-please.yml", "utf8"),
   readFile(".github/dependabot.yml", "utf8"),
   readFile("release-please-config.json", "utf8"),
@@ -95,9 +100,21 @@ if (!codeqlWorkflow.includes("github/codeql-action/init@v4") ||
   throw new Error("CodeQL must use the official v4 analysis actions with the security-events permission");
 }
 if (!dependencyReviewWorkflow.includes("actions/dependency-review-action@v5") ||
-    !dependencyReviewWorkflow.includes("fail-on-severity: high")) {
-  throw new Error("Dependency Review must use v5 and fail on high severity");
+    !dependencyReviewWorkflow.includes("fail-on-severity: high") ||
+    dependencyReviewWorkflow.includes("DEPENDENCY_REVIEW_ENABLED")) {
+  throw new Error("Dependency Review must run on eligible PRs with v5 and fail on high severity; no opt-in flag is permitted");
 }
+if (!secretWorkflow.includes("gitleaks/gitleaks-action@v3") ||
+    !secretWorkflow.includes("fetch-depth: 0") ||
+    !secretWorkflow.includes("GITHUB_TOKEN")) {
+  throw new Error("Secret scanning must use Gitleaks v3 with full Git history and the GitHub token");
+}
+if (!workflowSecurity.includes("astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2") ||
+    !workflowSecurity.includes("zizmor@1.32.0") ||
+    !workflowSecurity.includes("--format=github")) {
+  throw new Error("Workflow Security must run the pinned Zizmor version with GitHub annotations");
+}
+
 if (!releaseWorkflow.includes("googleapis/release-please-action@v5") ||
     !releaseWorkflow.includes("config-file: release-please-config.json")) {
   throw new Error("Release Please v5 must be the sole changelog/release workflow");
@@ -169,8 +186,15 @@ if (addonSchema.$schema !== "https://json-schema.org/draft/2020-12/schema" || ad
   throw new Error("Add-on manifest schema must be strict JSON Schema draft 2020-12");
 }
 const addonAdr = await readFile("docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md", "utf8");
+const runtimeAdr = await readFile("docs/adr/ADR-0004-node26-lts-and-github-automation.md", "utf8");
 if (!addonAdr.includes("Status:** Proposed") || !addonAdr.includes("Third-party add-ons remain disabled")) {
   throw new Error("ADR-0003 must keep unapproved third-party add-on execution disabled");
+}
+if (!runtimeAdr.includes("Node.js 26 Active LTS") || !runtimeAdr.includes("26.13.0")) {
+  throw new Error("ADR-0004 must record the accepted Node.js 26 Active LTS baseline");
+}
+if (addonSchema.$defs?.compatibility?.properties?.node?.const !== ">=26.13.0 <27.0.0") {
+  throw new Error("Add-on manifest schema must enforce the current Node 26 compatibility baseline");
 }
 if (!pkg.scripts?.["lint:addons"] || !String(pkg.scripts?.check ?? "").includes("pnpm lint:addons")) {
   throw new Error("Root quality gate must execute pnpm lint:addons");
