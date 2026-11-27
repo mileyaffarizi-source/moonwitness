@@ -188,14 +188,16 @@ test("path overlap is conservative for parent, child and wildcard scopes", () =>
   assert.equal(pathsOverlap("docs/architecture/**", "docs/security/**"), false);
 });
 
-test("validates the repository's canonical 238-task registry", async () => {
+test("validates the repository's canonical task registry", async () => {
   const registry = JSON.parse(await readFile(new URL("../../tasks.json", import.meta.url), "utf8"));
   const result = validateTaskRegistry(registry);
   assert.equal(result.valid, true, result.errors.map((error) => `${error.code} ${error.path}: ${error.message}`).join("\n"));
-  assert.equal(result.summary.task_count, 238);
+  assert.equal(result.summary.task_count, registry.project.task_count);
+  assert.equal(registry.project.application_count, 16);
 });
 
 test("CLI validates the canonical registry from the repository root", () => {
+  const registry = JSON.parse(readFileSync(new URL("../../tasks.json", import.meta.url), "utf8"));
   const script = fileURLToPath(new URL("./task-registry.mjs", import.meta.url));
   const result = spawnSync(process.execPath, [script, "tasks.json"], {
     cwd: process.cwd(),
@@ -203,7 +205,7 @@ test("CLI validates the canonical registry from the repository root", () => {
   });
 
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /Valid task registry: 238 tasks/);
+  assert.match(result.stdout, new RegExp("Valid task registry: " + registry.project.task_count + " tasks"));
 });
 
 test("schema document is valid JSON and declares forward-compatible task fields", async () => {
