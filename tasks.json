@@ -6,7 +6,7 @@
     "branch": "main",
     "title": "The Living Platform — Coordinated Engineering and Creative Universe",
     "parent_blueprint": "BLUEPRINT.md",
-    "runtime": "Node.js 24.22.3",
+    "runtime": "Node.js 26.13.0",
     "package_manager": "pnpm 12.24.0",
     "workspace": "pnpm Workspaces + Turborepo",
     "applications": [
@@ -115,7 +115,7 @@
       "legacy_policy": "Existing Odoo-owned data remains Odoo-owned; supported version-aware APIs only; no big-bang migration."
     },
     "generated_at": "2026-11-27",
-    "task_count": 235,
+    "task_count": 237,
     "status": "planning",
     "application_count": 14,
     "priority_workstream": "DX",
@@ -19004,6 +19004,190 @@
       "created_at": null,
       "updated_at": null,
       "completed_at": null
+    },
+    {
+      "id": "PKG-010",
+      "title": "Migrate repository and add-on runtime to Node.js 26 Active LTS",
+      "workstream": "PACKAGE",
+      "blueprint": "BLUEPRINT-PACKAGE.MD",
+      "phase": "PHASE-01",
+      "priority": "P0",
+      "status": "in_review",
+      "owner_role": "platform_architect",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Replace the superseded Node 24 runtime pin with the owner-approved Node 26 Active LTS patch across the workspace, CI checks, add-on contract, blueprints and contributor documentation.",
+      "scope_in": [
+        "Pin Node.js 26.13.0 in .nvmrc and .node-version and enforce engines.node >=26.13.0 <27.",
+        "Align add-on package engines and manifest compatibility to Node 26.",
+        "Update tests, root checks, active blueprints, ADR register and runtime documentation.",
+        "Retain pnpm 12.24.0 and the existing workspace lockfile unless frozen-install evidence requires a controlled update."
+      ],
+      "scope_out": [
+        "Do not change pnpm major/package version without a separate compatibility decision.",
+        "Do not upgrade or install the user's local Node runtime; the connected GitHub integration cannot alter their workstation.",
+        "Do not introduce an application scaffold or native runtime dependency without a real package consumer."
+      ],
+      "dependencies": [
+        "PKG-002"
+      ],
+      "inputs": [
+        "package.json",
+        ".nvmrc",
+        ".node-version",
+        "BLUEPRINT-PACKAGE.MD",
+        "BLUEPRINT-PACKAGE-ADDON.MD",
+        "docs/adr/ADR-0002-runtime-and-github-automation.md",
+        "docs/adr/ADR-0004-node26-lts-and-github-automation.md",
+        "tasks.json"
+      ],
+      "implementation_steps": [
+        "Verify PKG-002 evidence and inspect the current main runtime/lockfile before editing.",
+        "Use the owner-approved Node 26 Active LTS release and record the official source/version.",
+        "Update the exact pin, package engine range, add-on manifest compatibility, linter and tests.",
+        "Preserve ADR-0002 as historical and add a new superseding runtime ADR; update the decision register.",
+        "Update active README, automation standards, blueprints and task runtime metadata.",
+        "Run frozen install and every quality gate under the exact Node 26 pin in CI.",
+        "Inspect compatibility failures and native/runtime assumptions; do not suppress them.",
+        "Record exact commit and CI evidence; do not claim local workstation migration."
+      ],
+      "deliverables": [
+        "Node.js 26.13.0 version pins",
+        "root package engine and add-on compatibility contract",
+        "updated runtime validation and regression tests",
+        "ADR-0004 and decision-register update",
+        "updated contributor/automation documentation"
+      ],
+      "acceptance_criteria": [
+        ".nvmrc, .node-version and package.json agree on Node 26.13.0 / >=26.13.0 <27.",
+        "Add-on schema, package linter and fixtures enforce >=26.13.0 <27.0.0.",
+        "No active blueprint or contributor guide contradicts the selected Node 26 baseline.",
+        "pnpm install --frozen-lockfile succeeds on Node 26.13.0 without unreviewed lockfile churn.",
+        "The complete canonical pnpm check passes on Node 26.13.0."
+      ],
+      "verification": [
+        "Node version pin parity tests",
+        "Add-on schema/linter tests",
+        "pnpm install --frozen-lockfile",
+        "pnpm check",
+        "GitHub Actions run on Node 26.13.0"
+      ],
+      "file_ownership": [
+        ".nvmrc",
+        ".node-version",
+        "package.json",
+        "scripts/check-repo.mjs",
+        "scripts/check-repo.test.mjs",
+        "scripts/quality/**",
+        "scripts/architecture/addon-lint.mjs",
+        "scripts/architecture/addon-lint.test.mjs",
+        "docs/architecture/addons/**",
+        "docs/adr/ADR-0002-runtime-and-github-automation.md",
+        "docs/adr/ADR-0004-node26-lts-and-github-automation.md",
+        "docs/adr/decision-register.md",
+        "docs/engineering/**",
+        "BLUEPRINT-PACKAGE-ADDON.MD",
+        "README.md",
+        "tasks.json"
+      ],
+      "estimate": "L",
+      "parallel_group": "PKG-PHASE-01",
+      "human_approval_required": true,
+      "approval": {
+        "approved_by": "repository_owner",
+        "approved_at": "2026-11-27T16:47:00.000Z",
+        "scope": "Use Node.js 26 Active LTS as the MoonWitness runtime baseline instead of Node 24, including the exact Node 26 LTS patch, root/add-on compatibility checks, CI and blueprint/ADR updates. pnpm 12.24.0 remains unchanged unless a separately reviewed compatibility failure requires a change.",
+        "evidence": "Explicit instruction in the repository-owner conversation on 2026-11-27: use Node 26 because it is LTS."
+      },
+      "evidence": [
+        "Official Node.js Release Working Group schedule lists 26.x Lithium as Active LTS from 2026-10-28 through 2029-04-30; Node 27 remains Alpha.",
+        "Node.js 26.13.0 is the LTS patch selected for the migration as of 2026-11-27."
+      ],
+      "blocker": null,
+      "notes": [
+        "Node 24 runtime selection is retained in ADR-0002 as historical decision context and is superseded for runtime only by ADR-0004.",
+        "The Node 26 runtime pin in the repository does not install Node 26 on the owner's local workstation; local environment verification is separate."
+      ]
+    },
+    {
+      "id": "GOV-013",
+      "title": "Enable and verify GitHub repository security settings",
+      "workstream": "GOVERNANCE",
+      "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
+      "phase": "PHASE-10",
+      "priority": "P1",
+      "status": "blocked",
+      "owner_role": "repository_owner",
+      "assigned_agent": null,
+      "claim": {
+        "agent_id": null,
+        "claimed_at": null,
+        "lease_expires_at": null,
+        "worktree": null,
+        "branch": null,
+        "owned_paths": []
+      },
+      "objective": "Enable the repository-level GitHub security and branch rules that cannot be activated by committed workflow files, then verify the effective protection state.",
+      "scope_in": [
+        "Enable Dependency Graph, Dependabot alerts and security updates where supported.",
+        "Enable Secret Scanning and Push Protection where supported by repository visibility/plan.",
+        "Enable/verify Code Scanning for CodeQL where supported.",
+        "Create a main branch ruleset requiring the successful CI, CodeQL, Dependency Review, Secret Scanning and Workflow Security checks.",
+        "Require pull requests, reviewer approval, conversation resolution and stale approval dismissal; disallow direct pushes and force pushes."
+      ],
+      "scope_out": [
+        "Do not grant blanket Actions write permissions.",
+        "Do not enable automatic dependency merge, package publishing or deployment.",
+        "Do not assume unavailable GitHub plan features are enabled."
+      ],
+      "dependencies": [
+        "GOV-008"
+      ],
+      "inputs": [
+        "docs/engineering/GITHUB-AUTOMATION.md",
+        "docs/adr/ADR-0004-node26-lts-and-github-automation.md",
+        "GitHub repository Settings"
+      ],
+      "implementation_steps": [
+        "Review the repository's visibility, owner type and available GitHub plan features.",
+        "Enable Dependency Graph and Dependabot alert/security update settings where available.",
+        "Enable Secret Scanning and Push Protection where available.",
+        "Verify CodeQL results can be uploaded and viewed in the Security tab.",
+        "Wait for each intended workflow to complete successfully at least once, then add the exact required check names to the main ruleset.",
+        "Test that a PR with a failing quality gate cannot merge and direct pushes are denied.",
+        "Record unavailable features and exact administrator settings without publishing sensitive settings or tokens."
+      ],
+      "deliverables": [
+        "enabled repository security settings",
+        "main branch protection/ruleset",
+        "owner verification report"
+      ],
+      "acceptance_criteria": [
+        "Repository settings are visibly enabled and recorded by an authorized owner.",
+        "main requires pull request review and successful quality/security checks.",
+        "No automatic merge or deployment privilege is added."
+      ],
+      "verification": [
+        "GitHub Settings review",
+        "Branch ruleset effective-state inspection",
+        "Negative merge-protection test"
+      ],
+      "file_ownership": [],
+      "estimate": "M",
+      "parallel_group": "GOV-PHASE-10",
+      "human_approval_required": true,
+      "evidence": [],
+      "blocker": "The connected GitHub integration exposes repository-file and workflow operations but not repository Settings/branch-ruleset mutation or effective-state inspection. The repository owner must enable and verify these settings.",
+      "notes": [
+        "Workflow files for CodeQL, Dependency Review, Dependabot, Release Please, Gitleaks and Zizmor are not proof that repository-level features or branch protection are enabled."
+      ]
     }
   ]
 }
