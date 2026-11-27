@@ -20,6 +20,10 @@ const requiredFiles = [
   "docs/architecture/addons/addon.manifest.example.json",
   "docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md",
   "docs/adr/ADR-0004-node26-lts-and-github-automation.md",
+  "docs/adr/ADR-0005-node26-patch-refresh.md",
+  "docs/adr/ADR-0006-astronauts-arsy-architecture.md",
+  "BLUEPRINT-ASTRONAUTS.MD",
+  "BLUEPRINT-ARSY.MD",
   "scripts/architecture/addon-lint.mjs",
   "scripts/architecture/addon-lint.test.mjs",
   "scripts/architecture/workflow-lint.mjs",
@@ -43,8 +47,8 @@ if (versionParts.length !== 3 || versionParts.some((part) => !/^[0-9]+$/.test(pa
 if (nvmVersion.trim() !== nodeVersion.trim()) {
   throw new Error(".nvmrc and .node-version must pin the same Node.js version");
 }
-if (nodeVersion.trim() !== "26.13.0") {
-  throw new Error("Node.js must remain pinned to the requested 26.13.0 baseline");
+if (nodeVersion.trim() !== "26.13.1") {
+  throw new Error("Node.js must remain pinned to the current 26.13.1 baseline");
 }
 
 const workspaceLines = new Set((await readFile("pnpm-workspace.yaml", "utf8"))
@@ -204,7 +208,7 @@ if (!addonAdr.includes("Status:** Proposed") || !addonAdr.includes("Third-party 
 if (!runtimeAdr.includes("Node.js 26 Active LTS") || !runtimeAdr.includes("26.13.0")) {
   throw new Error("ADR-0004 must record the accepted Node.js 26 Active LTS baseline");
 }
-if (addonSchema.$defs?.compatibility?.properties?.node?.const !== ">=26.13.0 <27.0.0") {
+if (addonSchema.$defs?.compatibility?.properties?.node?.const !== ">=26.13.1 <27.0.0") {
   throw new Error("Add-on manifest schema must enforce the current Node 26 compatibility baseline");
 }
 if (!pkg.scripts?.["lint:addons"] || !String(pkg.scripts?.check ?? "").includes("pnpm lint:addons")) {
