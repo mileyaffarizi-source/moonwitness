@@ -66,3 +66,39 @@ Tasks ISP-* in tasks.json. Done means one real test subscriber/order traverses a
 ISP remains authoritative for subscriber-service lifecycle, entitlement and service state. It provides a versioned, time-bounded service-policy projection to Arsy for RADIUS AAA decisions; Arsy returns authentication/accounting/CoA outcomes and usage-session events with source and freshness metadata. The BRAS/BNG/NAS still terminates PPPoE; Arsy is its RADIUS AAA backend, not the PPPoE access concentrator.
 
 ACS/CWMP operations are initiated by an OSS-owned provisioning/change workflow or approved ISP service transition. Arsy transports and records the authorized protocol RPC; it does not choose the commercial profile, own the ONT inventory or determine billing. RADIUS accounting facts are evidence/input to downstream service and billing processes, not invoices. Subscriber entitlements and billing triggers remain under ISP/BSS policy.
+
+
+## 12. Subscriber service state machine and invariants
+
+Separate the subscriber/person/account identity from the **service instance**. A service instance references the BSS commercial order and offer, a service address, an ISP entitlement version and OSS-owned resource IDs. One subscriber may have more than one service; one service may change package/resources over time.
+
+Canonical service lifecycle: **draft → qualification_pending → qualified / not_qualified → order_accepted → resource_reserved → provisioning_pending → provisioning → activation_verification → active → suspended / restoration_pending / change_pending / cancellation_pending → cancelled / failed / needs_manual_reconciliation**.
+
+Each transition requires actor/workload, source state/version, target state, reason, correlation ID, idempotency key, effective time and authoritative evidence. Reject illegal transitions and stale writes. Active requires an explicit activation predicate; do not infer it from a queued provisioning job.
+
+## 13. Provisioning saga and compensation
+
+ISP owns orchestration, not low-level network execution. Model each step with command ID, owner, deadline, retry policy and compensation/manual recovery:
+1. validate commercial order and serviceability;
+2. reserve OSS resource;
+3. request OSS provisioning/change;
+4. wait for adapter/protocol result;
+5. verify actual service signals defined by product;
+6. commit ISP service state and publish activation milestone to BSS;
+7. reconcile delayed/out-of-order results.
+
+A failure after partial provisioning enters the needs_manual_reconciliation state or a defined compensation state. Compensation is a new, audited operation; it is not assumed to reverse the original side effect. A retry uses the same logical idempotency key only when the operation contract permits it.
+
+## 14. Arsy policy projection and AAA session semantics
+
+ISP is authoritative for subscriber entitlement and service state. It produces a versioned policy projection to Arsy containing stable subscriber/service references, allowed service/profile policy, status, validity window, source version and revocation/freshness information. Do not send unnecessary PII or plaintext subscriber password.
+
+Define behavior for active policy, suspended service, pending activation, cancelled service, unknown subscriber, cache miss and stale projection. The allow/deny rule and emergency-cache behavior must be explicit per product/NAS; stale data must never silently authorize. RADIUS session/accounting facts are consumed back into ISP as observations, not state authority.
+
+## 15. Activation verification and service assurance
+
+Define the activation predicate from the actual access/network estate. Candidate evidence may include NAS session state, expected service profile, OLT/ONT reachability/operational state, assigned resource mapping and end-to-end reachability/measurement. Each signal records source, observed time, freshness, expected value, actual value and failure reason.
+
+An active result requires all mandatory signals within configured freshness windows, or an explicit human-approved exception. Advertised speed, configured profile and measured throughput remain distinct fields.
+
+**Acceptance:** a lab service can be qualified, reserved, provisioned, observed and activated; a suspend/restore/change is idempotent and auditable; stale/missing AAA or device signals cannot be presented as healthy.
