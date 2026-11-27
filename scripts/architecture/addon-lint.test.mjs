@@ -68,6 +68,7 @@ function makeManifest(slug = "example", overrides = {}) {
 function makePackage(slug = "example", overrides = {}) {
   return {
     name: "@moonwitness/addon-" + slug,
+    version: "1.0.0",
     private: true,
     type: "module",
     engines: { node: ">=24.22.3 <25" },
@@ -184,8 +185,14 @@ test("foreign storage requires a named owner and approval reference", () => {
   assert.ok(codes(validateAddonManifest(manifest, "example")).includes("FOREIGN_STORAGE_APPROVAL_REQUIRED"));
 });
 
+test("package version must exactly match the add-on manifest version", () => {
+  const packageJson = makePackage("example", { version: "2.0.0" });
+  const result = codes(validateAddonPackage(packageJson, "example", "1.0.0"));
+  assert.ok(result.includes("PACKAGE_VERSION_MISMATCH"));
+});
+
 test("package metadata requires a private ESM package, scripts and exports", () => {
-  const errors = validateAddonPackage(makePackage(), "example");
+  const errors = validateAddonPackage(makePackage(), "example", "1.0.0");
   assert.deepEqual(errors, []);
 });
 
@@ -200,7 +207,7 @@ test("package rejects lifecycle hooks and direct persistence dependencies", () =
     },
     dependencies: { "@mikro-orm/core": "6.0.0" },
   });
-  const result = codes(validateAddonPackage(packageJson, "example"));
+  const result = codes(validateAddonPackage(packageJson, "example", "1.0.0"));
   assert.ok(result.includes("PACKAGE_LIFECYCLE_SCRIPT_FORBIDDEN"));
   assert.ok(result.includes("FORBIDDEN_PACKAGE_DEPENDENCY"));
 });
