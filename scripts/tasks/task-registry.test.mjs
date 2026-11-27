@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import {
   calculateReadiness,
   pathsOverlap,
@@ -191,6 +193,17 @@ test("validates the repository's canonical 234-task registry", async () => {
   const result = validateTaskRegistry(registry);
   assert.equal(result.valid, true, result.errors.map((error) => `${error.code} ${error.path}: ${error.message}`).join("\n"));
   assert.equal(result.summary.task_count, 234);
+});
+
+test("CLI validates the canonical registry from the repository root", () => {
+  const script = fileURLToPath(new URL("./task-registry.mjs", import.meta.url));
+  const result = spawnSync(process.execPath, [script, "tasks.json"], {
+    cwd: process.cwd(),
+    encoding: "utf8",
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Valid task registry: 234 tasks/);
 });
 
 test("schema document is valid JSON and declares forward-compatible task fields", async () => {

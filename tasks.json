@@ -9406,7 +9406,7 @@
       "blueprint": "BLUEPRINT-RULES-GOVERN-CONTRACT.MD",
       "phase": "PHASE-02",
       "priority": "P0",
-      "status": "pending",
+      "status": "done",
       "owner_role": "platform_governance_lead",
       "assigned_agent": null,
       "claim": {
@@ -9467,15 +9467,22 @@
       "estimate": "L",
       "parallel_group": "GOV-PHASE-02",
       "human_approval_required": true,
-      "evidence": [],
+      "evidence": [
+        "scripts/tasks/task-registry.schema.json — JSON Schema Draft 2020-12 contract",
+        "scripts/tasks/task-registry.mjs — read-only validator, dependency cycle detection, readiness and claim/path diagnostics",
+        "scripts/tasks/task-registry.test.mjs — unit fixtures plus canonical 234-task registry and CLI execution tests",
+        "Commit d6f11d74e8b9829ca0d94c3904bcb28d35291723 passed GitHub Actions run 46019968965 (frozen install, repository check, Node tests)",
+        "Repository-owner approval recorded in approval metadata for bounded read-only validator scope"
+      ],
       "blocker": null,
       "notes": [
         "Read-only validator implementation started under explicit repository-owner approval; no task claims or registry writes are performed by the validator.",
-        "Implementation branch is active; status remains pending until implementation and CI evidence are complete. No claim/lease record is fabricated."
+        "Implementation branch is active; status remains pending until implementation and CI evidence are complete. No claim/lease record is fabricated.",
+        "Validator remains read-only. Task claiming, lease mutation, registry writing, execution sandbox and local agent orchestration are separate future implementations."
       ],
       "created_at": null,
-      "updated_at": "2026-11-27T14:43:00.000Z",
-      "completed_at": null,
+      "updated_at": "2026-11-27T14:55:00.000Z",
+      "completed_at": "2026-11-27T14:55:00.000Z",
       "approval": {
         "approved_by": "repository_owner",
         "approved_at": "2026-11-27T14:42:00.000Z",
