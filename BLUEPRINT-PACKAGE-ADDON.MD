@@ -155,7 +155,7 @@ Do not create empty realm directories. Each add-on declares only the entrypoints
 
 ## 18. Manifest v1 exact contract
 
-The machine-readable JSON Schema is docs/architecture/addons/addon.manifest.schema.json. Schema version 1.0.0 is strict and rejects unknown fields. It requires:
+The machine-readable JSON Schema is docs/architecture/addons/addon.manifest.schema.json. Schema version 1.0.0 is strict and rejects unknown fields. The schema-valid [reference manifest example](./docs/architecture/addons/addon.manifest.example.json) is a starting point only; replace its placeholder provenance before use. It requires:
 
 - manifestVersion, stable id, display name, SemVer version and description;
 - owner team, SPDX/license identifier and provenance;
