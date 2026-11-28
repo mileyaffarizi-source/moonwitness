@@ -8,11 +8,12 @@ This foundation gate is not a substitute for application-specific ESLint, framew
 
 ## Canonical commands
 
-Run from the repository root with Node.js 24.22.3 and pnpm 12.24.0:
+Run from the repository root with Node.js 26.13.1 and pnpm 12.24.0:
 
 ~~~sh
 pnpm lint
 pnpm lint:addons
+pnpm lint:workflows
 pnpm format:check
 pnpm typecheck
 pnpm check:repo
@@ -23,7 +24,7 @@ pnpm check
 
 pnpm check is the canonical pre-commit/pre-PR gate. CI runs the same command after a frozen install.
 
-The current pinned runtime is Node.js 24.22.3 with pnpm 12.24.0. Project-level pnpm settings belong in pnpm-workspace.yaml; .npmrc is optional and reserved for registry, auth, TLS and proxy settings. The configuration and lockfile contracts are enforced by check:repo.
+The current pinned runtime is Node.js 26.13.1 with pnpm 12.24.0. Project-level pnpm settings belong in pnpm-workspace.yaml; .npmrc is optional and reserved for registry, auth, TLS and proxy settings. The configuration and lockfile contracts are enforced by check:repo.
 
 ## What each gate verifies
 
@@ -31,11 +32,14 @@ The current pinned runtime is Node.js 24.22.3 with pnpm 12.24.0. Project-level p
 |---|---|
 | lint | Syntax-check all tracked/unignored .js, .cjs and .mjs files using the pinned Node runtime; parse every JSON file; check Markdown code-fence balance; validate runtime/package-manager contract, .editorconfig, CI workflow and mandatory AGENTS.md rules. |
 | lint:addons | Strict add-on manifest/package validation, compatibility and dependency DAG checks, capability/permission allowlists, storage ownership and forbidden imports. Reports no add-ons explicitly if the workspace contains none. |
+| lint:workflows | Immutable SHA pinning for every remote Action, explicit workflow permissions, concurrency, secret references, and restrictions on dangerous PR triggers/write permissions. |
 | format:check | UTF-8 without BOM, LF line endings, final newline, no trailing whitespace or tab indentation in source/config files. Markdown hard-break spaces are preserved. |
 | typecheck | Explicitly reports SKIPPED while no .ts/.tsx implementation exists. Once TypeScript implementation appears, fails closed until TypeScript is pinned and root tsconfig.json exists, then runs tsc --noEmit. |
 | check:repo | Existing repository baseline and skill-pack structural validation. |
 | check:tasks | Read-only validation of tasks.json, including dependency graph, claims, evidence and readiness invariants. |
 | test | Node.js built-in test suite, including quality-gate and task-registry regression tests. |
+
+The workflow gate complements Zizmor's GitHub Actions security analysis. Zizmor findings are not replaced by the deterministic pin/permission policy.
 
 The repository lint is not a TypeScript type checker and does not claim to replace ESLint. The initial typecheck skip is visible in the output and becomes a hard failure if TypeScript source is introduced without a real compiler configuration.
 
@@ -65,3 +69,8 @@ Do not add every future tool at the root pre-emptively. The package that owns th
 ## Failure policy
 
 CI failure blocks merge. Do not add continue-on-error, blanket || true, warning-only lint steps, or automatic formatting writes inside CI. Formatters may be run locally as explicit edits; CI only checks. Branch protections must require the Repository CI check before merge.
+
+
+## Atomic task registry gate
+
+The task validator checks the project/task/application counts, one-to-one workstream membership, task type, parent/child symmetry, integration dependencies, non-overlapping parent/child scopes, dependency DAG and active claim collisions. XL tasks are rejected; decompose them before a worker claims implementation. See [TASK-DECOMPOSITION-STANDARD.md](./TASK-DECOMPOSITION-STANDARD.md).

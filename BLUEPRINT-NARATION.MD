@@ -164,3 +164,43 @@ Tasks **NAR-001 through NAR-008** in [tasks.json](./tasks.json). Inventory sourc
 ## 12. Definition of done
 
 Original sources are inventoried, immutable originals are separated from derivatives, provenance is queryable, unresolved canon is visible, proposed relationships cannot silently become canon, exact strings are protected, human review works and visual/content restrictions are enforced. A compelling screen without source fidelity is not complete.
+
+
+## 13. Canon status and evidence model
+
+The creative hierarchy and phrase **One Universe. Three Realms. One Foundation.** are preserved as authored narrative language. They are not the current technical plane count or deployment diagram; the platform architecture is defined in BLUEPRINT-APPLICATIONS.MD and the master technical blueprint. Creative canon and engineering topology must not overwrite one another.
+
+Every canon item is classified as **source_recorded, draft, proposed, in_review, approved, published, disputed, unverified, superseded or archived**. Store the exact original string/source separately from normalized search labels and translated text. A source-recorded title is not proof that its contents, relationships or creator identity have been discovered.
+
+Relationship evidence classes:
+- direct authored declaration;
+- explicit relation in a source passage/artifact;
+- human-reviewed editorial interpretation;
+- AI-suggested candidate;
+- unresolved/contested relation.
+
+Only the first three can support an approved canon relationship, and editorial interpretation must remain labeled as such. Similarity, alias overlap, shared symbol or generated summary cannot alone establish an identity or chronology.
+
+## 14. Work, edition and scene model
+
+A work owns one stable identity. Editions/versions retain title variant, creator/attribution state, source artifact, date where known, language, rights, review state and parent/supersession relationship. Chapters/scenes/timeline fragments reference a specific edition and preserve original ordering where known.
+
+A character/person/entity record references its source work/edition/scene; appearance, role, alias, chronology and relationships have separate evidence records. Do not force every work to have characters, chapters, scenes or a linear timeline. A visual-effect study may be an asset/process record rather than a fictional narrative.
+
+## 15. Editorial publication workflow
+
+Editorial lifecycle: **captured → transcribed → source_checked → structured → interpretation_review → canon_review → rights_review → approved → published → corrected / withdrawn / archived**.
+
+Corrections preserve prior public/version history and record reason, reviewer, affected statements/assets and downstream pages. Disputed claims remain visible with their source positions; the editorial interface must not turn disagreement into a cosmetic badge or silently choose a preferred interpretation.
+
+## 16. Localization and user-generated content
+
+Keep exact source-language string, locale-specific translation and UI display variant distinct. Every translation has source version, translator/method, review date and approval state. Brand taglines and authored titles are exact protected strings; localization is an explicitly linked derivative.
+
+Community/user-generated material is not canon or editorial research merely because it is popular or repeated. It requires separate moderation, rights, privacy, reporting, attribution and archival rules before it may be referenced as community testimony.
+
+## 17. Acceptance
+
+Test exact-string preservation, version/edition lineage, unresolved relationships, ambiguous aliases, competing interpretations, translation lineage, revision/withdrawal audit, rights restrictions and community-vs-canon separation. The missing ninth world remains an unresolved source-research task until a real original source is found.
+
+**Acceptance:** an editor can preserve an original artifact, attach sourced editions/relationships, review a proposed change, publish an approved version and trace every derived page/asset without inventing missing canon.

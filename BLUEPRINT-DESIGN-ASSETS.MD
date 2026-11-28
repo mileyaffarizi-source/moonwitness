@@ -87,3 +87,24 @@ Tasks **DAS-001 through DAS-008** in [tasks.json](./tasks.json). Child task grou
 ## 13. Definition of done
 
 No production asset is untraceable. The platform resolves assets deterministically, preserves editable sources, blocks unapproved/restricted content, validates rights/provenance, produces optimized derivatives and provides accessible alternatives.
+
+
+## 14. Asset approval and rights decision matrix
+
+Each asset family has a named reviewer and a separate rights/provenance decision. Creative approval, technical QA and rights approval are separate checks; passing one does not imply the others. Unknown source/license, unclear authorship, unreviewed generated references or restricted-canon ambiguity blocks production use.
+
+Asset lineage is immutable: master → approved revision → exported derivative(s) → placements. Each derivative records source master/version, export tool/version, settings, checksum, dimensions/codec and publication destinations. Replacing a master creates new derivatives and invalidates affected approval/cache references.
+
+## 15. Global asset contract and validator
+
+The machine-readable manifest validates stable asset ID, family, owning world/feature, creator/source/rights status, approved version, source/derivative references, MIME/format, size/dimensions/duration, integrity checksum, accessibility metadata, responsive variants, usage restrictions and review state.
+
+Reject path traversal, unsupported executable formats, untrusted inline SVG, mismatched extension/MIME, unbounded dimensions/frames, missing derivative source, unapproved rights state and blocked-policy content. Build output reports referenced-but-missing assets and unreferenced approved assets; it never silently substitutes a different canon asset.
+
+## 16. Performance and lifecycle budgets
+
+Set budgets by actual product context: initial payload, per-route image/audio load, decode time, GPU/CPU cost, memory, cache size and low-end device behavior. Lazy-load large worlds and media; preload only the critical path. Removing an asset from a screen does not delete its source/history.
+
+Deprecation records affected routes/apps, replacement if approved, expiry date and cache invalidation. Deletion requires rights/privacy/retention basis and owner approval; archival is the default for historical canon.
+
+**Acceptance:** every production asset resolves by stable ID, has source/rights/review lineage, safe optimized derivatives, accessibility behavior and a reproducible validation report.

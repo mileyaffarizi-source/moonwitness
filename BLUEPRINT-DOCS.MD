@@ -45,3 +45,34 @@ Docs source conventions, MDX/render pipeline, navigation, private/public access 
 ## 8. Task ownership and definition of done
 
 Tasks DOCS-* in tasks.json. Done means a contributor can find the correct current blueprint, follow a tested guide, inspect task progress from the canonical registry and trace every release claim to evidence.
+
+
+## 9. Document metadata and lifecycle
+
+Every document projection records canonical source path/URI, source commit/blob revision, owner, application/workstream, document type, audience, classification, status, last review date, related ADR/task IDs, generated-at time and content checksum. A rendered copy must link back to the exact source revision.
+
+Document lifecycle: **discovered → classified → reviewed → current → stale / superseded → archived**. “Current” is evaluated against the source branch/revision; it must not be a manually asserted status. Blueprints describe target state; repository audits describe observed state at a commit; CI evidence describes a specific run/commit. These evidence types must not be conflated.
+
+## 10. Publication and access enforcement
+
+Default audience is internal. Public-candidate requires product/editorial/security/rights review. Restricted includes secrets, credentials, customer data, private network topology, security runbooks, unpatched vulnerability detail and privileged access procedures. Unknown classification stays internal until an owner resolves it.
+
+Authorization applies before index creation and before every render/export. Do not leak restricted document existence through page title, tags, autocomplete, search facets, snippets, breadcrumbs or related-document recommendations. Public and internal indexes have separate ingestion policies.
+
+## 11. Progress projection contract
+
+Task dashboard data is generated from the validated tasks.json at a specific commit. CI badges link to the exact run/commit; completed-task counts include only tasks with valid evidence under the task validator. Show stale/blocked/in-review states and unresolved blockers; do not turn a proposed plan into an implementation percentage.
+
+Projection cache records source revision and generated-at. Invalidation is event- or revision-driven; stale data is labeled. Docs does not have a task status writer. All task mutations go through the DX/governance registry writer.
+
+## 12. Search, links and retention
+
+Index only documents whose current audience policy allows the requesting principal. Preserve source sections/headings and exact link targets. Broken links, missing ADR IDs, unresolvable task IDs, stale source references and incompatible document frontmatter fail or warn according to an explicit severity policy.
+
+Set retention for indexed content and attachments by classification. When source access is revoked or a document becomes restricted, remove cached snippets and search material within a measured revocation window. Exports include source revision and audience classification.
+
+## 13. Acceptance and test matrix
+
+Tests cover public vs internal vs restricted search, snippets, unauthorized title discovery, changed permissions, source revision drift, stale task projection, broken task/ADR links, source deletion/rename, generated progress counts and cache purge after revocation.
+
+**Acceptance:** a contributor can find a current approved document, trace it to an exact source commit, view a truthful task/CI projection and never discover restricted metadata through search or navigation.

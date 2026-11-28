@@ -54,3 +54,16 @@ Tasks **CHR-001 through CHR-008** in [tasks.json](./tasks.json).
 ## 10. Definition of done
 
 No identity is invented from ambiguous metadata; aliases remain evidence-based; approved designs are source-traceable; previous versions are preserved; restricted figures are never depicted.
+
+
+## 11. Character identity resolution and review states
+
+Character alias resolution is a controlled editorial operation. A candidate alias link stores the compared entities, supporting and contradicting sources, rationale, curator and decision status. The system supports unresolved, rejected and split/merged relation decisions; it must not force a single identity from similarity.
+
+Character record, alias record, relationship record and visual sheet have separate versions and approvals. A change in canon identity invalidates dependent sheets/relationships for review without erasing prior releases. Proposed appearance details cannot be exported into a production manifest until approved.
+
+## 12. Asset authorization and negative tests
+
+Character asset use requires source/canon approval, rights clearance, correct work/world context, restriction check and destination permission. Tests cover ambiguous alias, identity collision, missing source, disputed relation, revoked rights, restricted-identity trigger, unsupported derivative and rollback to a prior approved sheet.
+
+**Acceptance:** ambiguity remains visible; only an explicitly approved fictional character sheet can reach production; no alias inference or style change can bypass the visual restrictions.

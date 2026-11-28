@@ -67,3 +67,22 @@ Tasks **VEC-001 through VEC-008** in [tasks.json](./tasks.json).
 ## 10. Definition of done
 
 Every production mark has approved meaning, separate source/exports, stable identity, correct world ownership, sanitized SVG, accessible use, version history and documented rights. Exploratory concepts are never mistaken for official identity.
+
+
+## 11. Vector asset publication pipeline
+
+Vector pipeline: **source/brief → editable master → semantic review → rights/canon review → sanitizer → static render/size tests → export variants → manifest approval → consuming-app integration**. Sanitization is mandatory for externally supplied or generated SVG before any inline rendering.
+
+The sanitizer allowlist specifies XML elements, attributes, namespaces, path/gradient/filter limits and reference policy. Reject script, event handlers, foreignObject, external href/url, embedded HTML, data-URI payloads, CSS imports, oversized path complexity and unsupported animation. Do not allow SVG to fetch remote resources.
+
+## 12. Semantic and identity review
+
+A world mark/wordmark and a functional icon have different approval records. Confirm intended identity, owner, meaning, usage scope and prohibited interpretations. Do not use a generated logo proposal as an official identity without the brand owner approval. Sacred/restricted-content checks apply to visual geometry and symbolic stand-ins as well as explicit figures.
+
+Icons must have consistent visual weight/grid, readable optical size, explicit semantic name and accessible label or decorative status. An icon alone cannot communicate destructive action, permission or operational success.
+
+## 13. Export and compatibility matrix
+
+For each approved master, export only required variants: SVG, raster sizes, favicon/app icon, monochrome/high-contrast and theme variants where justified. Record viewBox, intrinsic dimensions, color inheritance, minimum size, clear-space rules, MIME and checksum. Test on light/dark/world themes, high-DPI, disabled color, small sizes and screen-reader path.
+
+**Acceptance:** published logo/icon artifacts originate from an approved master, are sanitized, readable at target sizes, have correct identity/accessibility metadata and cannot load external content.

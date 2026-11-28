@@ -45,3 +45,27 @@ Use code signing, signed updates, dependency scanning, platform permissions, saf
 ## 8. Task ownership and definition of done
 
 Tasks DESKTOP-* in tasks.json. Done means a signed test desktop app can authenticate through apps/id, open an authorized real workflow, safely manage permitted local state and update through a verified release channel.
+
+
+## 9. Native capability and IPC contract
+
+Desktop native operations are capability-based. Each command declares caller/window identity, purpose, allowed input schema, permitted paths/resources, confirmation requirement, audit class, timeout and result schema. WebView content cannot construct an arbitrary filesystem path, process command or URL and have it executed by the native host.
+
+Deep links are parsed against an explicit route allowlist; they cannot inject shell arguments, arbitrary file paths or token values. Inter-window messages are versioned and validated. File access uses user-selected handles/permissions and minimum scope.
+
+## 10. Update, rollback and incident behavior
+
+A release manifest records app version, platform/architecture, provider artifact checksum/signature, minimum supported API, signing identity and release channel. Verify artifact signature before install; staged rollout and rollback retain the last known-good version. A compromised update key has a documented revoke/reissue process.
+
+Crash reporting and diagnostics are opt-in/transparent and redact document paths, user content, tokens and local secrets. Define supported OS versions and signing/notarization requirements as a release matrix after a real proof of concept.
+
+## 11. Acceptance
+
+- Authentication uses the registered ID client and an external/system browser flow where required.
+- Native command allowlist denies path traversal, arbitrary process execution and untrusted deep links.
+- User-selected file access is bounded to the granted file/directory.
+- Offline cache displays revision and freshness; sensitive cache purges at logout/revocation.
+- Signed update verification rejects tampered or wrong-platform artifacts.
+- Keyboard, screen-reader, high-DPI, reduced-motion and window lifecycle tests pass.
+
+**Acceptance:** a signed test build can enter a real permitted workflow without turning Desktop into a privileged developer console or a second DX implementation.

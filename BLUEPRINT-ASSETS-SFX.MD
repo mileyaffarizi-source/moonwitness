@@ -63,3 +63,18 @@ Tasks **SFX-001 through SFX-007** in [tasks.json](./tasks.json).
 ## 10. Definition of done
 
 Audio enhances optional experience but never blocks function, never plays unexpectedly, has mute/quiet paths, is optimized and traceable, and maps only to real semantic state transitions.
+
+
+## 11. Audio event contract and playback lifecycle
+
+A sound event is bound to a meaningful application state transition, not a render, poll or animation frame. Each binding declares event ID/version, authoritative state source, asset ID/version, volume class, cooldown, concurrency limit, mute/quiet/reduced mode behavior, route cancellation rule and analytics policy.
+
+Playback lifecycle: **requested → user_preference_checked → asset_loaded → played → completed / interrupted / failed**. If the asset fails to load, playback is blocked by preference/autoplay policy or the device is unavailable, the UI continues normally and text/status remains authoritative.
+
+Audio cues must not imply approval, successful execution, factual verification or incident resolution before the domain API reports that state.
+
+## 12. Audio QA and acceptance
+
+Automated checks inspect duration, channel/sample-rate metadata, peak/clipping, file-size limits, loop boundaries and manifest integrity. Manual review covers loudness, headphone/speaker quality, semantic distinctness, startling/overlapping sounds and world identity. Test first-gesture/autoplay policy, mute persistence, route-change cancellation, duplicate polling events, no-audio device and reduced sensory mode.
+
+**Acceptance:** one approved semantic transition plays at most one appropriate optional sound; user preferences always win and the product remains fully usable with all audio disabled.

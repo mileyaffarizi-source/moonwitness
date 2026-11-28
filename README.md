@@ -6,22 +6,29 @@ MoonWitness is a multi-application ecosystem. Its target architecture is documen
 
 ## Repository status
 
-This repository is being transitioned from an architecture/planning repository into an executable Node.js monorepo. The initial foundation establishes workspace conventions and automated repository checks. It does not claim that the fourteen planned applications are implemented.
+This repository is being transitioned from an architecture/planning repository into an executable Node.js monorepo. The initial foundation establishes workspace conventions and automated repository checks. It does not claim that the sixteen planned applications are implemented.
 
 - Application architecture: BLUEPRINT-APPLICATIONS.MD
+- Go machine control plane and Edge Agent: BLUEPRINT-ASTRONAUTS.MD
+- Rust telecom protocol services: BLUEPRINT-ARSY.MD
 - Add-on architecture: BLUEPRINT-PACKAGE-ADDON.MD
 - Add-on engineering standard: docs/engineering/ADDON-ENGINEERING-STANDARD.md
 - Add-on runtime/trust decision: docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md
 - Developer Experience blueprint: BLUEPRINT-DX.MD
 - Task registry: tasks.json
+- Task decomposition and parent/child execution standard: docs/engineering/TASK-DECOMPOSITION-STANDARD.md
+- Full blueprint audit (2026-11-28): docs/architecture/BLUEPRINT-AUDIT-2026-11-28.md
 - Latest repository baseline audit: AUDIT-REPOSITORY-BASELINE-2026-11-27.MD
 - Quality gates for humans and local AI agents: docs/engineering/QUALITY-GATES.md
 - GitHub security, dependency and release automation: docs/engineering/GITHUB-AUTOMATION.md
-- Accepted runtime/automation ADR: docs/adr/ADR-0002-runtime-and-github-automation.md
+- Current runtime/automation ADR: docs/adr/ADR-0004-node26-lts-and-github-automation.md
+- Node 26 patch refresh: docs/adr/ADR-0005-node26-patch-refresh.md
+- Astronauts/Arsy boundaries: docs/adr/ADR-0006-astronauts-arsy-architecture.md
+- Historical Node 24/automation ADR: docs/adr/ADR-0002-runtime-and-github-automation.md
 
 ## Requirements
 
-- Node.js 24.22.3 (pinned in .nvmrc and .node-version; consistency is checked by pnpm check:repo)
+- Node.js 26.13.1 Active LTS (pinned in .nvmrc and .node-version; consistency is checked by pnpm check:repo)
 - pnpm 12.24.0 (managed through Corepack)
 
 ## Setup
@@ -47,6 +54,7 @@ Use Node.js and pnpm. Do not introduce Bun as the package manager. Keep secrets 
 | --- | --- |
 | pnpm lint | Repository consistency, JSON, JavaScript syntax, Markdown fence and agent-contract checks |
 | pnpm lint:addons | Add-on manifest, package, permission, ownership, dependency and forbidden-import gate |
+| pnpm lint:workflows | Require immutable action SHAs, explicit token permissions, concurrency, and safe PR trust boundaries |
 | pnpm format:check | Enforce UTF-8/LF/final-newline and source whitespace rules without rewriting files |
 | pnpm typecheck | Run TypeScript compiler when a TypeScript project exists; fail closed if source is added without config |
 | pnpm check:repo | Validate required repository files, skills and task registry structure |

@@ -25,7 +25,7 @@ Use [the reference manifest](../architecture/addons/addon.manifest.example.json)
 
 ## Package rules
 
-- private: true, type: module, engines.node: >=24.22.3 <25.
+- private: true, type: module, engines.node: >=26.13.1 <27.
 - Use exact package versions or approved workspace references; no latest, *, git branch or local file: dependencies.
 - Provide explicit exports; no deep imports into private packages.
 - Provide build, lint, typecheck and test scripts.

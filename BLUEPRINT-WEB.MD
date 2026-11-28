@@ -6,7 +6,7 @@
 
 ## 1. Mission
 
-**apps/web** is the MoonWitness public experience: its main front page, narrative/research discovery and Community experience. It is one of fourteen application surfaces; it is not the universal frontend for every product. It must feel like a coherent living universe, not a generic SaaS dashboard with dark colors and gradients.
+**apps/web** is the MoonWitness public experience: its main front page, narrative/research discovery and Community experience. It is one of sixteen application surfaces; it is not the universal frontend for every product. It must feel like a coherent living universe, not a generic SaaS dashboard with dark colors and gradients.
 
 The visual direction is immersive anime/game FX, cinematic and emotionally expressive, while remaining accessible, fast, legible and trustworthy.
 
@@ -122,3 +122,22 @@ If it is a community/social system, define membership, profiles, posts/discussio
 Web is not the flagship A-L-L-A-H landing page; that experience belongs to apps/A-L-L-A-H. Web is not the OSS/BSS/ISP operator console, DX coding workbench or general Desktop client. Shared UI components/tokens are permitted, but ownership, navigation and data contracts are separate.
 
 See BLUEPRINT-APPLICATIONS.MD and BLUEPRINT-DOCS.MD for app boundaries.
+
+
+## 18. Data and experience contracts
+
+Every route family must declare its authoritative API resource, required audience/scope, cache class, freshness behavior, pagination/size budget and loading/empty/partial/stale/forbidden/error states. Public read content may use static/ISR caching only when its source classification and revocation policy permit it. User-specific, community, subscriber and operational data must be no-store or use a reviewed private cache partition; never share personalized responses across users/tenants.
+
+Source/evidence pages distinguish original source, derivative/translation, claim, supporting evidence, disputed status and editorial interpretation. Story pages preserve work/edition/chapter/scene identity and canon version. Operations pages distinguish desired, observed, inferred, stale and unknown state. A success animation is triggered only after the API reports an authoritative success state.
+
+## 19. Community boundary and moderation lifecycle
+
+The label `Community (CSS)` remains unconfirmed. Until the product owner/source audit resolves CSS, tasks may perform research and requirements discovery only; they must not invent a social graph, public posting model or membership rules. Before public implementation, define actor/account model, visibility, membership, content types, moderation states, reporting/appeals, rate limits/anti-spam, privacy/export/deletion, rights/retention, abuse escalation and distinction from editorial canon. UGC never becomes corpus/canon automatically.
+
+## 20. Browser security and cache policy
+
+Use one documented BFF/session strategy. Cookie-authenticated mutations require CSRF protection and origin checks. Validate all redirect/deep-link destinations and user-supplied rich content. Content Security Policy is tested against real asset/analytics requirements. Server Actions/routes enforce the same API/resource policies; hiding a UI control is not authorization. Service workers may cache only explicit public/static assets and must purge user-bound data at logout/revocation.
+
+## 21. Acceptance matrix
+
+For each route family verify: anonymous vs authenticated policy; correct user/tenant isolation; real API source and version; no-store/public caching decision; stale/offline rendering; source/canon state; keyboard/screen-reader/reduced-motion behavior; responsive breakpoints; performance budget; and error recovery. The route is not complete because it renders a mock card or successful animation.

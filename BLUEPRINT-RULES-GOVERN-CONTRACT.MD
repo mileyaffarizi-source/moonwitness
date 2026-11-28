@@ -18,7 +18,7 @@ A lower-level document cannot silently override a higher-level rule. A conflict 
 
 ## 2. Non-negotiable platform laws
 
-1. Exactly fourteen named applications are defined in BLUEPRINT-APPLICATIONS.MD. This does not require fourteen microservices.
+1. Exactly sixteen named applications are defined in BLUEPRINT-APPLICATIONS.MD. This does not require sixteen microservices.
 2. Node.js LTS + pnpm + pnpm Workspaces + Turborepo. No Bun.
 3. API is business authority and only business-data write boundary.
 4. Agent calls approved API capabilities; no direct business DB access.
@@ -149,12 +149,12 @@ Tasks **GOV-001 through GOV-012** in [tasks.json](./tasks.json).
 
 Repository has a verifiable task DAG, claims do not collide, dependencies/approvals are enforced, contracts are versioned, security/ownership boundaries hold, evidence is attached to completion and no worker can turn a proposal into an authoritative result.
 
-## 16. Fourteen-app governance addendum
+## 16. Sixteen-app governance addendum
 
-The app inventory in BLUEPRINT-APPLICATIONS.MD is authoritative. The fourteen apps are:
-apps/agent, apps/api, apps/web, apps/OSS, apps/BSS, apps/id, apps/docs, apps/desktop, apps/mobile, apps/cloud, apps/isp, apps/dx, apps/A-L-L-A-H and apps/riot.
+The app inventory in BLUEPRINT-APPLICATIONS.MD is authoritative. The sixteen apps are:
+apps/agent, apps/api, apps/web, apps/OSS, apps/BSS, apps/id, apps/docs, apps/desktop, apps/mobile, apps/cloud, apps/isp, apps/dx, apps/A-L-L-A-H, apps/riot, apps/astronauts and apps/arsy.
 
-Do not reintroduce the superseded exactly-three-app constraint. Do not interpret the fourteen directories as an automatic mandate for fourteen separately deployed microservices.
+Do not reintroduce the superseded exactly-three-app constraint. Do not interpret the sixteen directories as an automatic mandate for sixteen separately deployed microservices.
 
 ### 16.1 Mandatory ownership distinctions
 
@@ -186,6 +186,56 @@ Divine/primary corpus, translations, commentary, human law, government documents
 
 User-generated community content is not editorial canon. Define moderation, reporting, privacy, content rights and abuse handling before public rollout. The meaning of the label CSS remains unconfirmed until verified from source/owner.
 
-### 16.7 RIOT safety and authorization
+### 16.7 Astronauts machine-control authorization
+
+- Astronauts is the only fleet controller for enrolled host/remote Edge Agents; it does not provision cloud resources or own developer worktrees.
+- Every operation is a typed, versioned capability with exact host scope, expiry, nonce/idempotency and a signed grant from the API authority.
+- Edge Agents initiate outbound mutually authenticated connections. No general inbound SSH, shell, Docker socket, arbitrary filesystem, script/eval or model-supplied command execution is exposed.
+- Enrollment, certificate rotation/revocation, anti-replay, agent update signature, job cancellation, kill switch and immutable execution evidence are required before production use.
+- Human approval is required for production/destructive/high-impact operations and is bound to the exact target and action payload.
+
+### 16.8 Arsy telecom protocol boundary
+
+- Arsy implements telecom wire protocols and protocol-session handling only. ISP owns subscriber service lifecycle and entitlements; BSS owns commercial/billing truth; OSS owns network inventory, incident and provisioning workflows.
+- RADIUS secrets and device credentials are delivered from a dedicated vault just in time. No plaintext credential storage, task-file secrets, UI secrets or AI context secrets.
+- RADIUS accounting/session events, ACS outcomes and normalized Syslog are exported with versioned contracts, correlation IDs, source identity and bounded retention; no direct database sharing.
+- Production PPPoE AAA, CoA/Disconnect, ACS configuration RPC and trusted Syslog ingestion require replay/DoS, source-authentication, failover and load testing.
+- TR-369/USP remains a separately evaluated future compatibility track; it is not a requirement for the initial TR-069 ACS slice.
+
+### 16.9 RIOT safety and authorization
 
 War-equipment archive work is limited to historical, journalistic, fictional or non-operational metadata/media. Do not create instructions for weapon construction, acquisition, modification, targeting or operational deployment. Red-team work defaults to isolated synthetic labs with written authorization, fixed scope, expiry, egress controls, kill switch and audit.
+
+
+## 17. Atomic task decomposition and parent-child contract
+
+The canonical `tasks.json` supports task records of type `task`, `subtask` and `integration`:
+
+- A **task** is a bounded discovery, implementation, documentation, review or verification unit.
+- A **subtask** has one `parent_task`, a narrow deliverable, disjoint `file_ownership`, explicit acceptance criteria and a smaller estimate. It never depends on its parent.
+- An **integration** parent lists `child_tasks`, depends on every child, owns only integration/report paths, and verifies that the children compose into the parent capability. Existing task IDs remain stable so downstream dependencies do not break.
+
+Rules:
+1. Do not claim a parent/integration task until all children are `done` with evidence.
+2. Child tasks may run in parallel only when all dependency tasks are done and their paths do not overlap.
+3. A task with estimate `XL` is not claimable implementation work. Decompose it into small tasks; use `XL` only as a planning indicator during drafting and remove it before activation.
+4. Every task has one owner, an exact output, path ownership, preconditions, explicit non-goals, at least two observable acceptance criteria and test/verification evidence.
+5. Parent paths never overlap child paths. A parent must not claim a whole application tree while children own subfolders.
+6. Workstream membership, project task count, child/parent references and global-gate references must be validated against the same task IDs.
+7. Splitting never marks parent or child done. No existing status is inferred from task decomposition.
+
+### Task size guideline
+
+| Estimate | Expected scope |
+|---|---|
+| XS | One mechanical change or test fixture; no independent design decision |
+| S | One focused capability or contract, normally a small set of files |
+| M | One cohesive vertical slice within one bounded ownership area |
+| L | A cross-module capability that must remain under one owner and one review boundary; prefer splitting if multiple independent outcomes exist |
+| XL | Not executable as a single claim; must be decomposed into child tasks before implementation |
+
+A task is not atomic merely because it has one title. If it has independently testable outputs, multiple privilege boundaries or separable deliverables, split it.
+
+## 18. Machine-readable registry invariants
+
+The task validator must fail closed when: project task count differs from the array length; application count differs from the app inventory; a workstream omits/adds/duplicates a task ID; a task points to an unknown workstream; parent-child links are not symmetric; a child does not depend on its parent's upstream preconditions; an integration parent does not depend on every child; task IDs are duplicated; dependency graph contains a cycle; or active claims collide. Unknown future fields may be preserved, but canonical fields cannot contradict one another.

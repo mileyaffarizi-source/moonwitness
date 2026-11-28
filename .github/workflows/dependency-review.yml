@@ -15,11 +15,10 @@ concurrency:
 
 jobs:
   review:
-    if: vars.DEPENDENCY_REVIEW_ENABLED == 'true'
     name: Review dependency changes
     runs-on: ubuntu-latest
     steps:
       - name: Review dependency diff
-        uses: actions/dependency-review-action@v5
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
         with:
           fail-on-severity: high

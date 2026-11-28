@@ -65,13 +65,16 @@ export function validateTypeScriptGate({ files, packageJson, hasRootTsconfig }) 
 export function validateRootContracts({ packageJson, editorConfig, agents, ci }) {
   const errors = [];
   if (packageJson.packageManager !== "pnpm@12.24.0") errors.push("packageManager must remain pnpm@12.24.0.");
-  if (packageJson.engines?.node !== ">=24.22.3 <25") errors.push("Node engine range must remain >=24.22.3 <25.");
+  if (packageJson.engines?.node !== ">=26.13.1 <27") errors.push("Node engine range must remain >=26.13.1 <27.");
   const checkScript = String(packageJson.scripts?.check ?? "");
-  if (!checkScript.includes("pnpm lint") || !checkScript.includes("pnpm lint:addons") || !checkScript.includes("pnpm test")) {
+  if (!checkScript.includes("pnpm lint") || !checkScript.includes("pnpm lint:addons") || !checkScript.includes("pnpm lint:workflows") || !checkScript.includes("pnpm test")) {
     errors.push("The canonical check script must include repository lint, add-on lint and tests.");
   }
   if (packageJson.scripts?.["lint:addons"] !== "node scripts/architecture/addon-lint.mjs") {
     errors.push("The root lint:addons script must invoke the canonical add-on policy linter.");
+  }
+  if (packageJson.scripts?.["lint:workflows"] !== "node scripts/architecture/workflow-lint.mjs") {
+    errors.push("The root lint:workflows script must invoke the immutable GitHub Actions policy linter.");
   }
   if (/\bbun\b/i.test(JSON.stringify(packageJson.scripts ?? {}))) errors.push("Do not add Bun commands; pnpm is canonical.");
 
@@ -82,8 +85,8 @@ export function validateRootContracts({ packageJson, editorConfig, agents, ci })
     if (!agents.includes(rule)) errors.push("AGENTS.md is missing rule: " + rule);
   }
   if (!ci.includes("pnpm install --frozen-lockfile")) errors.push("CI must use a frozen lockfile install.");
-  for (const action of ["actions/checkout@v7", "pnpm/action-setup@v6", "actions/setup-node@v7"]) {
-    if (!ci.includes(action)) errors.push("CI must use the Node 24-compatible action baseline: " + action);
+  for (const action of ["actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1", "pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413", "actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1"]) {
+    if (!ci.includes(action)) errors.push("CI must use the Node 26-compatible action baseline: " + action);
   }
   if (!/run:\s*pnpm check\b/.test(ci)) errors.push("CI must run the canonical pnpm check command.");
   return errors;

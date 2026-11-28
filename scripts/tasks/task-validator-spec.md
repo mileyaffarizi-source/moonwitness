@@ -77,3 +77,33 @@ Include fixtures for valid DAG; duplicate IDs; missing/self dependency; multi-no
 ## 8. Separation from DX-003
 
 GOV-008 owns schema validation and registry invariants. DX-003 consumes the validated model to provide task filtering, readiness and read-only presentation. Do not duplicate the DAG validator in a second package; expose a stable pure interface when package ownership is established.
+
+
+## 9. Task hierarchy and atomicity
+
+Every task declares `task_type`, `parent_task` and `child_tasks`:
+
+- `task`: standalone bounded unit; `parent_task=null` and `child_tasks=[]`.
+- `subtask`: one atomic child; references one integration parent and has no children.
+- `integration`: parent/report task; has a non-empty unique child list, depends on every child and owns only integration evidence/report paths.
+
+The relationship is symmetric. The parent lists each child; each child points to that parent. The child must not depend on its own parent. A parent may retain external dependencies, but its completion is additionally gated by every child.
+
+Parent and child path ownership must not overlap. Sibling child scopes must be non-overlapping to permit parallel claims. Shared global files are owned by a separately serialized integration task, not all children.
+
+XL is not an executable estimate. Accepted sizes are XS, S, M and L; a task whose work cannot fit L must be decomposed before claim. The registry may be planned with a parent integration task, but the implementation unit is its smallest independently testable child.
+
+## 10. Workstream and project consistency
+
+- `project.task_count` equals `tasks.length`.
+- `project.application_count` equals `project.applications.length`.
+- Each workstream has a unique ID and name.
+- Every task names an existing workstream by its display name.
+- Every task ID appears exactly once in the matching workstream `task_ids` list.
+- No workstream may reference an unknown task, another workstream's task, or list an ID twice.
+
+A mismatch invalidates the entire registry; the validator never silently repairs membership or counts.
+
+## 11. Additional test matrix
+
+Add test cases for project count drift, duplicate/missing/wrong workstream membership, missing parent, parent missing child, wrong child type, child depending on its parent, integration missing a dependency edge, parent-child path collision, XL estimate rejection, a valid parent with parallel children, and a valid 400+ task registry.

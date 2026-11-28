@@ -70,3 +70,44 @@ IdP/provider decision ADR; OIDC client registry; trust/claims map; account lifec
 Tasks ID-* in tasks.json.
 
 Done means every app uses registered identity clients, tokens are validated by intended resource servers, authorization remains resource-owned, sessions/revocation work, secrets are externalized and security tests cover the relevant flows.
+
+
+## 11. Client registration and token contract
+
+Every application/environment has a separate registered client record. The registry stores stable client ID, display owner, environment, exact redirect/logout URI set, client type (public/confidential/service), allowed grant/response types, audience/resource indicators, scopes, authentication method, signing-key reference, permitted origins, lifecycle state, owner, review date and rotation/revocation evidence. Secret values and private signing keys remain in the vault/KMS.
+
+Client lifecycle: **proposed → reviewed → registered → active → rotating → suspended/revoked → retired**. A client must not become active merely because a package or app directory exists. Redirect URI changes and new privileged scopes require review and audit. Development, staging and production clients are never interchangeable.
+
+Token validation contract for API and service resource servers:
+- pin trusted issuer and discovery/JWKS source; cache keys with bounded refresh and safe unknown-key retry;
+- verify signature using an explicit algorithm allowlist, issuer, audience, expiry, not-before and required token type/claims;
+- distinguish ID token from access token; never accept an ID token as an API bearer token;
+- reject missing/ambiguous subject, tenant/organization context, audience or scope where required;
+- handle signing-key rotation overlap, emergency key revocation and issuer outage explicitly;
+- avoid putting volatile business permissions, customer data or vault values into tokens;
+- record authentication result and key ID without logging the bearer token.
+
+## 12. Human, workload and delegated identity
+
+Keep three identities separate in every privileged trace: **initiating human**, **calling workload/agent**, and **target resource identity**. An Agent/DX request must not replace the human actor with the service account or claim the service account is the approving human.
+
+Define delegation as a short-lived, audience-bound grant with allowed operation, resource/tenant scope, expiry, policy version and original actor reference. Token exchange/on-behalf-of semantics must be chosen from a supported standard/provider capability; do not invent a custom bearer-token format.
+
+Human MFA/step-up is risk-driven for account recovery, finance-sensitive actions, production approvals, secret access and identity-administration changes. A workload identity cannot satisfy a human approval gate.
+
+## 13. Session, recovery and incident state
+
+Specify session states, idle/absolute TTL, refresh-token rotation/reuse detection, logout/revocation propagation, concurrent device policy, risk events and recovery. Account recovery must not silently bypass MFA or privileged approval. Lost-device handling revokes the specific device/session and allows review of recent actions.
+
+Operational SLOs are to be measured and approved before production: login availability/latency, revocation propagation, JWKS/key-rotation recovery, federation error rate and account-recovery completion. Runbooks cover IdP outage, compromised client, signing-key compromise, refresh-token replay, mass revocation and tenant/issuer misconfiguration.
+
+## 14. Test and rollout acceptance
+
+- OIDC conformance/provider integration tests cover code + PKCE, nonce/state, issuer/audience, redirect exact-match and logout.
+- Negative tests cover algorithm downgrade, wrong issuer/audience, expired/not-yet-valid token, ID-token misuse, unknown key, replayed refresh token and revoked session.
+- Cross-client tests prove dev/staging/prod redirect and audience separation.
+- Workload tests prove service credentials cannot impersonate human approvals.
+- Recovery drills prove key rotation, session revocation, lost-device flow and IdP outage behavior.
+- Rollout starts with one non-production client and one API resource server; expand by client/environment after measured telemetry and security review.
+
+**Acceptance:** every app client is registered and independently scoped, every resource server validates the intended issuer/audience, delegated operations preserve the initiating human, session revocation is observable, and secrets never enter tokens/logs/tasks.

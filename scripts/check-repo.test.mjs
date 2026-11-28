@@ -39,6 +39,8 @@ test("add-on standard and task sequence are part of the repository baseline", as
   const pkg = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
   assert.equal(pkg.scripts["lint:addons"], "node scripts/architecture/addon-lint.mjs");
   assert.ok(pkg.scripts.check.includes("pnpm lint:addons"));
+  assert.equal(pkg.scripts["lint:workflows"], "node scripts/architecture/workflow-lint.mjs");
+  assert.ok(pkg.scripts.check.includes("pnpm lint:workflows"));
 
   const registry = JSON.parse(await readFile(new URL("../tasks.json", import.meta.url), "utf8"));
   assert.equal(registry.project.task_count, registry.tasks.length);
@@ -68,4 +70,51 @@ test("agent contract and focused skills are present", async () => {
     assert.ok(lines.some((line) => /^name:\s*\S+/.test(line)));
     assert.ok(lines.some((line) => /^description:\s*\S+/.test(line)));
   }
+});
+
+test("Node runtime pins are aligned to Node.js 26 Active LTS", async () => {
+  const [pkg, nvm, nodeVersion] = await Promise.all([
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
+    readFile(new URL("../.nvmrc", import.meta.url), "utf8"),
+    readFile(new URL("../.node-version", import.meta.url), "utf8"),
+  ]);
+  const manifest = JSON.parse(pkg);
+  assert.equal(nvm.trim(), "26.13.1");
+  assert.equal(nodeVersion.trim(), "26.13.1");
+  assert.equal(manifest.engines.node, ">=26.13.1 <27");
+});
+
+test("GitHub security and release automation have non-overlapping active owners", async () => {
+  const [dependencyReview, secrets, workflowSecurity, releaseWorkflow, releaseFiles, adr] = await Promise.all([
+    readFile(new URL("../.github/workflows/dependency-review.yml", import.meta.url), "utf8"),
+    readFile(new URL("../.github/workflows/secrets.yml", import.meta.url), "utf8"),
+    readFile(new URL("../.github/workflows/workflow-security.yml", import.meta.url), "utf8"),
+    readFile(new URL("../.github/workflows/release-please.yml", import.meta.url), "utf8"),
+    readdir(new URL("../.github/workflows/", import.meta.url)),
+    readFile(new URL("../docs/adr/ADR-0004-node26-lts-and-github-automation.md", import.meta.url), "utf8"),
+  ]);
+
+  assert.ok(dependencyReview.includes("actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294"));
+  assert.ok(dependencyReview.includes("fail-on-severity: high"));
+  assert.ok(dependencyReview.includes("a1d282b36b6f3519aa1f3fc636f609c47dddb294"));
+  assert.ok(!dependencyReview.includes("DEPENDENCY_REVIEW_ENABLED"));
+  assert.ok(secrets.includes("gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e"));
+  assert.ok(secrets.includes("fetch-depth: 0"));
+  assert.ok(secrets.includes("3d3c42e5aac5ba805825da76410c181273ba90b1"));
+  assert.ok(workflowSecurity.includes('ZIZMOR_VERSION: "1.32.0"'));
+  assert.ok(workflowSecurity.includes("68559e99cc807c1eb7e9238fd43a15bba460eec2"));
+  assert.ok(workflowSecurity.includes('uvx "zizmor@${ZIZMOR_VERSION}"') && workflowSecurity.includes("--format=github"));
+  assert.ok(workflowSecurity.includes("3d3c42e5aac5ba805825da76410c181273ba90b1"));
+  assert.ok(secrets.includes("REVIEWED_EXCEPTION_GITLEAKS_COMMENT_ONLY"));
+  assert.ok(releaseWorkflow.includes("googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7"));
+
+  const changelogWorkflows = releaseFiles.filter((name) => /(?:release|changelog)/i.test(name) && name.endsWith(".yml"));
+  assert.deepEqual(changelogWorkflows, ["release-please.yml"]);
+  assert.match(adr, /Status:\*\* Accepted/);
+  assert.match(adr, /Node.js 26 Active LTS/);
+});
+
+test("Dependabot update groups enforce a seven-day version-update cooldown", async () => {
+  const config = await readFile(new URL("../.github/dependabot.yml", import.meta.url), "utf8");
+  assert.equal((config.match(/default-days: 7/g) ?? []).length, 2);
 });

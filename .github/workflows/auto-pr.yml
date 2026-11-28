@@ -1,0 +1,100 @@
+name: Auto Pull Request
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - "dependabot/**"
+      - "renovate/**"
+      - "release/**"
+      - release-please--branches--main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: auto-pr-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  open-or-reuse:
+    name: Open or reuse the branch pull request
+    if: github.repository == 'mileyaffarizi-source/moonwitness'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout source commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Open pull request when one does not exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_BRANCH: main
+          SOURCE_BRANCH: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "${GITHUB_REF_TYPE}" != "branch" ]]; then
+            echo "::notice::Auto PR only handles branch refs; this ref is not a branch."
+            exit 0
+          fi
+
+          case "${SOURCE_BRANCH}" in
+            "${BASE_BRANCH}"|dependabot/*|renovate/*|release/*|release-please--branches--main)
+              echo "::notice::This branch is owned by the base branch, a dependency bot, or Release Please; no duplicate PR will be created."
+              exit 0
+              ;;
+          esac
+
+          existing_prs="$(gh pr list \
+            --repo "${GITHUB_REPOSITORY}" \
+            --base "${BASE_BRANCH}" \
+            --head "${SOURCE_BRANCH}" \
+            --state all \
+            --json number,state,url)"
+
+          existing_state="$(jq -r '.[0].state // empty' <<< "${existing_prs}")"
+          existing_url="$(jq -r '.[0].url // empty' <<< "${existing_prs}")"
+
+          if [[ "${existing_state}" == "OPEN" ]]; then
+            echo "::notice::An open PR already tracks this branch: ${existing_url}. New commits will update that PR automatically."
+            exit 0
+          fi
+
+          if [[ "${existing_state}" == "CLOSED" ]]; then
+            echo "::notice::A PR for this branch was intentionally closed: ${existing_url}. It will not be reopened automatically."
+            exit 0
+          fi
+
+          subject="$(git log -1 --format=%s "${GITHUB_SHA}")"
+          if [[ "${subject}" =~ ^(feat|fix|docs|refactor|test|build|ci|chore|perf|revert)(\([^)]+\))?(!)?:[[:space:]]+.+$ ]]; then
+            pr_title="${subject}"
+          else
+            safe_branch="${SOURCE_BRANCH//\//-}"
+            pr_title="chore(auto-pr): review ${safe_branch}"
+          fi
+
+          body_file="${RUNNER_TEMP}/auto-pr-body.md"
+          {
+            printf '## Automatically opened pull request\n\n'
+            printf 'This PR was opened for branch `%s` at commit `%s`.\n\n' "${SOURCE_BRANCH}" "${GITHUB_SHA}"
+            printf 'The PR will receive later commits pushed to the same branch. Existing PRs are reused; deliberately closed PRs are not reopened.\n\n'
+            printf '%s\n' '---'
+            printf '\n'
+            cat .github/pull_request_template.md
+          } > "${body_file}"
+
+          gh pr create \
+            --repo "${GITHUB_REPOSITORY}" \
+            --base "${BASE_BRANCH}" \
+            --head "${SOURCE_BRANCH}" \
+            --title "${pr_title}" \
+            --body-file "${body_file}"
+
+          echo "::notice::Created a pull request for ${SOURCE_BRANCH}. Auto PR does not enable auto-merge; merge requirements depend on the main-branch ruleset."

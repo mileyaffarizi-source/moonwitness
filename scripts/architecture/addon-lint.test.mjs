@@ -26,7 +26,7 @@ function makeManifest(slug = "example", overrides = {}) {
     compatibility: {
       platformApi: ">=1.0.0 <2.0.0",
       addonSdk: ">=1.0.0 <2.0.0",
-      node: ">=24.22.3 <25.0.0",
+      node: ">=26.13.1 <27.0.0",
     },
     dependencies: { required: [], optional: [] },
     capabilities: ["api.route"],
@@ -71,7 +71,7 @@ function makePackage(slug = "example", overrides = {}) {
     version: "1.0.0",
     private: true,
     type: "module",
-    engines: { node: ">=24.22.3 <25" },
+    engines: { node: ">=26.13.1 <27" },
     exports: { ".": "./dist/index.js" },
     scripts: {
       build: "tsc",

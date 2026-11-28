@@ -8,7 +8,7 @@
 
 Define how the repository is divided into reusable, independently testable workspace packages. This architecture enables local AI parallel work without circular dependencies, shared-file collisions, duplicated business logic or accidental runtime coupling.
 
-The workspace contains exactly fourteen named applications as defined in BLUEPRINT-APPLICATIONS.MD: agent, api, web, OSS, BSS, id, docs, desktop, mobile, cloud, isp, dx, A-L-L-A-H and riot. An app directory is not automatically a separately deployed microservice; deployment boundaries are chosen by trust, scale, availability and lifecycle needs. No fifteenth app may be introduced without an ADR and a coordinated update to the application inventory.
+The ecosystem contains exactly sixteen named application surfaces as defined in BLUEPRINT-APPLICATIONS.MD. An app directory is not automatically a separately deployed microservice. Go (`apps/astronauts`) and Rust (`apps/arsy`) own independent toolchains/workspaces and are not pnpm packages. New app identities require an ADR and coordinated updates to the authoritative inventory and task registry.
 
 ## 2. Toolchain rules
 
@@ -79,7 +79,7 @@ Tasks **PKG-001 through PKG-009** and add-on tasks **ADD-001 through ADD-012** i
 
 ## 11. Definition of done
 
-Clean Node.js/pnpm install builds reproducibly; package boundaries are explicit and checked; all fourteen named app surfaces are inventoried and bounded (without requiring fourteen microservices); public exports are stable; no cycles/realm leaks exist; local AI workers can operate on non-overlapping packages under a shared task contract.
+Clean Node.js/pnpm install builds reproducibly; Go and Cargo builds are independently pinned/verified; all sixteen app surfaces are inventoried and bounded without requiring sixteen microservices; package boundaries and public exports are explicit; dependency cycles and trust-zone leaks fail CI; local AI workers operate on small non-overlapping tasks with isolated worktrees and evidence.
 
 ## 12. Application and package separation
 
@@ -96,3 +96,36 @@ Recommended domain package families (subject to source audit):
 - DX task registry, worker adapter and worktree orchestration packages.
 
 The API composes authoritative business capabilities. Frontends consume contracts. Privileged workers use separate service identities and narrowly scoped adapters.
+
+
+## 13. Multi-language workspace boundary
+
+### Node.js / TypeScript
+
+- Root `.nvmrc` and `.node-version` are the only Node runtime pins; application packages may declare engines but cannot override the major line.
+- pnpm owns the Node/TypeScript workspace graph and `pnpm-lock.yaml`.
+- Each Node app/package provides its own `lint`, `typecheck`, `test` and `build` scripts; the root composes affected checks.
+
+### Go — Astronauts
+
+- `apps/astronauts/go.mod` and `go.sum` own Go dependencies. Pin the toolchain in the module/build contract.
+- Controller and Edge Agent share module/contracts but are separate binaries, configs, service identities and deployments.
+- `gofmt`, `go vet`, `go test`, race/security checks and cross-build targets run in Go CI; no dependency is introduced through pnpm.
+
+### Rust — Arsy
+
+- `apps/arsy/Cargo.toml`, `Cargo.lock` and `rust-toolchain.toml` own the Rust workspace/toolchain.
+- Protocol binaries may share crates, but RADIUS, ACS and Syslog keep separate listeners, credentials, budgets and release/deployment boundaries.
+- `cargo fmt --check`, `cargo clippy`, `cargo test`, audit, fuzz and integration gates run in Rust CI.
+
+### Aggregate checks
+
+The repository gate reports `passed`, `failed`, `blocked` or `not-applicable` for each language. A missing app source can be `not-applicable` only while the corresponding planning task is not implementing it. A scaffold or missing toolchain cannot be called passed.
+
+## 14. Package-to-app integration rules
+
+- Shared schemas and message contracts belong in a versioned contract package or a language-neutral schema source; generated Go/Rust/TypeScript clients are build artifacts from the same source.
+- No package imports a private runtime implementation of another app.
+- No Go/Rust runtime accesses Node process memory or pnpm workspace internals at runtime.
+- Cross-language communication is over explicit HTTP/gRPC/event contracts, not filesystem sharing or cross-language database writes.
+- Contract changes update producer, consumer fixtures and the compatibility matrix in one coordinated change.

@@ -45,3 +45,28 @@ Use device attestation/risk signal only as defense in depth, not the sole author
 ## 8. Task ownership and definition of done
 
 Tasks MOBILE-* in tasks.json. Done means signed Android/iOS builds can authenticate, securely store minimum session material, use authorized APIs, handle push/deep links, recover from offline state and pass accessibility/security checks.
+
+
+## 9. Mobile notification and offline data contract
+
+A push payload contains only a non-sensitive notification ID, generic event category and safe deep-link reference. Customer name, subscriber address, invoice data, network credential or sensitive action detail must not appear in lock-screen payload by default. The app fetches current authorized details after authenticating.
+
+Push delivery is best-effort, not proof that an event was read or an action approved. Deep links are allowlisted, versioned and re-authorized at the API when opened. A notification must expire or show stale state when its source event/resource is no longer current.
+
+Offline cache policy is defined per domain: public corpus may be cacheable by rights; community/PII requires access-aware private storage; subscriber and operational information has explicit TTL/encryption/purge; privileged actions are never queued for silent execution. Reconnect performs authoritative refresh and surfaces conflict/expiry.
+
+## 10. Consent, device and abuse controls
+
+Request camera, microphone, location, notification and biometric permissions only at the moment a feature needs them with clear purpose. Biometric unlock gates local session access but does not replace server-side authentication or transaction approval. Lost-device revocation must be actionable from ID/security support.
+
+Rate-limit login/recovery, uploads, community interactions and notification registration. Apply device revocation, token rotation, abuse reporting and privacy retention. Avoid collecting precise location unless a user feature actually requires it.
+
+## 11. Release and compatibility matrix
+
+Track OS minimum version, architecture, Expo/React Native SDK, native module compatibility, API minimum version, push provider settings, signing identity and store review status. Roll out internal test → closed beta → production by platform. Rollback/disable remote feature flags without deleting user data.
+
+## 12. Acceptance
+
+Tests cover PKCE/OIDC, secure storage, token revocation, deep-link allowlist, notification redaction, cache expiry/purge, offline conflict, accessibility/dynamic text, upload validation, lost-device recovery and minimum API compatibility.
+
+**Acceptance:** a test user can complete one approved mobile journey securely online/offline with private push notifications, fresh authoritative state, accessible fallback and revocable device identity.

@@ -295,8 +295,8 @@ export function validateAddonManifest(manifest, expectedSlug = null) {
         addError(errors, "INVALID_COMPATIBILITY_RANGE", "compatibility." + key, "use explicit bounded range >=x.y.z <a.b.c");
       }
     }
-    if (manifest.compatibility.node !== ">=24.22.3 <25.0.0") {
-      addError(errors, "UNSUPPORTED_NODE_RANGE", "compatibility.node", "must match the repository Node 24 baseline");
+    if (manifest.compatibility.node !== ">=26.13.1 <27.0.0") {
+      addError(errors, "UNSUPPORTED_NODE_RANGE", "compatibility.node", "must match the repository Node 26 baseline");
     }
     if (Object.keys(manifest.compatibility).some((key) => !["platformApi", "addonSdk", "node"].includes(key))) {
       addError(errors, "UNKNOWN_COMPATIBILITY_FIELD", "compatibility", "unknown compatibility keys are not allowed");
@@ -515,7 +515,7 @@ export function validateAddonPackage(packageJson, slug, manifestVersion, manifes
   if (packageJson.version !== manifestVersion) addError(errors, "PACKAGE_VERSION_MISMATCH", "package.json.version", "must exactly match the add-on manifest version");
   if (packageJson.private !== true) addError(errors, "PACKAGE_MUST_BE_PRIVATE", "package.json.private", "add-on packages are private workspace packages in v1");
   if (packageJson.type !== "module") addError(errors, "PACKAGE_MUST_BE_ESM", "package.json.type", "must be module");
-  if (packageJson.engines?.node !== ">=24.22.3 <25") addError(errors, "PACKAGE_NODE_RANGE", "package.json.engines.node", "must match the repository Node 24 baseline");
+  if (packageJson.engines?.node !== ">=26.13.1 <27") addError(errors, "PACKAGE_NODE_RANGE", "package.json.engines.node", "must match the repository Node 26 baseline");
   if (!isRecord(packageJson.exports) || Object.keys(packageJson.exports).length === 0) addError(errors, "PACKAGE_EXPORTS_REQUIRED", "package.json.exports", "must declare explicit public exports");
   for (const script of ["build", "lint", "typecheck", "test"]) {
     if (typeof packageJson.scripts?.[script] !== "string" || packageJson.scripts[script].trim().length === 0) {

@@ -8,7 +8,7 @@ This file is the short, repository-wide contract for every human or AI contribut
 2. **Use the task ledger.** tasks.json is the canonical execution plan. Read only the target task and its direct dependencies. Respect dependency order, ownership paths and acceptance criteria.
 3. **Implement, do not simulate.** No fake data presented as live, placeholder success, empty scaffolds claimed as features, invented test output or status changes without evidence.
 4. **Keep scope narrow.** Make the smallest coherent change that solves the task. Reuse existing code and dependencies. Avoid speculative abstractions, gratuitous refactors and unrelated cleanup.
-5. **Preserve boundaries.** There are fourteen named app surfaces, not a mandate for fourteen microservices. Domain authority and data ownership stay explicit. Frontends do not own business rules or persistence.
+5. **Preserve boundaries.** There are sixteen named app surfaces, not a mandate for sixteen microservices. Domain authority and data ownership stay explicit. Frontends do not own business rules or persistence.
 6. **Protect shared files.** Root manifests, lockfile, tasks.json, API composition, ORM registry, shared exports and global design tokens are serialized integration surfaces. Coordinate before editing; never perform stale full-file replacement.
 7. **Security by default.** No secrets in Git, prompts, task context, logs or browser storage. No unrestricted SQL, shell, filesystem, Docker socket or production credentials exposed to an Agent. Authorization is enforced by the owning API, not the UI or model.
 8. **Verify actual behavior.** Run the narrowest relevant checks, then broader checks when practical. Report command, result, commit and limitations accurately.
@@ -75,6 +75,8 @@ Before creating or changing an add-on, read [BLUEPRINT-PACKAGE-ADDON.MD](./BLUEP
 - apps/api: shared modular authority, domain use cases, model/record/field access and persistence composition.
 - apps/id: identity, OIDC/SSO and workload identity integration; not a business authorization bypass or secret-value store.
 - apps/agent: model/agent/workflow runtime; business writes only through approved API capabilities.
+- apps/astronauts: Go host fleet controller and outbound Edge Agent; no unrestricted shell or ambient machine credentials.
+- apps/arsy: Rust telecom protocol runtime for RADIUS AAA, TR-069 ACS and Syslog; not subscriber/billing/NMS authority.
 - apps/dx: developer workbench, task control tower, safe local orchestration and evidence review.
 - apps/web, apps/OSS, apps/BSS, apps/docs, apps/desktop, apps/mobile, apps/cloud, apps/isp, apps/A-L-L-A-H, apps/riot: separate product/operational surfaces as defined in their blueprints.
 - Existing Odoo-owned records remain Odoo-owned until an entity-level migration/cutover is explicitly approved. MikroORM is a persistence engine beneath the platform model kernel, not permission to write Odoo tables.
@@ -82,3 +84,13 @@ Before creating or changing an add-on, read [BLUEPRINT-PACKAGE-ADDON.MD](./BLUEP
 ## Specialist instructions
 
 Use the skill index at .agents/skills/README.md. Skills are task-scoped references, not a reason to load every instruction file.
+
+
+## Atomic task and integration-parent rules
+
+- The canonical task registry classifies work as `task`, `subtask` or `integration`. Prefer the smallest claimable `task`/`subtask` that has complete prerequisites and one independently verifiable output.
+- Do not claim an `integration` parent for source implementation. First complete its children; then claim the parent only for cross-child verification, failure/recovery checks and the final evidence report.
+- A child must never depend on its parent. The integration parent must depend on every child. Parent and child file ownership must not overlap.
+- Two children may run in parallel only when their dependency sets are ready and their normalized ownership paths are disjoint. Shared root manifests, tasks.json, lockfiles, global registries, ORM/API composition and design tokens remain serialized integration surfaces.
+- Do not add `XL` tasks. Split independently testable outputs into XS/S/M/L tasks with exact path ownership, acceptance criteria and verification.
+- Do not update a parent to done when its children finish; the parent requires its own integration evidence and review.

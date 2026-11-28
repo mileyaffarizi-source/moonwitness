@@ -50,3 +50,32 @@ RIOT charter, lab threat model, authorization templates, target-scope registry, 
 ## 9. Task ownership and definition of done
 
 Tasks RIOT-* in tasks.json. Done means creative and security workloads are isolated, each red-team session is authorized and auditable, lab resources are ephemeral, defensive evidence is reproducible, and the war archive remains non-operational research/media rather than weapon-construction or deployment guidance.
+
+
+## 10. Authorization dossier and exercise lifecycle
+
+Every security exercise is an immutable authorization dossier containing owner, approving authority, target asset IDs, proof of asset control, in-scope addresses/accounts, excluded assets, permitted test categories, time window, rate/impact ceiling, allowed egress, emergency contacts, stop conditions, evidence handling, retention and disclosure policy. Authorization is bound to the exact exercise version and target scope; changing either requires re-approval.
+
+Exercise lifecycle: **draft → scope_review → authorized → scheduled → isolated_environment_ready → executing → evidence_review → cleanup → complete / stopped / failed**. A run cannot start if authorization is absent/expired, scope resolution is ambiguous, egress policy is unavailable or the kill switch is unhealthy.
+
+## 11. Separation from Cloud and Astronauts
+
+Cloud creates and owns lab resources and isolated runner lifecycles. Astronauts may manage a lab host only when that host is explicitly enrolled into a separate RIOT machine group with separate machine identity, network policy and short-lived grants. A RIOT identity cannot be reused in production Astronauts fleet groups.
+
+Creative workloads and lab workloads have separate storage, identities, queues, networks, service accounts and retention. No shared privileged runner or credential exists. Data export from the lab to production/docs requires classification, sanitization and an owner approval.
+
+## 12. Detection, evidence and disclosure lifecycle
+
+Blue-team detection records source event, rule/version, observed time, host scope, confidence, triage and false-positive status. Red-team evidence is stored with exercise ID, target reference, timestamps, tool/version, impact class, redacted artifacts and reproducibility notes. Sensitive exploit/credential material is access-restricted and does not enter Agent context or public Docs search.
+
+A finding lifecycle is: **reported → triaged → reproduced → assigned → remediated → retested → disclosed / closed / accepted_risk**. Risk acceptance has owner, reason, compensating control and expiry. Define responsible disclosure and external communications before handling third-party findings.
+
+## 13. Emergency stop and post-exercise cleanup
+
+Kill switch blocks new work, revokes scoped workload credentials and stops runner processes. Teardown removes ephemeral compute/network resources and ephemeral secrets, but preserves authorized evidence and audit per retention rules. Cleanup failure becomes an incident and prevents the next exercise in that isolation domain.
+
+## 14. Acceptance and adversarial tests
+
+Test missing/expired authorization, target expansion, DNS/IP drift, wrong environment, egress denial, runner escape attempt, stolen credential, cancellation, kill-switch outage, partial teardown and evidence exfiltration. Every blocked start must leave an audit record and no execution side effect.
+
+**Acceptance:** one synthetic lab exercise runs only within an approved scope, has a working stop condition, produces attributable defensive evidence, tears down its environment and cannot reach production networks or credentials.

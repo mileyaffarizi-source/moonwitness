@@ -7,7 +7,7 @@
 
 ## 1. Mission and ownership
 
-**apps/agent** is the shared Intelligence Runtime used by the fourteen-app ecosystem. It is distinct from **apps/dx**, which is the developer workbench and local orchestration control plane. It reasons, plans, coordinates tools, executes workflows, requests approval and reports results. It is not the system of record, a parallel API, an unrestricted database client or a general-purpose shell.
+**apps/agent** is the shared Intelligence Runtime used by the sixteen-app ecosystem. It is distinct from **apps/dx**, which is the developer workbench and local orchestration control plane. It reasons, plans, coordinates tools, executes workflows, requests approval and reports results. It is not the system of record, a parallel API, an unrestricted database client or a general-purpose shell.
 
 Authority split:
 - **Agent:** model orchestration, context assembly, agent/tool/workflow registration, evaluation, memory, checkpoints, action proposals and run history.
@@ -124,3 +124,52 @@ A real workflow executes under verified identity, calls only approved API capabi
 apps/dx may select and invoke approved Agent adapters, but it does not bypass Agent tool policies or API authorization. The DX local daemon can launch a configured coding agent within a bounded repository/worktree sandbox. It must not expose host shell, production secrets or Docker privileges as ordinary Mastra tools.
 
 Desktop, Mobile, OSS, BSS, Cloud, ISP, A-L-L-A-H, RIOT and Web experiences call approved API contracts. The Agent does not import their UI code or internal domain repositories.
+
+
+## 17. Remote machine and telecom execution boundary
+
+Agent does not own host connectivity. A model-generated machine operation must become a typed API capability request with a verified actor, exact host set, capability, input hash, expiry and approval policy. The API authorizes and issues a short-lived signed execution grant; Astronauts accepts only that grant and forwards only an allowlisted signed job to an enrolled Edge Agent. Agent never receives machine credentials, SSH keys, RADIUS shared secrets or ACS device credentials.
+
+Agent does not call RADIUS/ACS/Syslog protocols directly. It requests approved API/OSS/ISP operations; Arsy is the protocol runtime behind those service boundaries. Retrieved protocol output is untrusted data and cannot broaden Agent permissions.
+
+
+## 18. Canonical agent, tool and workflow manifests
+
+Every Agent/Tool/Workflow is an independently versioned product capability. A manifest must declare stable ID/version, owner, purpose/non-goals, accepted intent, input/output schema, API capability IDs, trusted context requirements, data classification, model/provider policy, budget, timeout, retry class, idempotency, concurrency, memory scope/retention, risk tier, approval mode, evaluation suite and deprecation policy.
+
+Do not infer tool authority from natural-language description, agent name, model role or prompt. The executable permission map is an API-owned capability contract. A manifest can request capability use but cannot grant it.
+
+## 19. Tool execution protocol
+
+1. Resolve a registered and enabled Agent/Workflow/Tool version.
+2. Bind verified initiating human, tenant, application, correlation ID and task/run context from the trusted session.
+3. Validate structured input against the tool schema; normalize only fields whose semantics are specified.
+4. Classify risk and data handling; block unknown capability, unsupported environment, expired context and missing approval.
+5. Call the API through a typed client with idempotency key, deadline, expected contract version and bounded payload.
+6. Validate the response schema and classify business outcome separately from transport outcome.
+7. Persist run/step/tool status and redacted evidence under the retention policy.
+8. Present the next action or result without turning accepted, queued, sent or acknowledged into completed.
+
+Retries must be per-operation. A read can retry within a bounded budget; a reversible write needs an idempotency key and outcome reconciliation; a destructive/external action is never blindly replayed after an ambiguous timeout.
+
+## 20. Workflow state and failure model
+
+Workflow lifecycle: **requested → validated → authorized → queued → running → waiting_approval / waiting_external / retry_scheduled → succeeded / failed / cancelled / expired / needs_reconciliation**.
+
+Each transition records actor/workload, workflow version, step, state-change time, correlation/causation IDs, input hash/reference, attempt number and reason. The needs_reconciliation state is truthful when a remote side effect might have occurred but no authoritative outcome exists.
+
+Cancellation prevents new steps and attempts to stop in-flight work where safe; it cannot claim that an already accepted external operation was reversed. Recovery reloads the last durable checkpoint and revalidates authority before resuming. Expired grants/approvals are not inherited across restart.
+
+## 21. Prompt injection, tool output and context boundaries
+
+Imported documents, repository files, tickets, web pages, Syslog, device responses and command output are untrusted data. The context builder labels provenance and trust; retrieved instructions never override system policy, task scope, capability grants or human approval.
+
+Do not put secrets in model context. Minimize source snippets, tenant data and customer PII. Tool outputs are data, not authority. A model cannot self-register a tool, change risk tier, widen scope, approve itself or convert a proposal into canonical knowledge.
+
+## 22. Evaluation and release gates
+
+Every Agent has deterministic unit/contract tests plus an evaluation suite for intent routing, schema correctness, refusal/abstention, prompt injection, tool selection, authorization boundary, hallucination, recovery and cost/latency budget. Evaluation datasets must be versioned, sourced and privacy-reviewed. Keep representative golden cases and adversarial cases; do not optimize only for average score.
+
+Release stages: offline evaluation → sandbox integration → shadow/read-only pilot → limited user cohort → broader enablement. Privileged tools remain disabled until API authorization, approval, audit and recovery criteria pass.
+
+**Acceptance:** an Agent can complete one authorized bounded workflow, preserve human/service identities, survive process restart without duplicate side effects, reject adversarial/untrusted instructions and present a verifiable API-confirmed outcome.

@@ -112,3 +112,18 @@ A model self-report, commit existing, PR merged or test skipped is not sufficien
 ## 10. Approval requested
 
 This is a proposed execution contract. It needs owner/platform-security approval before it becomes an active worker authorization policy. Approval should cover claim eligibility, path collision semantics, lease recovery, CAS behavior, shared-file ownership and human-approval gates as one bounded version.
+
+
+## 11. Parent, child and integration execution
+
+The canonical task record declares `task_type`, `parent_task` and `child_tasks`.
+
+- Claim an atomic `task` or `subtask`; do not claim an integration parent to perform source implementation.
+- A subtask depends on the parent's upstream prerequisites and only on sibling tasks required for its own output. It never depends on its parent.
+- Independent children may execute in parallel only when dependencies are done and normalized file-ownership paths are disjoint.
+- The integration parent depends on all child IDs and is not claim-ready until every child is done with evidence. It owns only the parent report/integration evidence paths.
+- Completing a child never changes the parent status automatically. The parent needs its own integration/E2E evidence and review.
+- Child and parent path overlap is invalid. Shared files (tasks.json, root manifests, lockfiles, global registries, shared tokens and API composition roots) require a separate serialized integrator task.
+- XL is not claimable. Decompose it into XS/S/M/L work before assigning any worker.
+
+A parent completion proposal must identify each child commit, tests, CI runs, evidence, remaining limitations and the integrated postcondition. A merged PR or all children merely existing is not enough.

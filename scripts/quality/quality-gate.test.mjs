@@ -72,12 +72,12 @@ test("root contract accepts canonical repository rules", () => {
   const errors = validateRootContracts({
     packageJson: {
       packageManager: "pnpm@12.24.0",
-      engines: { node: ">=24.22.3 <25" },
-      scripts: { "lint:addons": "node scripts/architecture/addon-lint.mjs", check: "pnpm lint && pnpm lint:addons && pnpm test" },
+      engines: { node: ">=26.13.1 <27" },
+      scripts: { "lint:addons": "node scripts/architecture/addon-lint.mjs", "lint:workflows": "node scripts/architecture/workflow-lint.mjs", check: "pnpm lint && pnpm lint:addons && pnpm lint:workflows && pnpm test" },
     },
     editorConfig: "root = true\ncharset = utf-8\nend_of_line = lf\ninsert_final_newline = true\n",
     agents: "Inspect before changing. Use the task ledger. Security by default. Anti-slop engineering and product craft Token and context budget Mandatory quality gate",
-    ci: "uses: actions/checkout@v7\nuses: pnpm/action-setup@v6\nuses: actions/setup-node@v7\nrun: pnpm install --frozen-lockfile\nrun: pnpm check\n",
+    ci: "uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1\nuses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413\nuses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1\nrun: pnpm install --frozen-lockfile\nrun: pnpm check\n",
   });
   assert.deepEqual(errors, []);
 });
