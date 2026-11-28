@@ -4,8 +4,8 @@
 **Version:** 4.0  
 **Status:** Architecture baseline; implementation not yet verified  
 **Target repository:** `mileyaffarizi-source/moonwitness`  
-**Runtime:** Node.js LTS · pnpm Workspaces · Turborepo  
-**Applications:** Mastra Agent · Fastify API · Next.js Web  
+**Runtime:** Node.js 26.13.1 Active LTS · pnpm 12.24.0 Workspaces · Turborepo  
+**Applications:** Sixteen named application surfaces across four cooperating technical planes (see BLUEPRINT-APPLICATIONS.MD); not sixteen microservices.  
 **Persistence:** Odoo-inspired Platform ORM backed by MikroORM  
 **Operating principle:** Preserve existing data; no big-bang migration.
 
@@ -26,6 +26,12 @@ Before implementation:
 5. Update this blueprint only when an architectural or creative decision is explicitly accepted and recorded.
 6. Mark checklist items complete only when their acceptance criteria have evidence.
 7. Do not create empty packages just to match a proposed directory tree.
+
+## Foundation build order and decision gates
+
+Use [BLUEPRINT-FOUNDATIONS.MD](./BLUEPRINT-FOUNDATIONS.MD) for the dependency-aware foundation sequence, owner roles, shared contract inventory, entry/exit evidence and owner-only decisions. It complements this master blueprint; it does not replace specialist blueprints or the canonical `tasks.json` ledger.
+
+The accepted runtime baseline is Node.js 26.13.1 Active LTS with pnpm 12.24.0, governed by [ADR-0004](./docs/adr/ADR-0004-node26-lts-and-github-automation.md) and the exact patch refresh in [ADR-0005](./docs/adr/ADR-0005-node26-patch-refresh.md). The approved application topology contains sixteen named surfaces across four cooperating technical planes. Add-on execution trust remains separately governed by Proposed ADR-0003; third-party add-on execution is not authorized.
 
 ## Initial repository baseline
 

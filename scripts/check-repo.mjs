@@ -16,6 +16,10 @@ const requiredFiles = [
   ".github/workflows/release-please.yml",
   "release-please-config.json",
   ".release-please-manifest.json",
+  "BLUEPRINT.md",
+  "BLUEPRINT-FOUNDATIONS.MD",
+  "BLUEPRINT-APPLICATIONS.MD",
+  "BLUEPRINT-PACKAGE.MD",
   "BLUEPRINT-PACKAGE-ADDON.MD",
   "docs/engineering/ADDON-ENGINEERING-STANDARD.md",
   "docs/architecture/addons/addon.manifest.schema.json",
@@ -204,6 +208,10 @@ if (addonSchema.$schema !== "https://json-schema.org/draft/2020-12/schema" || ad
 }
 const addonAdr = await readFile("docs/adr/ADR-0003-addon-runtime-and-trust-boundary.md", "utf8");
 const runtimeAdr = await readFile("docs/adr/ADR-0004-node26-lts-and-github-automation.md", "utf8");
+const runtimePatchAdr = await readFile("docs/adr/ADR-0005-node26-patch-refresh.md", "utf8");
+const foundationBlueprint = await readFile("BLUEPRINT-FOUNDATIONS.MD", "utf8");
+const masterBlueprint = await readFile("BLUEPRINT.md", "utf8");
+const appBlueprint = await readFile("BLUEPRINT-APPLICATIONS.MD", "utf8");
 if (!addonAdr.includes("Status:** Proposed") || !addonAdr.includes("Third-party add-ons remain disabled")) {
   throw new Error("ADR-0003 must keep unapproved third-party add-on execution disabled");
 }
@@ -212,6 +220,32 @@ if (!runtimeAdr.includes("Node.js 26 Active LTS") || !runtimeAdr.includes("26.13
 }
 if (addonSchema.$defs?.compatibility?.properties?.node?.const !== ">=26.13.1 <27.0.0") {
   throw new Error("Add-on manifest schema must enforce the current Node 26 compatibility baseline");
+}
+for (const required of [
+  "Node.js 26.13.1 Active LTS",
+  "### 4.3.1 Shared contract inventory",
+  "PKG-010",
+  "GOV-013",
+  "GOV-014",
+  "ADD-012",
+  "ADR-0004",
+  "ADR-0005",
+  "422-task registry",
+]) {
+  if (!foundationBlueprint.includes(required)) {
+    throw new Error("BLUEPRINT-FOUNDATIONS.MD is missing required current foundation contract: " + required);
+  }
+}
+if (!runtimePatchAdr.includes("Status:** Accepted") || !runtimePatchAdr.includes("26.13.1")) {
+  throw new Error("ADR-0005 must accept the exact Node.js 26.13.1 patch baseline");
+}
+if (!masterBlueprint.includes("Node.js 26.13.1 Active LTS") ||
+    !masterBlueprint.includes("Sixteen named application surfaces") ||
+    !masterBlueprint.includes("BLUEPRINT-FOUNDATIONS.MD")) {
+  throw new Error("Master blueprint must align with the Node 26.13.1 and sixteen-surface foundation architecture");
+}
+if (!appBlueprint.toLowerCase().includes("exactly sixteen named application surfaces")) {
+  throw new Error("Application blueprint must define exactly sixteen named application surfaces");
 }
 if (!pkg.scripts?.["lint:addons"] || !String(pkg.scripts?.check ?? "").includes("pnpm lint:addons")) {
   throw new Error("Root quality gate must execute pnpm lint:addons");
