@@ -118,3 +118,28 @@ test("Dependabot update groups enforce a seven-day version-update cooldown", asy
   const config = await readFile(new URL("../.github/dependabot.yml", import.meta.url), "utf8");
   assert.equal((config.match(/default-days: 7/g) ?? []).length, 2);
 });
+
+test("master and foundation blueprints align to Node 26.13.1 and sixteen app surfaces", async () => {
+  const [master, foundation, applications, runtimePatchAdr, registryText] = await Promise.all([
+    readFile(new URL("../BLUEPRINT.md", import.meta.url), "utf8"),
+    readFile(new URL("../BLUEPRINT-FOUNDATIONS.MD", import.meta.url), "utf8"),
+    readFile(new URL("../BLUEPRINT-APPLICATIONS.MD", import.meta.url), "utf8"),
+    readFile(new URL("../docs/adr/ADR-0005-node26-patch-refresh.md", import.meta.url), "utf8"),
+    readFile(new URL("../tasks.json", import.meta.url), "utf8"),
+  ]);
+  const registry = JSON.parse(registryText);
+  assert.match(master, /Node\.js 26\.13\.1 Active LTS/);
+  assert.match(master, /Sixteen named application surfaces/);
+  assert.match(master, /BLUEPRINT-FOUNDATIONS\.MD/);
+  assert.match(foundation, /Node\.js 26\.13\.1 Active LTS/);
+  assert.match(foundation, /### 4\.3\.1 Shared contract inventory/);
+  assert.match(foundation, /GOV-013/);
+  assert.match(foundation, /GOV-014/);
+  assert.match(foundation, /ADD-012/);
+  assert.match(foundation, /ADR-0005/);
+  assert.match(foundation, /422-task registry/);
+  assert.match(applications, /exactly sixteen named application surfaces/i);
+  assert.match(runtimePatchAdr, /Status:\*\* Accepted/);
+  assert.equal(registry.project.task_count, 422);
+  assert.equal(registry.tasks.length, 422);
+});

@@ -8,7 +8,10 @@ MoonWitness is a multi-application ecosystem. Its target architecture is documen
 
 This repository is being transitioned from an architecture/planning repository into an executable Node.js monorepo. The initial foundation establishes workspace conventions and automated repository checks. It does not claim that the sixteen planned applications are implemented.
 
+- Master architecture and Living Universe narrative: BLUEPRINT.md
+- Platform foundation sequence, shared contracts and owner gates: BLUEPRINT-FOUNDATIONS.MD
 - Application architecture: BLUEPRINT-APPLICATIONS.MD
+- Package architecture: BLUEPRINT-PACKAGE.MD
 - Go machine control plane and Edge Agent: BLUEPRINT-ASTRONAUTS.MD
 - Rust telecom protocol services: BLUEPRINT-ARSY.MD
 - Add-on architecture: BLUEPRINT-PACKAGE-ADDON.MD
@@ -24,7 +27,7 @@ This repository is being transitioned from an architecture/planning repository i
 - Current runtime/automation ADR: docs/adr/ADR-0004-node26-lts-and-github-automation.md
 - Node 26 patch refresh: docs/adr/ADR-0005-node26-patch-refresh.md
 - Astronauts/Arsy boundaries: docs/adr/ADR-0006-astronauts-arsy-architecture.md
-- Historical Node 24/automation ADR: docs/adr/ADR-0002-runtime-and-github-automation.md
+- Historical Node 24 runtime ADR: docs/adr/ADR-0002-runtime-and-github-automation.md
 
 ## Requirements
 
